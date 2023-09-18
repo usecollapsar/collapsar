@@ -2,6 +2,16 @@
 
 {% block title %}Collapsar Admin{% endblock %}
 
+{% block head_scripts %}
+<script>
+    window.Collapsar = {
+      sidebar: {
+        items: {{ dashboard_helper.get_resources_navigation() | json_encode() | safe}}
+      }
+    }
+</script>
+{% endblock %}
+
 {% block content %}
     <h1>Collapsar Admin</h1>
 {% endblock %}

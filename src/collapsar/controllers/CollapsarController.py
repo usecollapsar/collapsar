@@ -2,9 +2,14 @@
 from masonite.views import View
 from masonite.controllers import Controller
 from masonite.response import Response
+from masonite.request import Request
+
+from src.collapsar.helpers.DashboardHelper import DashboardHelper
 
 class CollapsarController(Controller):
     """CollapsarController Controller Class."""
 
-    def index(self, view: View):
-        return view.render('masonite-collapsar:admin.index')
+    def index(self, view: View, request: Request):
+        dashboard_helper = request.app.make(DashboardHelper)
+    
+        return view.render('masonite-collapsar:admin.index', {'dashboard_helper': dashboard_helper})
