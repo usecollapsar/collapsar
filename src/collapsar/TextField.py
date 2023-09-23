@@ -1,5 +1,5 @@
 from typing import Callable, Union, List
-from .Field import Field
+from collapsar.Field import Field
 
 class TextField(Field):
     def __init__(self, name: str, attribute: Union[str, Callable] = None, resolveCallback: Callable = None):

@@ -1,3 +1,4 @@
+import sys
 from masonite.providers import (
     RouteProvider,
     FrameworkProvider,
@@ -24,8 +25,8 @@ from masonite.notification.providers import NotificationProvider
 from masonite.validation.providers import ValidationProvider
 
 # register local package
+# print(sys.path[0])
 from src.collapsar import CollapsarProvider
-
 
 PROVIDERS = [
     FrameworkProvider,
@@ -50,4 +51,4 @@ PROVIDERS = [
     ORMProvider
 ]
 
-PROVIDERS += [ CollapsarProvider ]
+PROVIDERS += [CollapsarProvider]

@@ -1,86 +1,96 @@
 from typing import Callable, Any, List, Union
+from collapsar.Resource import Resource
+
 
 class Field:
+    """Base class for all fields"""
     # Attributes
     name: str
     attribute: str
-    value: Any
-    displayCallback: Callable
-    resolveCallback: Callable
-    fillCallback: Callable
-    computedCallback: Callable
-    defaultCallback: Callable
-    rules: List[str]
-    creationRules: List[str]
-    updateRules: List[str]
-    sortable: bool
-    nullable: bool
-    nullValues: List[str]
-    pivot: bool
-    textAlign: str
-    stacked: bool
-    customComponents: List[Any]
-    readonlyCallback: Callable
-    requiredCallback: Callable
-    help_text: str = ''
-    resource: Any
+    component: str
+    default_value: Any = None
+    sortable: bool = True
     nullable: bool = False
+    null_values: List[str]
+    help_text: str = ""
+    resource: Resource
+    nullable: bool = False
+    rules: List[str]
+    creation_rules: List[str]
+    update_rules: List[str]
+    show_on_creation: bool = True
+    show_on_update: bool = True
+    show_on_index: bool = True
+    
+    computed_callback: Callable
+    display_callback: Callable
+    resolve_callback: Callable
 
-    def __init__(self, name: str, attribute: Union[str, Callable] = None, resolveCallback: Callable = None):
+    # pivot: bool
+    # fillCallback: Callable
+    # customComponents: List[Any]
+    # defaultCallback: Callable
+    # readonlyCallback: Callable
+    # requiredCallback: Callable
+
+    def __init__(
+        self, name: str, attribute: Union[str, Callable] = None, resolve_callback: Callable = None
+    ):
         self.name = name
-        self.resolveCallback = resolveCallback
+        self.resolve_callback = resolve_callback
 
         self.default(None)
 
         if callable(attribute):
-            self.computedCallback = attribute
-            self.attribute = 'ComputedField'
+            self.computed_callback = attribute
+            self.attribute = "ComputedField"
         else:
-            self.attribute = attribute if attribute is not None else name.lower().replace(' ', '_')
+            self.attribute = attribute if attribute is not None else name.lower().replace(" ", "_")
 
     def default(self, value: Any):
-        # You'll have to define this function to set a default value
-        pass
-
-    def stacked(self, stack: bool = True):
-        self.stacked = stack
+        """Set the default value for the field"""
+        self.default_value = value
         return self
-    
-    def sortable(self, sortable: bool = True):
+
+    def set_sortable(self, sortable: bool = True):
+        """Set if the field should be sortable or not"""
         self.sortable = sortable
         return self
-    
-    def display_callback(self, callback: Callable):
-        self.displayCallback = callback
+
+    def set_display_callback(self, callback: Callable):
+        """Set the display callback for the field"""
+        self.display_callback = callback
         return self
-    
-    def get_value(self):
-        return self.value
-    
+
     def is_readonly(self):
+        """Set whether field is readonly"""
         return False
-    
+
     def is_required(self):
+        """Set whether field is required"""
         return False
-    
+
     def get_value(self):
-        return self.value
-    
+        """Returns field value"""
+        return self.default_value
+
     def json_serialize(self):
+        """Returns a dict with the field's data"""
         return {
-            'attribute': self.attribute,
-            'help_text': self.help_text,
-            'index_name': self.name,
-            'name': self.name,
-            'nullable': self.nullable,
+            "attribute": self.attribute,
+            "help_text": self.help_text,
+            "index_name": self.name,
+            "name": self.name,
+            "nullable": self.nullable,
             # 'panel': self.panel,
             # 'prefixComponent': self.
-            'readonly': self.is_readonly(),
-            'required': self.is_required(),
-            'sortable': self.sortable,
+            "readonly": self.is_readonly(),
+            "required": self.is_required(),
+            "sortable": self.sortable,
+            "component": self.component,
             # 'sortableUriKey': self.sortableUriKey(),
-            'stacked': self.stacked,
             # 'textAlign': self.textAlign,
             # 'validationKey': self.validationKey(),
-            'value': self.get_value(),
+            "rules": [],
+            "value": self.get_value(),
         }

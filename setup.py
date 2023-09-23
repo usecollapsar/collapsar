@@ -1,21 +1,17 @@
-from setuptools import setup
+from setuptools import setup, find_packages
 
 with open("README.md", "r") as fh:
     long_description = fh.read()
 
 setup(
-    name="masonite-c∑ollapsar",
+    name="masonite-collapsar",
     # Versions should comply with PEP440.  For a discussion on single-sourcing
     # the version across setup.py and the project code, see
     # https://packaging.python.org/en/latest/single_source_version.html
     version="0.0.1",
-    packages=[
-        "collapsar",
-        "collapsar.providers",
-        "collapsar.config",
-    ],
+    packages=find_packages(where="src"),
     package_dir={"": "src"},
-    description="Masonite Package for Admin Dashboard",
+    description="Masonite Dashboard",
     long_description=long_description,
     long_description_content_type="text/markdown",
     # The project's main homepage.

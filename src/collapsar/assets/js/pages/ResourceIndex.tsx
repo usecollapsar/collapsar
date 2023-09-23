@@ -3,8 +3,8 @@ import * as React from "react";
 import {
   CaretSortIcon,
   ChevronDownIcon,
-  DotsHorizontalIcon,
 } from "@radix-ui/react-icons";
+
 import {
   ColumnDef,
   ColumnFiltersState,
@@ -24,9 +24,6 @@ import {
   DropdownMenu,
   DropdownMenuCheckboxItem,
   DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuLabel,
-  DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { Input } from "@/components/ui/input";
@@ -38,7 +35,7 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 
 const constructColumns = (fields: any[]): ColumnDef[any] => {
   const columns = fields.map((field, k) => {
@@ -143,9 +140,12 @@ export function ResourceIndex() {
           }
           className="max-w-sm"
         />
+        <Button variant="default" className="ml-auto">
+          <Link to={`/resource/${resource}/create`}>Create</Link>
+        </Button>
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
-            <Button variant="outline" className="ml-auto">
+            <Button variant="outline" className="ml-5">
               Columns <ChevronDownIcon className="ml-2 h-4 w-4" />
             </Button>
           </DropdownMenuTrigger>

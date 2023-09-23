@@ -5,5 +5,6 @@ ROUTES = [
         Route.get('/', "CollapsarController@index"),
         Route.get("/resource/@urikey", "CollapsarController@index"),
         Route.get("/resource/@urikey/@id", "CollapsarController@index"),
+        Route.get('/resource/@urikey/@id/edit', "CollapsarController@index"),
     ], prefix='/collapsar')
 ]
