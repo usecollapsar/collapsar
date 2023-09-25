@@ -2,6 +2,7 @@
 from abc import ABCMeta, abstractmethod
 from masoniteorm.models import Model
 
+
 class ResolvesFields(metaclass=ABCMeta):
     """A trait that provides a method to resolve a list of fields to their values."""
 
@@ -17,29 +18,19 @@ class ResolvesFields(metaclass=ABCMeta):
     @classmethod
     def creation_fields(cls):
         """Resolve a list of fields to their values."""
-        resolved_fields = []
-        for field in cls._filter_only_fillable(cls.fields()):
-            if field.show_on_creation:
-                resolved_fields.append(field)
-        return resolved_fields
-    
+        return [
+            field for field in cls._filter_only_fillable(cls.fields()) if field.show_on_creation
+        ]
+
     @classmethod
     def creation_fields_without_readonly(cls):
         """Resolve a list of fields to their values."""
-        resolved_fields = []
-        for field in cls.creation_fields():
-            if not field.is_readonly():
-                resolved_fields.append(field)
-        return resolved_fields
+        return [field for field in cls.creation_fields() if not field.is_readonly()]
 
     @classmethod
     def show_fields(cls):
         """Resolve a list of fields to their values."""
-        resolved_fields = []
-        for field in cls.fields():
-            if field.show_on_index:
-                resolved_fields.append(field)
-        return resolved_fields
+        return [field for field in cls.fields() if field.show_on_index]
 
     @classmethod
     def _filter_only_fillable(cls, fields):

@@ -64,10 +64,10 @@ export function ResourceEdit() {
       }
     });
 
-    createRules[field.name] = fieldRules;
+    createRules[field.attribute] = fieldRules;
 
     if (!isCreating) {
-      defaultValues[field.name] = data.data[field.name];
+      defaultValues[field.attribute] = data.data[field.attribute];
     }
   });
 
@@ -116,12 +116,12 @@ export function ResourceEdit() {
 
   const renderFormField = (field: Field, form) => {
     return (
-      <FormField control={form.control} name={field.name} render={renderForm} />
+      <FormField control={form.control} name={field.attribute} render={renderForm} />
     );
   };
 
   const renderForm = ({ field }) => {
-    const fieldData = fields.find((f) => f.name == field.name) as Field;
+    const fieldData = fields.find((f) => f.attribute == field.name) as Field;
 
     const FieldComponent = Fields[fieldData.component as keyof typeof Fields];
 
@@ -132,7 +132,7 @@ export function ResourceEdit() {
 
     return (
       <FormItem>
-        <FormLabel>{fieldData.attribute}</FormLabel>
+        <FormLabel>{fieldData.name}</FormLabel>
         <FormControl>
           <FieldComponent {...field} />
         </FormControl>

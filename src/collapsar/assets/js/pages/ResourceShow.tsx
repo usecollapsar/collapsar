@@ -30,12 +30,12 @@ export function ResourceShow() {
   };
 
   const renderFormField = (field: Field) => {
-    const fieldInfo = fields.find((f) => f.name == field.name) as Field;
-    const value = data.data[field.name];
+    const fieldInfo = fields.find((f) => f.attribute == field.attribute) as Field;
+    const value = data.data[field.attribute];
 
     return (
       <div className="flex gap-2 flex-col">
-        <p>{fieldInfo.attribute}</p>
+        <p>{fieldInfo.name}</p>
         <Input placeholder="" value={value} disabled={true} />
       </div>
     );
