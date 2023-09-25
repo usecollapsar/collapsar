@@ -9,7 +9,18 @@ setup(
     # the version across setup.py and the project code, see
     # https://packaging.python.org/en/latest/single_source_version.html
     version="0.0.1",
-    packages=find_packages(where="src"),
+    packages=[
+        'assets',
+        'config',
+        'controllers',
+        'dist',
+        'foundation',
+        'helpers',
+        'providers',
+        'routes',
+        'templates',
+        'traits',
+    ],
     package_dir={"": "src"},
     description="Masonite Dashboard",
     long_description=long_description,
@@ -80,6 +91,6 @@ setup(
     # installed, specify them here.  If using Python 2.6 or less, then these
     # have to be included in MANIFEST.in as well.
     package_data={
-        # 'templates/index.html': [],
+        '': ['templates/*.html', 'dist/**'],
     },
 )
