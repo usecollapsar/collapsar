@@ -18,7 +18,7 @@ class ResourceIndexController(Controller):
 
         return response.json(
             {
-            "paginator": paginator.serialize(),
+                "paginator": paginator.serialize(),
                 "fields": resource.index_fields(),
             }
         )
