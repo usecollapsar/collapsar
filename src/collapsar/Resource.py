@@ -1,9 +1,9 @@
 """Resource Class."""
 from slugify import slugify
 from masoniteorm.models import Model
-from src.collapsar.traits.ResolvesFields import ResolvesFields
-from src.collapsar.traits.ForwardsCalls import ForwardsCalls
-from src.collapsar.traits.FillsFields import FillsFields
+from .traits.ResolvesFields import ResolvesFields
+from .traits.ForwardsCalls import ForwardsCalls
+from .traits.FillsFields import FillsFields
 
 
 class Resource(ResolvesFields, ForwardsCalls, FillsFields):

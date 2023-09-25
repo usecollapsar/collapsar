@@ -2,7 +2,7 @@
 from masonite.controllers import Controller
 from masonite.response import Response
 from masonite.request import Request
-from src.collapsar.Resource import Resource
+from ..Resource import Resource
 
 
 class ResourceStoreController(Controller):

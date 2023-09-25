@@ -1,16 +1,13 @@
 """Textfield field class."""
 from typing import Callable, Union, List
-from src.collapsar.Field import Field
+from .Field import Field
 
 
 class TextField(Field):
     """Textfield field class."""
 
     def __init__(
-        self,
-        name: str,
-        attribute: Union[str, Callable] = None,
-        resolve_callback: Callable = None
+        self, name: str, attribute: Union[str, Callable] = None, resolve_callback: Callable = None
     ):
         # Field's component
         self.component = "TextField"

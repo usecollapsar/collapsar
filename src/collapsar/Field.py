@@ -3,7 +3,7 @@ from typing import Callable, Any, List, Union, TYPE_CHECKING
 from masoniteorm.models import Model
 
 if TYPE_CHECKING:
-    from src.collapsar.Resource import Resource
+    from .Resource import Resource
 
 
 class Field:

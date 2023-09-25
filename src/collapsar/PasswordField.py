@@ -1,7 +1,7 @@
 """PasswordField Field definition"""
 from typing import Callable, Union, TYPE_CHECKING
 from masonite.facades.Hash import Hash
-from src.collapsar.Field import Field
+from .Field import Field
 
 if TYPE_CHECKING:
     from masoniteorm.models.Model import Model

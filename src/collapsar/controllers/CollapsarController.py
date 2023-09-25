@@ -3,7 +3,7 @@ from masonite.views import View
 from masonite.controllers import Controller
 from masonite.request import Request
 
-from src.collapsar.helpers.DashboardHelper import DashboardHelper
+from ..helpers.DashboardHelper import DashboardHelper
 
 
 class CollapsarController(Controller):
