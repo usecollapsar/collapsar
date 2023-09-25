@@ -1,5 +1,5 @@
 from typing import List
-from src.collapsar.Field import Field
+from ..Field import Field
 
 
 class FillsFields:
