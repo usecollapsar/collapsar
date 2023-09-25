@@ -1,6 +1,6 @@
 """ID Field definition"""
 from typing import Callable, Union
-from collapsar.Field import Field
+from src.collapsar.Field import Field
 
 
 class IdField(Field):

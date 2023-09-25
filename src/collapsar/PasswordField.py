@@ -1,6 +1,10 @@
 """PasswordField Field definition"""
-from typing import Callable, Union
-from collapsar.Field import Field
+from typing import Callable, Union, TYPE_CHECKING
+from masonite.facades.Hash import Hash
+from src.collapsar.Field import Field
+
+if TYPE_CHECKING:
+    from masoniteorm.models.Model import Model
 
 
 class PasswordField(Field):
@@ -16,13 +20,11 @@ class PasswordField(Field):
 
         super().__init__(name, attribute, resolve_callback)
 
-    def as_html(self):
-        """
-        Display the field as raw HTML using React.
+    def fill(self, request, model: "Model"):
+        """Fill the field"""
+        setattr(model, self.attribute, Hash.make(request.input(self.attribute)))
 
-        :return: self
-        """
-        return self.with_meta({"asHtml": True})
+        return None
 
     def json_serialize(self):
         """

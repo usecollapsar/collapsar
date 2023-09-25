@@ -98,7 +98,7 @@ export function ResourceEdit() {
         console.log("Success");
         console.log(response.data);
 
-        navigate(`/resource/${params.resource}/${data.resource_model.id}`);
+        navigate(`/resource/${params.resource}/${response.data.resource.id}`);
       });
   }
 
@@ -134,7 +134,7 @@ export function ResourceEdit() {
       <FormItem>
         <FormLabel>{fieldData.attribute}</FormLabel>
         <FormControl>
-          <FieldComponent />
+          <FieldComponent {...field} />
         </FormControl>
         <FormDescription>{fieldData.help_text}</FormDescription>
         <FormMessage />

@@ -1,5 +1,8 @@
-from typing import Callable, Any, List, Union
-from collapsar.Resource import Resource
+from typing import Callable, Any, List, Union, TYPE_CHECKING
+from masoniteorm.models import Model
+
+if TYPE_CHECKING:
+    from src.collapsar.Resource import Resource
 
 
 class Field:
@@ -13,7 +16,7 @@ class Field:
     nullable: bool = False
     null_values: List[str]
     help_text: str = ""
-    resource: Resource
+    resource: "Resource"
     nullable: bool = False
     rules: List[str]
     creation_rules: List[str]
@@ -73,6 +76,13 @@ class Field:
     def get_value(self):
         """Returns field value"""
         return self.default_value
+
+    def fill(self, request, model: Model):
+        """Fill the field"""
+        setattr(model, self.attribute, request.input(self.attribute))
+
+        # Added to issues tracker #1: it should return a callback for the field
+        return None
 
     def json_serialize(self):
         """Returns a dict with the field's data"""

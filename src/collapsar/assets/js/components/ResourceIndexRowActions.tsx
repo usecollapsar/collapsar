@@ -1,7 +1,7 @@
 import { DotsHorizontalIcon } from "@radix-ui/react-icons";
 import { Row } from "@tanstack/react-table";
 import { AiFillEye } from "react-icons/ai";
-import { BiEdit } from "react-icons/bi";
+import { BiEdit, BiTrash } from "react-icons/bi";
 
 import { Button } from "@/components/ui/button";
 import {
@@ -18,6 +18,7 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { Link, useParams } from "react-router-dom";
+import axios from "axios";
 
 interface DataTableRowActionsProps<TData> {
   row: Row<TData>;
@@ -25,6 +26,7 @@ interface DataTableRowActionsProps<TData> {
 
 export function ResourceIndexRowActions<TData>({
   row,
+  setData,
 }: DataTableRowActionsProps<TData>) {
   const params = useParams();
 
@@ -33,15 +35,37 @@ export function ResourceIndexRowActions<TData>({
     { label: "Two", value: 2 },
   ];
 
+  const deleteItem = (row) => {
+    axios
+      .delete(`/collapsar/api/${params.resource}/${row.getValue("id")}`)
+      .then((response) => {
+        setData((prevData) => {
+          return prevData.filter((item) => item.id != row.getValue("id"));
+        });
+      });
+  };
+
   return (
     <div className="flex">
       <Button variant="ghost" className="flex h-8 w-8 p-0">
-        <Link to={`/resource/${params.resource}/${row.getValue("id")}`}><AiFillEye className="h-4 w-4" /></Link>
+        <Link to={`/resource/${params.resource}/${row.getValue("id")}`}>
+          <AiFillEye className="h-4 w-4" />
+        </Link>
         <span className="sr-only">View</span>
       </Button>
       <Button variant="ghost" className="flex h-8 w-8 p-0">
-      <Link to={`/resource/${params.resource}/${row.getValue("id")}/edit`}><BiEdit className="h-4 w-4" /></Link>
+        <Link to={`/resource/${params.resource}/${row.getValue("id")}/edit`}>
+          <BiEdit className="h-4 w-4" />
+        </Link>
         <span className="sr-only">Edit</span>
+      </Button>
+      <Button
+        onClick={() => deleteItem(row)}
+        variant="ghost"
+        className="flex h-8 w-8 p-0"
+      >
+        <BiTrash className="h-4 w-4" />
+        <span className="sr-only">Delete</span>
       </Button>
       <DropdownMenu>
         <DropdownMenuTrigger asChild>

@@ -37,53 +37,6 @@ import {
 } from "@/components/ui/table";
 import { Link, useParams } from "react-router-dom";
 
-const constructColumns = (fields: any[]): ColumnDef[any] => {
-  const columns = fields.map((field, k) => {
-    return {
-      accessorKey: field,
-      header: ({ column }) => {
-        return (
-          <Button
-            variant="ghost"
-            onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-          >
-            { field }
-            <CaretSortIcon className="ml-2 h-4 w-4" />
-          </Button>
-        );
-      },
-      cell: ({ row }) => <div className="lowercase">{row.getValue(field)}</div>,
-    }
-  });
-
-  return [
-    {
-      id: "select",
-      header: ({ table }) => (
-        <Checkbox
-          checked={table.getIsAllPageRowsSelected()}
-          onCheckedChange={(value) => table.toggleAllPageRowsSelected(!!value)}
-          aria-label="Select all"
-        />
-      ),
-      cell: ({ row }) => (
-        <Checkbox
-          checked={row.getIsSelected()}
-          onCheckedChange={(value) => row.toggleSelected(!!value)}
-          aria-label="Select row"
-        />
-      ),
-      enableSorting: true,
-      enableHiding: true,
-    },
-    ...columns,
-    {
-      id: "actions",
-      cell: ({ row }) => <ResourceIndexRowActions row={row} />,
-    },
-  ]
-}
-
 import { ResourceIndexRowActions } from "@/components/ResourceIndexRowActions";
 
 export function ResourceIndex() {
@@ -105,6 +58,53 @@ export function ResourceIndex() {
       setFields(response.data.fields);
     });
   }, []);
+
+  const constructColumns = (fields: any[]): ColumnDef[any] => {
+    const columns = fields.map((field, k) => {
+      return {
+        accessorKey: field,
+        header: ({ column }) => {
+          return (
+            <Button
+              variant="ghost"
+              onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+            >
+              { field }
+              <CaretSortIcon className="ml-2 h-4 w-4" />
+            </Button>
+          );
+        },
+        cell: ({ row }) => <div className="lowercase">{row.getValue(field)}</div>,
+      }
+    });
+  
+    return [
+      {
+        id: "select",
+        header: ({ table }) => (
+          <Checkbox
+            checked={table.getIsAllPageRowsSelected()}
+            onCheckedChange={(value) => table.toggleAllPageRowsSelected(!!value)}
+            aria-label="Select all"
+          />
+        ),
+        cell: ({ row }) => (
+          <Checkbox
+            checked={row.getIsSelected()}
+            onCheckedChange={(value) => row.toggleSelected(!!value)}
+            aria-label="Select row"
+          />
+        ),
+        enableSorting: true,
+        enableHiding: true,
+      },
+      ...columns,
+      {
+        id: "actions",
+        cell: ({ row }) => <ResourceIndexRowActions row={row} setData={setData} />,
+      },
+    ]
+  }
 
   const columns = constructColumns(fields);
 

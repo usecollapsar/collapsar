@@ -20,4 +20,4 @@ class ResourceUpdateController(Controller):
 
         resource_model.update(request.all())
     
-        return response.json({'resource_model': json.loads(resource_model.to_json()), 'success': True})
+        return response.json({'resource': json.loads(resource_model.to_json()), 'success': True})

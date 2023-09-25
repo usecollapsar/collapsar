@@ -18,11 +18,11 @@ class UserResource(Resource):
         """Return the fields of the resource."""
 
         return [
-            IdField('id', 'Id'),
-            TextField('name', 'Name'),
-            TextField('email', 'Email'),
-            PasswordField('password', 'Password'),
-            TextField('created_at', 'Created At'),
+            IdField('Id', 'id'),
+            TextField('Name', 'name'),
+            TextField('Email', 'email'),
+            PasswordField('Password', 'password'),
+            TextField('Created At', 'created_at'),
         ]
 
     @classmethod

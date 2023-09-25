@@ -1,14 +1,15 @@
 from typing import Callable, Union, List
-from collapsar.Field import Field
+from src.collapsar.Field import Field
+
 
 class TextField(Field):
-    def __init__(self, name: str, attribute: Union[str, Callable] = None, resolveCallback: Callable = None):
+    def __init__(self, name: str, attribute: Union[str, Callable] = None, resolve_callback: Callable = None):
         # Field's component
         self.component = 'TextField'
         # Field's suggestions callback
         self.suggestions = None
 
-        super().__init__(name, attribute, resolveCallback)
+        super().__init__(name, attribute, resolve_callback)
 
     def set_suggestions(self, suggestions: Union[List, Callable]):
         """

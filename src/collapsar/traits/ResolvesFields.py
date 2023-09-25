@@ -6,7 +6,6 @@ class ResolvesFields(metaclass=ABCMeta):
     """A trait that provides a method to resolve a list of fields to their values."""
 
     @classmethod
-    @abstractmethod
     def fields(cls):
         """Return the fields of the resource."""
 
@@ -25,6 +24,15 @@ class ResolvesFields(metaclass=ABCMeta):
         return resolved_fields
     
     @classmethod
+    def creation_fields_without_readonly(cls):
+        """Resolve a list of fields to their values."""
+        resolved_fields = []
+        for field in cls.creation_fields():
+            if not field.is_readonly():
+                resolved_fields.append(field)
+        return resolved_fields
+
+    @classmethod
     def show_fields(cls):
         """Resolve a list of fields to their values."""
         resolved_fields = []
@@ -38,4 +46,4 @@ class ResolvesFields(metaclass=ABCMeta):
         """Remove hidden fields from the resource."""
         model = cls.get_model()
 
-        return [field for field in fields if field.name in model.__fillable__]
+        return [field for field in fields if field.attribute in model.__fillable__]
