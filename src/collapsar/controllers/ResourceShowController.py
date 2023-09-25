@@ -21,6 +21,8 @@ class ResourceShowController(Controller):
             {
                 "data": model.serialize(),
                 "resource": resource.json_serialize(),
-                "fields": list(map(lambda resource: resource.json_serialize(), resource.show_fields())),
+                "fields": list(
+                    map(lambda resource: resource.json_serialize(), resource.show_fields())
+                ),
             }
         )

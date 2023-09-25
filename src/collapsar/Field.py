@@ -1,3 +1,4 @@
+"""Base module for all fields"""
 from typing import Callable, Any, List, Union, TYPE_CHECKING
 from masoniteorm.models import Model
 
@@ -24,7 +25,6 @@ class Field:
     show_on_creation: bool = True
     show_on_update: bool = True
     show_on_index: bool = True
-    
     computed_callback: Callable
     display_callback: Callable
     resolve_callback: Callable

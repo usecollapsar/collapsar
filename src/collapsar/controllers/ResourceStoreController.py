@@ -1,5 +1,4 @@
 """A ResourceStoreController Module."""
-import json
 from masonite.controllers import Controller
 from masonite.response import Response
 from masonite.request import Request
@@ -18,10 +17,9 @@ class ResourceStoreController(Controller):
             return response.json({"success": False})
 
         # this fills every model attribute with request parameters (except id)
-        # every field has its own fill method, for example, to Hash the password before assigning it
+        # every field has its own fill method, for example,
+        # to Hash the password before assigning it
         [resource_model, callbacks] = resource.fill(request, resource.new_model())
         resource_model.save()
 
-        return response.json(
-            {"resource_model": resource_model.serialize(), "success": True}
-        )
+        return response.json({"resource_model": resource_model.serialize(), "success": True})
