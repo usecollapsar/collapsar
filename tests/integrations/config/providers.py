@@ -1,4 +1,3 @@
-import sys
 from masonite.providers import (
     RouteProvider,
     FrameworkProvider,
@@ -24,8 +23,6 @@ from masonite.scheduling.providers import ScheduleProvider
 from masonite.notification.providers import NotificationProvider
 from masonite.validation.providers import ValidationProvider
 
-# register local package
-# print(sys.path[0])
 from src.collapsar import CollapsarProvider
 
 PROVIDERS = [

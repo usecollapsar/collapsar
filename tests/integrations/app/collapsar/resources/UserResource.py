@@ -3,6 +3,8 @@ from src.collapsar import Resource
 from src.collapsar.TextField import TextField
 from src.collapsar.IdField import IdField
 from src.collapsar.PasswordField import PasswordField
+
+
 class UserResource(Resource):
     """User Resource."""
 
@@ -18,11 +20,11 @@ class UserResource(Resource):
         """Return the fields of the resource."""
 
         return [
-            IdField('Id', 'id'),
-            TextField('Name', 'name'),
-            TextField('Email', 'email'),
-            PasswordField('Password', 'password'),
-            TextField('Created At', 'created_at'),
+            IdField("Id", "id"),
+            TextField("Name", "name"),
+            TextField("Email", "email"),
+            PasswordField("Password", "password"),
+            TextField("Created At", "created_at"),
         ]
 
     @classmethod
