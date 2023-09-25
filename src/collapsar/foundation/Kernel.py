@@ -39,7 +39,11 @@ class Kernel:
         # Add path to system path for module import
 
         real_path = self.application.base_path + "/" + path
+
         sys.path.append(real_path)
+
+        if not os.path.exists(real_path):
+            return
 
         # Iterate over each file in the path
         for filename in os.listdir(real_path):
