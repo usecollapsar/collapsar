@@ -1,4 +1,4 @@
-from setuptools import setup, find_packages
+from setuptools import setup
 
 with open("README.md", "r") as fh:
     long_description = fh.read()
@@ -91,6 +91,7 @@ setup(
             "pytest-cov",
             "twine>=1.5.0",
             "wheel",
+            "pytest-dotenv",
         ],
     },
     # If there are data files included in your packages that need to be

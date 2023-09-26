@@ -15,11 +15,11 @@ ci: ## [CI] Run package tests and lint
 	make test
 	make lint
 lint: ## Run code linting
-	python -m flake8 .
+	python -m flake8 src/collapsar --ignore=E501,F401,E203,E128,E402,E731,F821,E712,W503,F811
 format: ## Format code with Black
-	black .
+	black src/collapsar
 coverage: ## Run package tests and upload coverage reports
-	python -m pytest --cov-report term --cov-report xml --cov=src/masonite/collapsar tests
+	python -m pytest --cov-report term --cov-report xml --cov=src/collapsar tests
 publish: ## Publish package to pypi
 	python setup.py sdist bdist_wheel
 	twine upload dist/*

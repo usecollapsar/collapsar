@@ -15,3 +15,5 @@ dist
 *.db
 src/masonite_collapsar.egg-info
 node_modules/
+*.sqlite3
+*.env*
