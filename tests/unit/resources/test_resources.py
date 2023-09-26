@@ -10,7 +10,6 @@ class User(Model):
     """User Model"""
 
     __fillable__ = ["name", "email", "password"]
-    __connection__ = "testing"
     __auth__ = "email"
 
     @property
@@ -48,6 +47,8 @@ class UserResource(Resource):
 
 class TestResources(TestCase, DatabaseTransactions):
     """Test Resources Class."""
+
+    connection = "testing"
 
     def test_resource_can_get_fields(self):
         ur = UserResource
