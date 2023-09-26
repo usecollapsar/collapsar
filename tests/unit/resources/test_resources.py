@@ -49,8 +49,6 @@ class UserResource(Resource):
 class TestResources(TestCase, DatabaseTransactions):
     """Test Resources Class."""
 
-    connection = "testing"
-
     def test_resource_can_get_fields(self):
         ur = UserResource
         self.assertEqual(len(ur.fields()), 5)
