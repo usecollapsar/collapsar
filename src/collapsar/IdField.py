@@ -18,14 +18,6 @@ class IdField(Field):
 
         super().__init__(name, attribute, resolve_callback)
 
-    def as_html(self):
-        """
-        Display the field as raw HTML using React.
-
-        :return: self
-        """
-        return self.with_meta({"asHtml": True})
-
     def json_serialize(self):
         """
         Prepare the element for JSON serialization.

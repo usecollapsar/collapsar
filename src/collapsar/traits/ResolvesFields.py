@@ -1,13 +1,17 @@
 """A trait that provides a method to resolve a list of fields to their values."""
 from abc import ABCMeta, abstractmethod
+from typing import List, TYPE_CHECKING
 from masoniteorm.models import Model
+
+if TYPE_CHECKING:
+    from src.collapsar.Field import Field
 
 
 class ResolvesFields(metaclass=ABCMeta):
     """A trait that provides a method to resolve a list of fields to their values."""
 
     @classmethod
-    def fields(cls):
+    def fields(cls) -> List["Field"]:
         """Return the fields of the resource."""
 
     @classmethod
@@ -19,21 +23,23 @@ class ResolvesFields(metaclass=ABCMeta):
     def creation_fields(cls):
         """Resolve a list of fields to their values."""
         return [
-            field for field in cls._filter_only_fillable(cls.fields()) if field.show_on_creation
+            field
+            for field in cls._filter_only_fillable(cls.fields())
+            if field.resolve_show_on_creation()
         ]
 
     @classmethod
     def creation_fields_without_readonly(cls):
         """Resolve a list of fields to their values."""
-        return [field for field in cls.creation_fields() if not field.is_readonly()]
+        return [field for field in cls.creation_fields() if not field.resolve_readonly()]
 
     @classmethod
     def show_fields(cls):
         """Resolve a list of fields to their values."""
-        return [field for field in cls.fields() if field.show_on_index]
+        return [field for field in cls.fields() if field.resolve_show_on_creation()]
 
     @classmethod
-    def _filter_only_fillable(cls, fields):
+    def _filter_only_fillable(cls, fields) -> List["Field"]:
         """Remove hidden fields from the resource."""
         model = cls.get_model()
 

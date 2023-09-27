@@ -36,7 +36,7 @@ export function ResourceShow() {
     return (
       <div className="flex gap-2 flex-col">
         <p>{fieldInfo.name}</p>
-        <Input placeholder="" value={value} disabled={true} />
+        <Input placeholder="" value={value} readonly={true} />
       </div>
     );
   };

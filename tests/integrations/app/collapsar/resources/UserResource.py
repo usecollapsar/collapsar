@@ -20,9 +20,9 @@ class UserResource(Resource):
         """Return the fields of the resource."""
 
         return [
-            IdField("Id", "id"),
+            IdField("Id", "id").readonly(),
             TextField("Name", "name"),
-            TextField("Email", "email"),
+            TextField("Email", "email").rules("required",),
             PasswordField("Password", "password"),
             TextField("Created At", "created_at"),
         ]

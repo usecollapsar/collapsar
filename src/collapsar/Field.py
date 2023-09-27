@@ -8,41 +8,43 @@ if TYPE_CHECKING:
 
 class Field:
     """Base class for all fields"""
+
     # Attributes
     name: str
     attribute: str
     component: str
-    default_value: Any = None
-    sortable: bool = True
-    nullable: bool = False
-    null_values: List[str]
-    help_text: str = ""
     resource: "Resource"
-    nullable: bool = False
-    rules: List[str]
-    creation_rules: List[str]
-    update_rules: List[str]
-    show_on_creation: bool = True
-    show_on_update: bool = True
-    show_on_index: bool = True
-    computed_callback: Callable
-    display_callback: Callable
-    resolve_callback: Callable
+    default_value: Any = None
 
-    # pivot: bool
-    # fillCallback: Callable
-    # customComponents: List[Any]
-    # defaultCallback: Callable
-    # readonlyCallback: Callable
-    # requiredCallback: Callable
+    _readonly_callback: Callable = None
+    _required_callback: bool | Callable = False
+    _computed_callback: Callable = None
+    _display_callback: Callable = None
+    _resolve_callback: Callable = None
+    _show_on_creation_callback: bool | Callable = True
+    _show_on_update_callback: bool | Callable = True
+    _show_on_index_callback: bool | Callable = True
+
+    _rules: List[str] = []
+    _creation_rules: List[str] = []
+    _update_rules: List[str] = []
+    _help_text: str = ""
+    _sortable: bool = True
+    _nullable: bool = False
+    _readonly: bool = False
+    _nullable: bool = False
 
     def __init__(
-        self, name: str, attribute: Union[str, Callable] = None, resolve_callback: Callable = None
+        self,
+        name: str,
+        attribute: Union[str, Callable] = None,
+        resolve_callback: Callable = None,
+        default_value=None,
     ):
         self.name = name
         self.resolve_callback = resolve_callback
 
-        self.default(None)
+        self._default_value = default_value
 
         if callable(attribute):
             self.computed_callback = attribute
@@ -50,32 +52,10 @@ class Field:
         else:
             self.attribute = attribute if attribute is not None else name.lower().replace(" ", "_")
 
-    def default(self, value: Any):
-        """Set the default value for the field"""
-        self.default_value = value
-        return self
-
-    def set_sortable(self, sortable: bool = True):
-        """Set if the field should be sortable or not"""
-        self.sortable = sortable
-        return self
-
-    def set_display_callback(self, callback: Callable):
+    def display_callback(self, callback: Callable):
         """Set the display callback for the field"""
-        self.display_callback = callback
+        self._display_callback = callback
         return self
-
-    def is_readonly(self):
-        """Set whether field is readonly"""
-        return False
-
-    def is_required(self):
-        """Set whether field is required"""
-        return False
-
-    def get_value(self):
-        """Returns field value"""
-        return self.default_value
 
     def fill(self, request, model: Model):
         """Fill the field"""
@@ -83,24 +63,84 @@ class Field:
 
         # Added to issues tracker #1: it should return a callback for the field
         return None
+    
+    def rules(self, *rules: str):
+        """Set the rules for the field"""
+        self._rules = rules
+        return self
+
+    def required(self, value):
+        """Set whether field is required"""
+        self._required_callback = value
+
+        return self
+
+    def readonly(self, value: bool | Callable = True):
+        """Set the readonly value or callback the field"""
+        self._readonly_callback = value
+
+        return self
+
+    def sortable(self, sortable: bool = True):
+        """Set if the field should be sortable or not"""
+        self._sortable = sortable
+        return self
+    
+    def show_on_creation_callback(self, callback: bool | Callable):
+        """Set the show_on_creation callback for the field"""
+        self._show_on_creation_callback = callback
+        return self
+
+    def resolve_required(self):
+        """Resolve the required value"""
+        if (
+            self._required_callback is True
+            or callable(self._required_callback)
+            and self._required_callback()
+        ):
+            return True
+
+        return False
+    
+    def resolve_readonly(self):
+        """Resolve the readonly value"""
+        if (
+            self._readonly_callback is True
+            or callable(self._readonly_callback)
+            and self._readonly_callback()
+        ):
+            return True
+
+        return False
+    
+    def resolve_show_on_creation(self):
+        """Resolve the show_on_creation value"""
+        if (
+            self._show_on_creation_callback is True
+            or callable(self._show_on_creation_callback)
+            and self._show_on_creation_callback()
+        ):
+            return True
+
+        return False
 
     def json_serialize(self):
         """Returns a dict with the field's data"""
         return {
             "attribute": self.attribute,
-            "help_text": self.help_text,
+            "help_text": self._help_text,
             "index_name": self.name,
             "name": self.name,
-            "nullable": self.nullable,
+            # "nullable": self._nullable,
             # 'panel': self.panel,
             # 'prefixComponent': self.
-            "readonly": self.is_readonly(),
-            "required": self.is_required(),
-            "sortable": self.sortable,
+            "readonly": self.resolve_readonly(),
+            "required": self.resolve_required(),
+            "sortable": self._sortable,
             "component": self.component,
             # 'sortableUriKey': self.sortableUriKey(),
             # 'textAlign': self.textAlign,
             # 'validationKey': self.validationKey(),
-            "rules": [],
-            "value": self.get_value(),
+            "rules": self._rules,
+            "default_value": self._default_value,
         }
