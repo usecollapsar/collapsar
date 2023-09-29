@@ -1,6 +1,4 @@
 @tailwind base;
-@tailwind components;
-@tailwind utilities;
 
 @layer base {
   :root {
@@ -56,4 +54,11 @@
   body {
     @apply bg-background text-foreground;
   }
+}
+
+@tailwind components;
+@tailwind utilities;
+
+.px-view {
+  padding: 0 3.125rem;
 }

@@ -15,6 +15,7 @@ class Field:
     component: str
     resource: "Resource"
     default_value: Any = None
+    type: str = "string"
 
     _readonly_callback: Callable = None
     _required_callback: bool | Callable = False
@@ -26,7 +27,7 @@ class Field:
     _show_on_index_callback: bool | Callable = True
 
     _rules: List[str] = []
-    _creation_rules: List[str] = []
+    _create_rules: List[str] = []
     _update_rules: List[str] = []
     _help_text: str = ""
     _sortable: bool = True
@@ -63,10 +64,20 @@ class Field:
 
         # Added to issues tracker #1: it should return a callback for the field
         return None
-    
+
     def rules(self, *rules: str):
         """Set the rules for the field"""
         self._rules = rules
+        return self
+    
+    def create_rules(self, *rules: str):
+        """Set of create rules for the field"""
+        self._create_rules = rules
+        return self
+    
+    def update_rules(self, *rules: str):
+        """Set of update rules for the field"""
+        self._update_rules = rules
         return self
 
     def required(self, value):
@@ -85,7 +96,7 @@ class Field:
         """Set if the field should be sortable or not"""
         self._sortable = sortable
         return self
-    
+
     def show_on_creation_callback(self, callback: bool | Callable):
         """Set the show_on_creation callback for the field"""
         self._show_on_creation_callback = callback
@@ -101,7 +112,7 @@ class Field:
             return True
 
         return False
-    
+
     def resolve_readonly(self):
         """Resolve the readonly value"""
         if (
@@ -112,7 +123,7 @@ class Field:
             return True
 
         return False
-    
+
     def resolve_show_on_creation(self):
         """Resolve the show_on_creation value"""
         if (
@@ -142,5 +153,7 @@ class Field:
             # 'textAlign': self.textAlign,
             # 'validationKey': self.validationKey(),
             "rules": self._rules,
+            "create_rules": self._create_rules,
+            "update_rules": self._update_rules,
             "default_value": self._default_value,
         }

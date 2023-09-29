@@ -48,26 +48,47 @@ export function ResourceEdit() {
   let createRules: any = {};
 
   fields.forEach((field: any) => {
-    let fieldRules = z.any();
+    let rules = [];
 
-    field.rules.forEach((rule: any) => {
-      if (rule.name == "required") {
-        fieldRules = fieldRules.nonempty({
-          message: `${field.name} is required.`,
-        });
-      }
+    if (isCreating) {
+      rules = field.create_rules.length ? field.create_rules : field.rules;
+    } else {
+      rules = field.update_rules.length ? field.update_rules : field.rules;
+    }
 
-      if (rule.name == "max") {
-        fieldRules = fieldRules.max(rule.args[0], {
-          message: `${field.name} must be less than ${rule.args[0]}.`,
-        });
+    let schema: z.ZodTypeAny =
+      typeof field.value == "number" ? z.number() : z.string();
+    let isNullable = false;
+
+    rules.forEach((rule: any) => {
+      switch (true) {
+        case rule === "required":
+          schema = schema.nonempty();
+          break;
+        case rule.startsWith("max:"):
+          schema = schema.max(parseInt(rule.split(":")[1]));
+          break;
+        case rule.startsWith("min:"):
+          schema = schema.min(parseInt(rule.split(":")[1]));
+          break;
+        case rule === "email":
+          schema = schema.email();
+          break;
+        case rule === "nullable":
+          isNullable = true;
+          break;
       }
     });
 
-    createRules[field.attribute] = fieldRules;
+    if (isNullable) {
+      const emptyStringOrOriginalSchema = z.union([z.literal(""), schema]);
+      schema = emptyStringOrOriginalSchema.nullable().optional();
+    }
+
+    createRules[field.attribute] = schema;
 
     if (!isCreating) {
-      defaultValues[field.attribute] = data.data[field.attribute];
+      defaultValues[field.attribute] = data.data[field.attribute]?.toString();
     }
   });
 
@@ -116,7 +137,11 @@ export function ResourceEdit() {
 
   const renderFormField = (field: Field, form) => {
     return (
-      <FormField control={form.control} name={field.attribute} render={renderForm} />
+      <FormField
+        control={form.control}
+        name={field.attribute}
+        render={renderForm}
+      />
     );
   };
 
@@ -127,32 +152,39 @@ export function ResourceEdit() {
 
     if (!FieldComponent) {
       console.error(`Component ${fieldData.component} not found!`);
-      return null; 
+      return null;
     }
 
     return (
-      <FormItem>
-        <FormLabel>{fieldData.name}</FormLabel>
-        <FormControl>
-          <FieldComponent {...field} />
-        </FormControl>
-        <FormDescription>{fieldData.help_text}</FormDescription>
-        <FormMessage />
+      <FormItem className="flex border-b">
+        <div className="w-1/4 px-8 py-6">
+          <FormLabel>{fieldData.name}</FormLabel>
+          <FormDescription>{fieldData.help_text}</FormDescription>
+        </div>
+
+        <div className="w-3/4 px-8 py-6">
+          <FormControl>
+            <FieldComponent fieldConfig={fieldData} {...field} />
+          </FormControl>
+          <FormMessage />
+        </div>
       </FormItem>
     );
   };
 
   return (
     <>
-      <div className="mb-5">
+      <div className="py-4">
         <h1>{getTitle()}</h1>
       </div>
       {form && (
         <Form {...form}>
-          <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
-            {fields.map((field) => renderFormField(field, form))}
+          <form onSubmit={form.handleSubmit(onSubmit)}>
+            <div className="card rounded border">
+              {fields.map((field) => renderFormField(field, form))}
+            </div>
 
-            <div className="flex gap-2">
+            <div className="flex gap-2 mt-6">
               <Button variant="secondary">
                 <Link to={`/resource/${params.resource}`}>Cancel</Link>
               </Button>

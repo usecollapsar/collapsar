@@ -1,5 +1,3 @@
-from typing import Callable
-
 from masonite.tests import TestCase
 from masoniteorm.models import Model
 from src.collapsar.Resource import Resource

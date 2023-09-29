@@ -1,4 +1,4 @@
-import '../css/app.scss'
+import '../css/app.css'
 import * as React from "react";
 import * as ReactDOM from "react-dom/client";
 import {router} from "./services/router";
