@@ -88,7 +88,7 @@ export function ResourceEdit() {
     createRules[field.attribute] = schema;
 
     if (!isCreating) {
-      defaultValues[field.attribute] = data.data[field.attribute]?.toString();
+      defaultValues[field.attribute] = field?.value;
     }
   });
 

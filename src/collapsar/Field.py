@@ -70,12 +70,12 @@ class Field:
         """Set the rules for the field"""
         self._rules = rules
         return self
-    
+
     def create_rules(self, *rules: str):
         """Set of create rules for the field"""
         self._create_rules = rules
         return self
-    
+
     def update_rules(self, *rules: str):
         """Set of update rules for the field"""
         self._update_rules = rules
@@ -135,7 +135,7 @@ class Field:
             return True
 
         return False
-    
+
     def resolve_for_display(self, model):
         """Resolve the field for display"""
 
@@ -147,10 +147,12 @@ class Field:
             self.value = self._display_callback(model)
             return self
 
-        self.value = getattr(model, self.attribute)
+        self.value = (
+            getattr(model, self.attribute) if self.attribute not in model.__hidden__ else ""
+        )
 
         return self
-        
+
     def json_serialize(self):
         """Returns a dict with the field's data"""
         return {
