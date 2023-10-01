@@ -2,7 +2,6 @@
 from typing import TYPE_CHECKING
 from masonite.controllers import Controller
 from masonite.response import Response
-from masonite.request import Request
 from ..CollapsarRequest import CollapsarRequest
 
 if TYPE_CHECKING:
