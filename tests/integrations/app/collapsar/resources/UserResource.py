@@ -2,6 +2,7 @@ from tests.integrations.app.models.User import User
 from src.collapsar import Resource
 from src.collapsar.TextField import TextField
 from src.collapsar.IdField import IdField
+from src.collapsar.SelectField import SelectField
 from src.collapsar.PasswordField import PasswordField
 
 
@@ -21,10 +22,27 @@ class UserResource(Resource):
 
         return [
             IdField("Id", "id").readonly().sortable(),
+
+            SelectField("Role", "role").options(["admin", "user"]).rules("required").sortable(),
+
+            SelectField("Department", "department")
+            .options(
+                [
+                    {"label": "IT", "value": 1},
+                    {"label": "Marketing", "value": 2},
+                    {"label": "Sales", "value": 3},
+                ]
+            )
+            .rules("required")
+            .sortable(),
+
             TextField("Name", "name").rules("required", "max:40").sortable(),
+
             TextField("Email", "email").rules("required", "email", "max:30").sortable(),
+
             PasswordField("Password", "password").update_rules("nullable", "min:8"),
-            TextField("Created At", "created_at"),
+
+            TextField("Created At", lambda user: user.created_at.strftime("%d/%m/%Y %H:%M:%S")),
         ]
 
     @classmethod

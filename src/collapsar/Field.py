@@ -15,6 +15,7 @@ class Field:
     component: str
     resource: "Resource"
     default_value: Any = None
+    value: str = ""
     type: str = "string"
 
     _readonly_callback: Callable = None
@@ -48,7 +49,7 @@ class Field:
         self._default_value = default_value
 
         if callable(attribute):
-            self.computed_callback = attribute
+            self._computed_callback = attribute
             self.attribute = "ComputedField"
         else:
             self.attribute = attribute if attribute is not None else name.lower().replace(" ", "_")
@@ -124,7 +125,7 @@ class Field:
 
         return False
 
-    def resolve_show_on_creation(self):
+    def show_on_creation(self):
         """Resolve the show_on_creation value"""
         if (
             self._show_on_creation_callback is True
@@ -134,7 +135,22 @@ class Field:
             return True
 
         return False
+    
+    def resolve_for_display(self, model):
+        """Resolve the field for display"""
 
+        if self.attribute == "ComputedField":
+            self.value = self._computed_callback(model)
+            return self
+
+        if self._display_callback is not None:
+            self.value = self._display_callback(model)
+            return self
+
+        self.value = getattr(model, self.attribute)
+
+        return self
+        
     def json_serialize(self):
         """Returns a dict with the field's data"""
         return {
@@ -156,4 +172,5 @@ class Field:
             "create_rules": self._create_rules,
             "update_rules": self._update_rules,
             "default_value": self._default_value,
+            "value": self.value,
         }

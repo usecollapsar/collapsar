@@ -1,13 +1,14 @@
 """A trait that provides a method to resolve a list of fields to their values."""
-from abc import ABCMeta, abstractmethod
+from abc import abstractmethod
 from typing import List, TYPE_CHECKING
 from masoniteorm.models import Model
 
 if TYPE_CHECKING:
     from src.collapsar.Field import Field
+    from src.collapsar.CollapsarRequest import CollapsarRequest
 
 
-class ResolvesFields(metaclass=ABCMeta):
+class ResolvesFields():
     """A trait that provides a method to resolve a list of fields to their values."""
 
     @classmethod
@@ -25,7 +26,7 @@ class ResolvesFields(metaclass=ABCMeta):
         return [
             field
             for field in cls._filter_only_fillable(cls.fields())
-            if field.resolve_show_on_creation()
+            if field.show_on_creation()
         ]
 
     @classmethod
@@ -34,9 +35,11 @@ class ResolvesFields(metaclass=ABCMeta):
         return [field for field in cls.creation_fields() if not field.resolve_readonly()]
 
     @classmethod
-    def show_fields(cls):
+    def show_fields(cls, request: "CollapsarRequest"):
         """Resolve a list of fields to their values."""
-        return [field for field in cls.fields() if field.resolve_show_on_creation()]
+        fields = [field for field in cls.fields() if field.show_on_creation()]
+
+        return map(lambda field: field.resolve_for_display(request.model()), fields)
 
     @classmethod
     def _filter_only_fillable(cls, fields) -> List["Field"]:

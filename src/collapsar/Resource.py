@@ -10,9 +10,9 @@ class Resource(ResolvesFields, ForwardsCalls, FillsFields):
     """Resource Class."""
 
     title = ""
-    model: Model
+    model: "Model"
     group = "default"
-    resource: Model
+    resource: "Model"
 
     def __init__(self, resource=None):
         """Resource Constructor."""

@@ -1,22 +1,30 @@
-"""ID Field definition"""
-from typing import Callable, Union
+"""SelectField Field definition"""
+from typing import Callable, Union, TYPE_CHECKING
 from .Field import Field
 
+if TYPE_CHECKING:
+    from masoniteorm.models.Model import Model
 
-class IdField(Field):
-    """ID Field definition"""
 
-    _show_on_creation = False
+class SelectField(Field):
+    """SelectField Field definition"""
+
+    _options: list = []
 
     def __init__(
         self, name: str, attribute: Union[str, Callable] = None, resolve_callback: Callable = None
     ):
         # Field's component
-        self.component = "TextField"
+        self.component = "SelectField"
         # Field's suggestions callback
         self.suggestions = None
 
         super().__init__(name, attribute, resolve_callback)
+
+    def options(self, options: list):
+        """Set the options for the select field"""
+        self._options = options
+        return self
 
     def json_serialize(self):
         """
@@ -25,4 +33,5 @@ class IdField(Field):
         :return: dict
         """
         serialized = super().json_serialize()
+        serialized.update({"options": self._options})
         return serialized

@@ -6,6 +6,7 @@ from masonite.storage import StorageCapsule
 from ..config.filesystem import STATICFILES
 from ..helpers.DashboardHelper import DashboardHelper
 from ..foundation.Kernel import Kernel
+from ..CollapsarRequest import CollapsarRequest
 
 
 class CollapsarProvider(PackageProvider):
@@ -40,6 +41,12 @@ class CollapsarProvider(PackageProvider):
 
     def boot(self):
         """Boots services required by the container."""
+
+        # request = self.application.make("request")
+        # self.application.bind(
+        #     "CollapsarRequest",
+        #     CollapsarRequest(request),
+        # )
 
     def static_files(self, files: dict):
         """Add static files to the container."""
