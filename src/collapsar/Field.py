@@ -153,10 +153,19 @@ class Field:
 
         return self
 
+    def random_id(self):
+        """Generate a random id for the field"""
+        import random
+        import string
+
+        return "".join(random.choices(string.ascii_lowercase, k=10))
+
     def json_serialize(self):
         """Returns a dict with the field's data"""
         return {
-            "attribute": self.attribute,
+            "attribute": self.attribute
+            if not callable(self._computed_callback)
+            else f"computed_{self.random_id()}",
             "help_text": self._help_text,
             "index_name": self.name,
             "name": self.name,
@@ -170,6 +179,7 @@ class Field:
             # 'sortableUriKey': self.sortableUriKey(),
             # 'textAlign': self.textAlign,
             # 'validationKey': self.validationKey(),
+            "computed": callable(self._computed_callback),
             "rules": self._rules,
             "create_rules": self._create_rules,
             "update_rules": self._update_rules,

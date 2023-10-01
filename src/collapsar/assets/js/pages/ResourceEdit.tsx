@@ -100,6 +100,14 @@ export function ResourceEdit() {
   });
 
   function onSubmit(values: any) {
+    // filter values object to remove computed fields
+    values = Object.keys(values)
+      .filter((key) => !key.startsWith("computed"))
+      .reduce((obj, key) => {
+        obj[key] = values[key];
+        return obj;
+      }, {});
+
     if (isCreating) {
       return axios
         .put(`/collapsar/api/${params.resource}/`, values)

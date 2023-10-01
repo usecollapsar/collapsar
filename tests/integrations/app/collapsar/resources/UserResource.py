@@ -38,11 +38,13 @@ class UserResource(Resource):
 
             TextField("Name", "name").rules("required", "max:40").sortable(),
 
-            TextField("Email", "email").rules("required", "email", "max:30").sortable(),
+            TextField("Email", "email").rules("required", "email", "max:30", "unique:users").sortable(),
 
             PasswordField("Password", "password").update_rules("nullable", "min:8"),
 
             TextField("Created At", lambda user: user.created_at.strftime("%d/%m/%Y %H:%M:%S")),
+
+            TextField("Computed Field", lambda user: user.name.upper())
         ]
 
     @classmethod

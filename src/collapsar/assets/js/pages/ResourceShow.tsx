@@ -9,6 +9,7 @@ type Field = {
   required: boolean;
   attribute: string;
   help_text: string;
+  value: string | number;
 };
 
 interface RouterResponse {
@@ -33,7 +34,7 @@ export function ResourceShow() {
     const fieldInfo = fields.find(
       (f) => f.attribute == field.attribute
     ) as Field;
-    const value = data.data[field.attribute];
+    const value = field.value;
 
     if (!value) return null;
 

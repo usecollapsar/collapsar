@@ -20,3 +20,6 @@ class CollapsarRequest():
     def model(self):
         """Get model from request"""
         return self.resource().model.find(self.request.params.get("resource_id"))
+
+    def validate(self, rules):
+        """Validate request"""
