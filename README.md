@@ -75,21 +75,42 @@ source venv/bin/activate
 python -m pip install -r requirements.txt
 ```
 
+Create a simple .env
+```bash
+cp .env-example .env
+```
+
 Run migrations
 ```bash
 python craft migrate
 ```
-Visit [http://localhost:8000/collapsar](http://localhost:8000/collapsar) and you should see the dashboard and the User resource.
 
-## Usage
-
-If you want to make changes on the front assets, you could do it by modifying the React App on _/src/collapsar/assets/js_
-
-To see the changes reflected, you need to compile it with vite.
+Build assets
 
 ```bash
 npm install
-npx vite build --watch
+npx vite build 
+```
+
+Run the app
+```bash
+python craft serve
+```
+
+Visit [http://localhost:8000/collapsar](http://localhost:8000/collapsar) and you should see the dashboard and the User resource.
+
+# Usage
+
+This package has the UserResource class as example, you could edit the configuration editing the file `/tests/integrations/app/collapsar/resources/UserResource.py`
+
+## Making changes
+
+If you want to make changes on the front assets, you could do it by modifying the React App on _/src/collapsar/assets/js_
+
+Then, compile the assets using this script
+
+```bash
+npx vite build 
 ```
 
 ## Contributing

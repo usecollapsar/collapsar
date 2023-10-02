@@ -1,5 +1,4 @@
 masonite>=4,<5
 masonite-orm>=2,<3
-attrs>=23
 requests>=2.31
 python-slugify>=8
