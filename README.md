@@ -1,7 +1,7 @@
 # Collapsar
 
 <p align="center">
-    <img src="https://banners.beyondco.de/Collapsar.png?theme=light&packageManager=pip+install&packageName=masonite-collapsar&pattern=topography&style=style_1&description=Masonite Package for Admin Dashboard&md=1&showWatermark=1&fontSize=100px&images=https%3A%2F%2Fgblobscdn.gitbook.com%2Fspaces%2F-L9uc-9XAlqhXkBwrLMA%2Favatar.png">
+    <img src="https://banners.beyondco.de/Collapsar.png?theme=dark&packageManager=pip+install&packageName=masonite-collapsar&pattern=cage&style=style_1&description=Masonite+Dashboard+Package&md=0&showWatermark=1&fontSize=100px&images=emoji-happy">
 </p>
 
 <p align="center">
