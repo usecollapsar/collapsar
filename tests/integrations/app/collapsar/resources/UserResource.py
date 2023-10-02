@@ -23,6 +23,12 @@ class UserResource(Resource):
         return [
             IdField("Id", "id").readonly().sortable(),
 
+            TextField("Name", "name").rules("required", "max:40").sortable(),
+
+            TextField("Email", "email").rules("required", "email", "max:30", "unique:users").sortable(),
+
+            TextField("Name + ID (computed)", lambda user: f"(#{user.id}) {user.name} "),
+
             SelectField("Role", "role").options(["admin", "user"]).rules("required").sortable(),
 
             SelectField("Department", "department")
@@ -36,15 +42,9 @@ class UserResource(Resource):
             .rules("required")
             .sortable(),
 
-            TextField("Name", "name").rules("required", "max:40").sortable(),
-
-            TextField("Email", "email").rules("required", "email", "max:30", "unique:users").sortable(),
-
             PasswordField("Password", "password").update_rules("nullable", "min:8"),
 
-            TextField("Created At", lambda user: user.created_at.strftime("%d/%m/%Y %H:%M:%S")),
-
-            TextField("Computed Field", lambda user: user.name.upper())
+            TextField("Created At (computed)", lambda user: user.created_at.strftime("%d/%m/%Y %H:%M:%S")),
         ]
 
     @classmethod

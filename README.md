@@ -19,12 +19,13 @@
 
 ## Introduction
 
-Masonite Package for Admin Dashboard
+Collapsar is a package that will let you save time creating a dashboard for your app. You won't need to worry anymore about creating CRUD's.
 
 ## Features
 
-- _Add your package main features here_
-- _and here_
+- _Add multiple resources to your dashboard using Masonite Models_
+- _Use fields: TextField, IdField, PasswordField, SelectField and more_
+- _Add basic validations: max, min, required, email, etc.
 
 ## Official Masonite Documentation
 
@@ -58,15 +59,38 @@ PROVIDERS = [
 ]
 ```
 
-Then you can publish the package resources (if needed) by doing:
+# Develop instructions
+
+To test the project locally, you just need to clone the repository and configure a basic .env just like any masonite project.
 
 ```bash
-python craft package:publish collapsar
+git clone https://github.com/eaguad1337/masonite-collapsar
 ```
+
+Install dependencies
+
+```bash
+python -m venv venv
+source venv/bin/activate
+python -m pip install -r requirements.txt
+```
+
+Run migrations
+```bash
+python craft migrate
+```
+Visit [http://localhost:8000/collapsar](http://localhost:8000/collapsar) and you should see the dashboard and the User resource.
 
 ## Usage
 
-_Explain how to use your package_
+If you want to make changes on the front assets, you could do it by modifying the React App on _/src/collapsar/assets/js_
+
+To see the changes reflected, you need to compile it with vite.
+
+```bash
+npm install
+npx vite build --watch
+```
 
 ## Contributing
 
