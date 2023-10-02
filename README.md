@@ -25,7 +25,7 @@ Collapsar is a package that will let you save time creating a dashboard for your
 
 - _Add multiple resources to your dashboard using Masonite Models_
 - _Use fields: TextField, IdField, PasswordField, SelectField and more_
-- _Add basic validations: max, min, required, email, etc.
+- _Add basic validations: max, min, required, email, etc._
 
 ## Official Masonite Documentation
 
@@ -59,7 +59,7 @@ PROVIDERS = [
 ]
 ```
 
-# Develop instructions
+## Develop instructions
 
 To test the project locally, you just need to clone the repository and configure a basic .env just like any masonite project.
 
@@ -99,7 +99,7 @@ python craft serve
 
 Visit [http://localhost:8000/collapsar](http://localhost:8000/collapsar) and you should see the dashboard and the User resource.
 
-# Usage
+## Usage
 
 This package has the UserResource class as example, you could edit the configuration editing the file `/tests/integrations/app/collapsar/resources/UserResource.py`
 
