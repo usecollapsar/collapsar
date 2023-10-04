@@ -56,23 +56,47 @@ export function ResourceEdit() {
       rules = field.update_rules.length ? field.update_rules : field.rules;
     }
 
-    let schema: z.ZodTypeAny =
-      typeof field.value == "number" ? z.number() : z.string();
+    let schema: z.ZodTypeAny;
+
+    switch (field.type) {
+      case "boolean":
+        schema = z.boolean();
+        break;
+      case "integer":
+        schema = z.number();
+        break;
+      default:
+        schema = z.union([z.string(), z.number()]);
+        break;
+    }
+
     let isNullable = false;
 
     rules.forEach((rule: any) => {
       switch (true) {
         case rule === "required":
-          schema = schema.nonempty();
+          if (schema instanceof z.ZodString) {
+            schema = schema.nonempty();
+          }
           break;
         case rule.startsWith("max:"):
-          schema = schema.max(parseInt(rule.split(":")[1]));
+          if (schema instanceof z.ZodNumber) {
+            schema = schema.max(parseInt(rule.split(":")[1]));
+          } else if (schema instanceof z.ZodString) {
+            schema = schema.max(rule.split(":")[1].length);
+          }
           break;
         case rule.startsWith("min:"):
-          schema = schema.min(parseInt(rule.split(":")[1]));
+          if (schema instanceof z.ZodNumber) {
+            schema = schema.min(parseInt(rule.split(":")[1]));
+          } else if (schema instanceof z.ZodString) {
+            schema = schema.min(rule.split(":")[1].length);
+          }
           break;
         case rule === "email":
-          schema = schema.email();
+          if (schema instanceof z.ZodString) {
+            schema = schema.email();
+          }
           break;
         case rule === "nullable":
           isNullable = true;

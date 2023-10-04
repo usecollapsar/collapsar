@@ -44,4 +44,5 @@ class TextField(Field):
         :return: dict
         """
         serialized = super().json_serialize()
+        serialized["value"] = str(self.value)
         return serialized

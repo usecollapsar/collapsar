@@ -176,6 +176,7 @@ class Field:
             "required": self.resolve_required(),
             "sortable": self._sortable,
             "component": self.component,
+            "type": self.type,
             # 'sortableUriKey': self.sortableUriKey(),
             # 'textAlign': self.textAlign,
             # 'validationKey': self.validationKey(),

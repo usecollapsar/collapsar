@@ -3,6 +3,7 @@ from src.collapsar import Resource
 from src.collapsar.TextField import TextField
 from src.collapsar.IdField import IdField
 from src.collapsar.SelectField import SelectField
+from src.collapsar.BooleanField import BooleanField
 from src.collapsar.PasswordField import PasswordField
 
 
@@ -22,6 +23,8 @@ class UserResource(Resource):
 
         return [
             IdField("Id", "id").readonly().sortable(),
+
+            BooleanField("Active", "is_active"),
 
             TextField("Name", "name").rules("required", "max:40").sortable(),
 
