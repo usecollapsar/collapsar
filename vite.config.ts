@@ -9,8 +9,9 @@ export default defineConfig(({ mode }) => {
       minify: false,
       outDir: "./src/collapsar/dist/assets",
       lib: {
+        name: "collapsar",
         entry: "./src/collapsar/assets/js/index.tsx",
-        formats: ["cjs"],
+        formats: ["umd"],
         fileName: "app-bundle",
       },
     },

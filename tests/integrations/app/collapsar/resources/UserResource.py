@@ -5,6 +5,7 @@ from src.collapsar.IdField import IdField
 from src.collapsar.SelectField import SelectField
 from src.collapsar.BooleanField import BooleanField
 from src.collapsar.PasswordField import PasswordField
+from src.collapsar.RichTextField import RichTextField
 
 
 class UserResource(Resource):
@@ -31,6 +32,8 @@ class UserResource(Resource):
             TextField("Email", "email").rules("required", "email", "max:30", "unique:users").sortable(),
 
             TextField("Name + ID (computed)", lambda user: f"(#{user.id}) {user.name} "),
+
+            RichTextField("Content", "content"),
 
             SelectField("Role", "role").options(["admin", "user"]).rules("required").sortable(),
 
