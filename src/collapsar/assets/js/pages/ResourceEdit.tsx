@@ -65,6 +65,9 @@ export function ResourceEdit() {
       case "integer":
         schema = z.number();
         break;
+      case "date":
+        schema = z.date();
+        break;
       default:
         schema = z.union([z.string(), z.number()]);
         break;

@@ -17,7 +17,8 @@ class ResourceUpdateController(Controller):
             return response.json({"success": False})
 
         resource_model = resource.get_model().find(request.param("resource_id"))
+        
+        [resource_model, callbacks] = resource.fill(request, resource_model)
+        resource_model.save()
 
-        resource_model.update(request.all())
-
-        return response.json({"resource": json.loads(resource_model.to_json()), "success": True})
+        return response.json({"resource": resource_model.serialize(), "success": True})

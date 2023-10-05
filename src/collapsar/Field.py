@@ -152,6 +152,10 @@ class Field:
         )
 
         return self
+    
+    def format_value(self, value):
+        """Format the value"""
+        return value
 
     def random_id(self):
         """Generate a random id for the field"""
@@ -185,5 +189,5 @@ class Field:
             "create_rules": self._create_rules,
             "update_rules": self._update_rules,
             "default_value": self._default_value,
-            "value": self.value,
+            "value": self.format_value(self.value),
         }

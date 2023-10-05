@@ -5,6 +5,7 @@ from src.collapsar.IdField import IdField
 from src.collapsar.SelectField import SelectField
 from src.collapsar.BooleanField import BooleanField
 from src.collapsar.PasswordField import PasswordField
+from src.collapsar.CalendarField import CalendarField
 from src.collapsar.RichTextField import RichTextField
 
 
@@ -24,19 +25,14 @@ class UserResource(Resource):
 
         return [
             IdField("Id", "id").readonly().sortable(),
-
             BooleanField("Active", "is_active"),
-
             TextField("Name", "name").rules("required", "max:40").sortable(),
-
-            TextField("Email", "email").rules("required", "email", "max:30", "unique:users").sortable(),
-
+            TextField("Email", "email")
+            .rules("required", "email", "max:30", "unique:users")
+            .sortable(),
             TextField("Name + ID (computed)", lambda user: f"(#{user.id}) {user.name} "),
-
             RichTextField("Content", "content"),
-
             SelectField("Role", "role").options(["admin", "user"]).rules("required").sortable(),
-
             SelectField("Department", "department")
             .options(
                 [
@@ -47,10 +43,11 @@ class UserResource(Resource):
             )
             .rules("required")
             .sortable(),
-
             PasswordField("Password", "password").update_rules("nullable", "min:8"),
-
-            TextField("Created At (computed)", lambda user: user.created_at.strftime("%d/%m/%Y %H:%M:%S")),
+            CalendarField("Birth Date", "birth_date"),
+            TextField(
+                "Created At (computed)", lambda user: user.created_at.strftime("%d/%m/%Y %H:%M:%S")
+            ),
         ]
 
     @classmethod

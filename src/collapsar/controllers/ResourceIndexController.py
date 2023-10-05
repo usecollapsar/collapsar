@@ -1,4 +1,5 @@
 """A ResourceIndexController Module."""
+import json
 from masonite.controllers import Controller
 from masonite.response import Response
 from masonite.request import Request
@@ -14,6 +15,7 @@ class ResourceIndexController(Controller):
         if resource is None:
             return response.json({"success": False})
 
+        # todo: fix this hardcoded per_page
         paginator = resource.paginate(per_page=10)
 
         return response.json(
