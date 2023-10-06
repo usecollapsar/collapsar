@@ -25,13 +25,13 @@ class UserResource(Resource):
 
         return [
             IdField("Id", "id").readonly().sortable(),
-            BooleanField("Active", "is_active"),
-            TextField("Name", "name").rules("required", "max:40").sortable(),
+            BooleanField("Active", "is_active").hide_from_index(),
+            TextField("Name", "name").rules("required", "max:40").hide_from_index(),
             TextField("Email", "email")
             .rules("required", "email", "max:30", "unique:users")
             .sortable(),
             TextField("Name + ID (computed)", lambda user: f"(#{user.id}) {user.name} "),
-            RichTextField("Content", "content"),
+            RichTextField("Content", "content").hide_from_index(),
             SelectField("Role", "role").options(["admin", "user"]).rules("required").sortable(),
             SelectField("Department", "department")
             .options(
@@ -43,14 +43,11 @@ class UserResource(Resource):
             )
             .rules("required")
             .sortable(),
-            PasswordField("Password", "password").update_rules("nullable", "min:8"),
-            CalendarField("Birth Date", "birth_date"),
+            PasswordField("Password", "password")
+            .update_rules("nullable", "min:8")
+            .hide_from_index(),
+            CalendarField("Birth Date", "birth_date").hide_from_index(),
             TextField(
                 "Created At (computed)", lambda user: user.created_at.strftime("%d/%m/%Y %H:%M:%S")
             ),
         ]
-
-    @classmethod
-    def index_fields(cls):
-        """Return the fields to be displayed in the index page."""
-        return ("id", "name", "email", "created_at", "updated_at")

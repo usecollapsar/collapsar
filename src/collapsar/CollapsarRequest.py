@@ -1,12 +1,13 @@
 from typing import TYPE_CHECKING
 from masonite.request import Request
 from masonite.foundation import Application
+from .traits.ForwardsCalls import ForwardsCalls
 
 if TYPE_CHECKING:
     from .Resource import Resource
 
 
-class CollapsarRequest():
+class CollapsarRequest(ForwardsCalls):
     """CollapsarRequest class"""
 
     def __init__(self, request: Request):
@@ -23,3 +24,9 @@ class CollapsarRequest():
 
     def validate(self, rules):
         """Validate request"""
+
+    def __getattr__(self, name):
+        if hasattr(self.request, name):
+            return getattr(self.request, name)
+
+        return self.forwards_call_to(self.request, name)

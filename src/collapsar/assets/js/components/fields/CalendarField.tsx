@@ -4,20 +4,21 @@ import { format } from "date-fns";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 import { Calendar } from "@/components/ui/calendar";
-import {
-  FormControl,
-} from "@/components/ui/form";
+import { FormControl } from "@/components/ui/form";
 import {
   Popover,
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover";
+import { useEffect } from "react";
 
 export function CalendarField(props: any) {
   const value = props.value ? new Date(props.value) : new Date();
 
   // force the value to be a Date object
-  props.onChange(value)
+  useEffect(() => {
+    props.onChange(value);
+  }, []);
 
   return (
     <Popover>
@@ -30,11 +31,7 @@ export function CalendarField(props: any) {
               !value && "text-muted-foreground"
             )}
           >
-            {value ? (
-              format(value, "PPP")
-            ) : (
-              <span>Pick a date</span>
-            )}
+            {value ? format(value, "PPP") : <span>Pick a date</span>}
             <CalendarIcon className="ml-auto h-4 w-4 opacity-50" />
           </Button>
         </FormControl>

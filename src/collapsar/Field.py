@@ -102,6 +102,11 @@ class Field:
         """Set the show_on_creation callback for the field"""
         self._show_on_creation_callback = callback
         return self
+    
+    def hide_from_index(self, callback: bool | Callable = True):
+        """Set the show_on_index callback for the field"""
+        self._show_on_index_callback = lambda: not callback() if callable(callback) else not callback
+        return self
 
     def resolve_required(self):
         """Resolve the required value"""
@@ -120,6 +125,17 @@ class Field:
             self._readonly_callback is True
             or callable(self._readonly_callback)
             and self._readonly_callback()
+        ):
+            return True
+
+        return False
+
+    def show_on_index(self):
+        """Resolve the show_on_index value"""
+        if (
+            self._show_on_index_callback is True
+            or callable(self._show_on_index_callback)
+            and self._show_on_index_callback()
         ):
             return True
 
@@ -152,7 +168,7 @@ class Field:
         )
 
         return self
-    
+
     def format_value(self, value):
         """Format the value"""
         return value

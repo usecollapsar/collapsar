@@ -1,26 +1,22 @@
 """A ResourceIndexController Module."""
-import json
+from typing import TYPE_CHECKING
 from masonite.controllers import Controller
 from masonite.response import Response
-from masonite.request import Request
+from masonite.utils.collections import Collection
+from ..CollapsarRequest import CollapsarRequest
+
+if TYPE_CHECKING:
+    from ..Resource import Resource
 
 
 class ResourceIndexController(Controller):
     """ResourceIndexController Controller Class."""
 
-    def handle(self, request: Request, response: Response, resource):
+    def handle(self, collapsar_request: CollapsarRequest, response: Response, resource):
         """Handles main route."""
-        resource = request.app.make("Collapsar").get_resource(resource)
+        resource: "Resource" = collapsar_request.resource()
 
         if resource is None:
             return response.json({"success": False})
 
-        # todo: fix this hardcoded per_page
-        paginator = resource.paginate(per_page=10)
-
-        return response.json(
-            {
-                "paginator": paginator.serialize(),
-                "fields": resource.index_fields(),
-            }
-        )
+        return response.json(resource.paginate(collapsar_request))

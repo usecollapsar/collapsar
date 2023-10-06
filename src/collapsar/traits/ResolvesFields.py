@@ -2,6 +2,7 @@
 from abc import abstractmethod
 from typing import List, TYPE_CHECKING
 from masoniteorm.models import Model
+from masonite.utils.collections import Collection
 
 if TYPE_CHECKING:
     from src.collapsar.Field import Field
@@ -40,6 +41,19 @@ class ResolvesFields():
         fields = [field for field in cls.fields() if field.show_on_creation()]
 
         return map(lambda field: field.resolve_for_display(request.model()), fields)
+
+    @classmethod
+    def index_fields(cls):
+        """Return the fields to be displayed in the index page."""
+        return [field for field in cls.fields() if field.show_on_index()]
+
+    @classmethod
+    def fields_to_object(cls, fields: List["Field"]):
+        """Reduce a list of fields to their values."""
+        obj = {}
+        for field in fields:
+            obj.update({field["attribute"]: field["value"]})
+        return obj
 
     @classmethod
     def _filter_only_fillable(cls, fields) -> List["Field"]:

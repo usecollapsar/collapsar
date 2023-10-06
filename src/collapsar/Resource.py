@@ -1,10 +1,11 @@
 """Resource Class."""
 from slugify import slugify
 from masoniteorm.models import Model
+from masonite.utils.collections import Collection
 from .traits.ResolvesFields import ResolvesFields
 from .traits.ForwardsCalls import ForwardsCalls
 from .traits.FillsFields import FillsFields
-
+from .CollapsarRequest import CollapsarRequest
 
 class Resource(ResolvesFields, ForwardsCalls, FillsFields):
     """Resource Class."""
@@ -26,15 +27,31 @@ class Resource(ResolvesFields, ForwardsCalls, FillsFields):
         """Return the fields of the resource."""
 
     @classmethod
-    def paginate(cls, per_page=10):
+    def paginate(cls, collapsar_request: "CollapsarRequest"):
         """Paginate the resource."""
-        return cls.model.paginate(per_page)
+        paginator = cls.model.paginate(collapsar_request.param("per_page", 10))
 
-    @classmethod
-    def index_fields(cls):
-        """Return the fields to be displayed in the index page."""
-        return ("id",)
+        def _resolve_fields(model, resource):
+            return (
+                Collection(resource.index_fields())
+                .map(lambda field: field.resolve_for_display(model))
+                .map(lambda field: field.json_serialize())
+                .all()
+            )
+        
+        data = (
+            Collection(paginator.result)
+            .map(lambda model: _resolve_fields(model, cls))
+            .map(cls.fields_to_object)
+            .all()
+        )
 
+        paginator = paginator.serialize()
+        paginator["data"] = data
+        paginator["fields"] = list(data[0].keys()) if len(data) > 0 else []
+        
+        return paginator
+    
     @classmethod
     def get_model(cls) -> Model:
         """Return the model of the resource."""
@@ -56,7 +73,6 @@ class Resource(ResolvesFields, ForwardsCalls, FillsFields):
         """Prepare the element for JSON serialization."""
         return {
             "title": cls.title,
-            "index_fields": cls.index_fields(),
             "group": cls.group,
             "urikey": cls.get_urikey(),
         }

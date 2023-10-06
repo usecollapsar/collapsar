@@ -54,7 +54,7 @@ export function ResourceIndex() {
 
   React.useEffect(() => {
     axios.get(`/collapsar/api/${resource}`).then((response) => {
-      setData(response.data.paginator.data);
+      setData(response.data.data);
       setFields(response.data.fields);
     });
   }, []);
