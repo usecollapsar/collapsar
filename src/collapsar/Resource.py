@@ -7,6 +7,7 @@ from .traits.ForwardsCalls import ForwardsCalls
 from .traits.FillsFields import FillsFields
 from .CollapsarRequest import CollapsarRequest
 
+
 class Resource(ResolvesFields, ForwardsCalls, FillsFields):
     """Resource Class."""
 
@@ -38,7 +39,7 @@ class Resource(ResolvesFields, ForwardsCalls, FillsFields):
                 .map(lambda field: field.json_serialize())
                 .all()
             )
-        
+
         data = (
             Collection(paginator.result)
             .map(lambda model: _resolve_fields(model, cls))
@@ -49,9 +50,9 @@ class Resource(ResolvesFields, ForwardsCalls, FillsFields):
         paginator = paginator.serialize()
         paginator["data"] = data
         paginator["fields"] = list(data[0].keys()) if len(data) > 0 else []
-        
+
         return paginator
-    
+
     @classmethod
     def get_model(cls) -> Model:
         """Return the model of the resource."""

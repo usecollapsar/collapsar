@@ -17,7 +17,7 @@ class ResourceUpdateController(Controller):
             return response.json({"success": False})
 
         resource_model = resource.get_model().find(request.param("resource_id"))
-        
+
         [resource_model, callbacks] = resource.fill(request, resource_model)
         resource_model.save()
 

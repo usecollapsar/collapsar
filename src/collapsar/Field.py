@@ -102,7 +102,7 @@ class Field:
         """Set the show_on_creation callback for the field"""
         self._show_on_creation_callback = callback
         return self
-    
+
     def hide_from_index(self, callback: Union[bool, Callable] = True):
         """Set the show_on_index callback for the field"""
         self._show_on_index_callback = lambda: not callback() if callable(callback) else not callback
