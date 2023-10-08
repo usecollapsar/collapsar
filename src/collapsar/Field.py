@@ -19,13 +19,13 @@ class Field:
     type: str = "string"
 
     _readonly_callback: Callable = None
-    _required_callback: bool | Callable = False
+    _required_callback: Union[bool, Callable] = False
     _computed_callback: Callable = None
     _display_callback: Callable = None
     _resolve_callback: Callable = None
-    _show_on_creation_callback: bool | Callable = True
-    _show_on_update_callback: bool | Callable = True
-    _show_on_index_callback: bool | Callable = True
+    _show_on_creation_callback: Union[bool, Callable] = True
+    _show_on_update_callback: Union[bool, Callable] = True
+    _show_on_index_callback: Union[bool, Callable] = True
 
     _rules: List[str] = []
     _create_rules: List[str] = []
@@ -87,7 +87,7 @@ class Field:
 
         return self
 
-    def readonly(self, value: bool | Callable = True):
+    def readonly(self, value: Union[bool, Callable] = True):
         """Set the readonly value or callback the field"""
         self._readonly_callback = value
 
@@ -98,12 +98,12 @@ class Field:
         self._sortable = sortable
         return self
 
-    def show_on_creation_callback(self, callback: bool | Callable):
+    def show_on_creation_callback(self, callback: Union[bool, Callable]):
         """Set the show_on_creation callback for the field"""
         self._show_on_creation_callback = callback
         return self
     
-    def hide_from_index(self, callback: bool | Callable = True):
+    def hide_from_index(self, callback: Union[bool, Callable] = True):
         """Set the show_on_index callback for the field"""
         self._show_on_index_callback = lambda: not callback() if callable(callback) else not callback
         return self
