@@ -31,7 +31,7 @@ class Resource(ResolvesFields, ForwardsCalls, FillsFields):
         """Paginate the resource."""
         paginator = cls.model.paginate(collapsar_request.param("per_page", 10))
 
-        def _resolve_fields(model, resource):
+        def _resolve_fields(model, resource: "Resource"):
             return (
                 Collection(resource.index_fields())
                 .map(lambda field: field.resolve_for_display(model))

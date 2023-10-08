@@ -57,7 +57,7 @@ export function ResourceIndex() {
       setData(response.data.data);
       setFields(response.data.fields);
     });
-  }, []);
+  }, [resource]);
 
   const constructColumns = (fields: any[]): ColumnDef[any] => {
     const columns = fields.map((field, k) => {
