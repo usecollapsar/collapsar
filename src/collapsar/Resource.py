@@ -13,7 +13,7 @@ class Resource(ResolvesFields, ForwardsCalls, FillsFields):
 
     title = ""
     model: "Model"
-    group = "default"
+    group = "Resources"
     resource: "Model"
 
     def __init__(self, resource=None):

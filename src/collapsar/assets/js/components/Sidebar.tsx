@@ -37,10 +37,6 @@ export function Sidebar({ className }) {
               </svg>
               <Link to="/">Dashboard</Link>
             </Button>
-            <Button variant={checkCurrentRoute("/profile")} className="w-full justify-start">
-              <FaUser className="mr-2 h-4 w-4" />
-              Profile
-            </Button>
           </div>
         </div>
         {Object.keys(menuItems)?.map((key) => (
