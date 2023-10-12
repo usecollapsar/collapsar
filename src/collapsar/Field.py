@@ -200,6 +200,7 @@ class Field:
             "help_text": self._help_text,
             "index_name": self.name,
             "name": self.name,
+            "field_name": self.__class__.__name__,
             # "nullable": self._nullable,
             # 'panel': self.panel,
             # 'prefixComponent': self.

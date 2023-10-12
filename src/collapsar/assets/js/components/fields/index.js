@@ -4,5 +4,6 @@ export { SelectField } from './SelectField';
 export { BooleanField } from './BooleanField';
 export { RichTextField } from './RichTextField';
 export { CalendarField } from './CalendarField';
+export { BelongsToField } from './BelongsToField';
 
 export { Field } from './Field';

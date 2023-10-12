@@ -61,7 +61,7 @@ export function ResourceIndex() {
   const constructColumns = (fields: any[]): ColumnDef[any] => {
     const columns = fields.map((field, k) => {
       return {
-        accessorKey: field,
+        accessorKey: field.attribute,
         header: ({ column }) => {
           return (
             <Button
@@ -70,14 +70,29 @@ export function ResourceIndex() {
                 column.toggleSorting(column.getIsSorted() === "asc")
               }
             >
-              {field}
+              {field.name}
               <CaretSortIcon className="ml-2 h-4 w-4" />
             </Button>
           );
         },
         cell: ({ row }) => {
-          // debugger;
-          return <div className="lowercase">{row.getValue(field)}</div>;
+          const originalField = row.original[k]
+
+          console.log(originalField, field.attribute)
+
+          if (originalField.component == "BelongsToField") {
+            return (
+              <div className="lowercase">
+                <Link
+                  to={`/resource/${originalField.relation_urikey}/${originalField.value}`}
+                >
+                  {originalField.relation_label}
+                </Link>
+              </div>
+            );
+          }
+
+          return <div className="lowercase">{originalField.value}</div>;
         },
       };
     });

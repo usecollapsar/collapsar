@@ -22,7 +22,7 @@ class BelongsTo(Field, RelationField):
     ):
         super().__init__(name, resource)
         # Field's component
-        self.component = "SelectField"
+        self.component = "BelongsToField"
         # Field's suggestions callback
         self.resource = self.find_resource(resource)
         self.attribute = attribute
@@ -74,5 +74,6 @@ class BelongsTo(Field, RelationField):
         serialized.update({"resource": self.resource.__name__})
         serialized.update({"options": self.resolve_options()})
         serialized.update({"relation_label": self.relation_label})
+        serialized.update({"relation_urikey": self.resource.get_urikey()})
 
         return serialized

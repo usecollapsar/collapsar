@@ -42,15 +42,16 @@ class Resource(ResolvesFields, ForwardsCalls, FillsFields):
             )
 
         data = (
-            Collection(paginator.result)
-            .map(lambda model: _resolve_fields(model, cls))
-            .map(cls.fields_to_object)
+            Collection(paginator.result).map(lambda model: _resolve_fields(model, cls))
+            # .map(cls.fields_to_object)
             .all()
         )
 
         paginator = paginator.serialize()
         paginator["data"] = data
-        paginator["fields"] = list(data[0].keys()) if len(data) > 0 else []
+        paginator["fields"] = [
+            field for field in data[0] if len(data) > 0
+        ]
 
         return paginator
 

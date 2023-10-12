@@ -30,6 +30,8 @@ export function ResourceIndexRowActions<TData>({
 }: DataTableRowActionsProps<TData>) {
   const params = useParams();
 
+  const originalField = row.original.find((f) => f.field_name == "IdField");
+
   const labels = [
     { label: "One", value: 1 },
     { label: "Two", value: 2 },
@@ -37,10 +39,10 @@ export function ResourceIndexRowActions<TData>({
 
   const deleteItem = (row) => {
     axios
-      .delete(`/collapsar/api/${params.resource}/${row.getValue("id")}`)
+      .delete(`/collapsar/api/${params.resource}/${originalField.value}`)
       .then((response) => {
         setData((prevData) => {
-          return prevData.filter((item) => item.id != row.getValue("id"));
+          return prevData.filter((item) => item.id != originalField.value);
         });
       });
   };
@@ -48,13 +50,13 @@ export function ResourceIndexRowActions<TData>({
   return (
     <div className="flex">
       <Button variant="ghost" className="flex h-8 w-8 p-0">
-        <Link to={`/resource/${params.resource}/${row.getValue("id")}`}>
+        <Link to={`/resource/${params.resource}/${originalField.value}`}>
           <AiFillEye className="h-4 w-4" />
         </Link>
         <span className="sr-only">View</span>
       </Button>
       <Button variant="ghost" className="flex h-8 w-8 p-0">
-        <Link to={`/resource/${params.resource}/${row.getValue("id")}/edit`}>
+        <Link to={`/resource/${params.resource}/${originalField.value}/edit`}>
           <BiEdit className="h-4 w-4" />
         </Link>
         <span className="sr-only">Edit</span>
