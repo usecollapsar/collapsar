@@ -1,4 +1,4 @@
-"""Kernel class definition"""
+"""Collapsar class definition"""
 import sys
 import os
 import importlib
@@ -8,8 +8,8 @@ from ..config.collapsar import RESOURCES_PATH
 from ..Resource import Resource
 
 
-class Kernel:
-    """Kernel class definition."""
+class Collapsar:
+    """Collapsar class definition."""
     application = None
     resources = []
 

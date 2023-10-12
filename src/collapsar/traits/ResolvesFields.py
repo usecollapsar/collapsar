@@ -2,14 +2,15 @@
 from abc import abstractmethod
 from typing import List, TYPE_CHECKING
 from masoniteorm.models import Model
-from masonite.utils.collections import Collection
+from .RelationField import RelationField
+from ..BelongsTo import BelongsTo
 
 if TYPE_CHECKING:
     from src.collapsar.Field import Field
     from src.collapsar.CollapsarRequest import CollapsarRequest
 
 
-class ResolvesFields():
+class ResolvesFields:
     """A trait that provides a method to resolve a list of fields to their values."""
 
     @classmethod
@@ -25,9 +26,7 @@ class ResolvesFields():
     def creation_fields(cls):
         """Resolve a list of fields to their values."""
         return [
-            field
-            for field in cls._filter_only_fillable(cls.fields())
-            if field.show_on_creation()
+            field for field in cls._filter_only_fillable(cls.fields()) if field.show_on_creation()
         ]
 
     @classmethod
@@ -52,12 +51,21 @@ class ResolvesFields():
         """Reduce a list of fields to their values."""
         obj = {}
         for field in fields:
-            obj.update({field["attribute"]: field["value"]})
+            obj.update(
+                {
+                    field["attribute"]: field["relation_label"]
+                    if "relation_label" in field.keys()
+                    else field["value"]
+                }
+            )
         return obj
 
     @classmethod
     def _filter_only_fillable(cls, fields) -> List["Field"]:
         """Remove hidden fields from the resource."""
         model = cls.get_model()
-
-        return [field for field in fields if field.attribute in model.__fillable__]
+        return [
+            field
+            for field in fields
+            if isinstance(field, RelationField) or field.attribute in model.__fillable__
+        ]

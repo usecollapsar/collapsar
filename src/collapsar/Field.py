@@ -1,9 +1,11 @@
 """Base module for all fields"""
 from typing import Callable, Any, List, Union, TYPE_CHECKING
 from masoniteorm.models import Model
+from masonite.container import Container
 
 if TYPE_CHECKING:
     from .Resource import Resource
+    from .foundation.Collapsar import Collapsar
 
 
 class Field:
@@ -17,6 +19,7 @@ class Field:
     default_value: Any = None
     value: str = ""
     type: str = "string"
+    collapsar: "Collapsar"
 
     _readonly_callback: Callable = None
     _required_callback: Union[bool, Callable] = False
@@ -45,6 +48,7 @@ class Field:
     ):
         self.name = name
         self.resolve_callback = resolve_callback
+        self.collapsar = Container().make("Collapsar")
 
         self._default_value = default_value
 
@@ -105,7 +109,9 @@ class Field:
 
     def hide_from_index(self, callback: Union[bool, Callable] = True):
         """Set the show_on_index callback for the field"""
-        self._show_on_index_callback = lambda: not callback() if callable(callback) else not callback
+        self._show_on_index_callback = (
+            lambda: not callback() if callable(callback) else not callback
+        )
         return self
 
     def resolve_required(self):
@@ -152,6 +158,13 @@ class Field:
 
         return False
 
+    def resolve_value(self, model: Model):
+        """Resolve the field's value"""
+        if self.attribute in model.__hidden__:
+            return ""
+
+        return getattr(model, self.attribute)
+
     def resolve_for_display(self, model):
         """Resolve the field for display"""
 
@@ -163,9 +176,7 @@ class Field:
             self.value = self._display_callback(model)
             return self
 
-        self.value = (
-            getattr(model, self.attribute) if self.attribute not in model.__hidden__ else ""
-        )
+        self.value = self.resolve_value(model)
 
         return self
 

@@ -5,8 +5,7 @@ from masonite.storage import StorageCapsule
 
 from ..config.filesystem import STATICFILES
 from ..helpers.DashboardHelper import DashboardHelper
-from ..foundation.Kernel import Kernel
-from ..CollapsarRequest import CollapsarRequest
+from ..foundation.Collapsar import Collapsar
 
 
 class CollapsarProvider(PackageProvider):
@@ -36,7 +35,7 @@ class CollapsarProvider(PackageProvider):
 
         super().register()
 
-        self.application.bind("Collapsar", Kernel(self.application))
+        self.application.bind("Collapsar", Collapsar(self.application))
         self.application.simple(DashboardHelper(self.application))
 
     def boot(self):

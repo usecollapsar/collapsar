@@ -12,6 +12,7 @@ from src.collapsar.RichTextField import RichTextField
 class UserResource(Resource):
     """User Resource."""
 
+    label = "name"
     title = "User"
     model = User
 

@@ -1,5 +1,6 @@
 """Resource Class."""
 from slugify import slugify
+from typing import Callable, Union
 from masoniteorm.models import Model
 from masonite.utils.collections import Collection
 from .traits.ResolvesFields import ResolvesFields
@@ -11,7 +12,7 @@ from .CollapsarRequest import CollapsarRequest
 class Resource(ResolvesFields, ForwardsCalls, FillsFields):
     """Resource Class."""
 
-    title = ""
+    label: Union[str, Callable] = "id"
     model: "Model"
     group = "Resources"
     resource: "Model"
@@ -52,6 +53,10 @@ class Resource(ResolvesFields, ForwardsCalls, FillsFields):
         paginator["fields"] = list(data[0].keys()) if len(data) > 0 else []
 
         return paginator
+
+    def resolve_label(self):
+        """Return the name of the resource."""
+        return self.label() if callable(self.label) else self.resource[self.label]
 
     @classmethod
     def get_model(cls) -> Model:

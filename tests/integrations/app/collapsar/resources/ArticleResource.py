@@ -2,17 +2,14 @@ from tests.integrations.app.models.Article import Article
 from src.collapsar import Resource
 from src.collapsar.TextField import TextField
 from src.collapsar.IdField import IdField
-from src.collapsar.SelectField import SelectField
-from src.collapsar.BooleanField import BooleanField
-from src.collapsar.PasswordField import PasswordField
-from src.collapsar.CalendarField import CalendarField
 from src.collapsar.RichTextField import RichTextField
+from src.collapsar.BelongsTo import BelongsTo
 
 
 class ArticleResource(Resource):
     """Article Resource."""
 
-    title = "Article"
+    title = "id"
     model = Article
 
     def to_string(self):
@@ -27,4 +24,5 @@ class ArticleResource(Resource):
             IdField("Id", "id").readonly(),
             TextField("Title", "title").rules("required"),
             RichTextField("Content", "content").rules("required").hide_from_index(),
+            BelongsTo("User", "user", "UserResource").rules("required"),
         ]

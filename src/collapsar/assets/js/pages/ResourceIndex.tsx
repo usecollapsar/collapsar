@@ -1,9 +1,6 @@
 import axios from "axios";
 import * as React from "react";
-import {
-  CaretSortIcon,
-  ChevronDownIcon,
-} from "@radix-ui/react-icons";
+import { CaretSortIcon, ChevronDownIcon } from "@radix-ui/react-icons";
 
 import {
   ColumnDef,
@@ -53,10 +50,12 @@ export function ResourceIndex() {
   const [rowSelection, setRowSelection] = React.useState({});
 
   React.useEffect(() => {
-    axios.get(`/collapsar/api/${resource}`).then((response) => {
-      setData(response.data.data);
-      setFields(response.data.fields);
-    });
+    axios
+      .get(`/collapsar/api/${resource}?displayForIndex=true`)
+      .then((response) => {
+        setData(response.data.data);
+        setFields(response.data.fields);
+      });
   }, [resource]);
 
   const constructColumns = (fields: any[]): ColumnDef[any] => {
@@ -67,24 +66,31 @@ export function ResourceIndex() {
           return (
             <Button
               variant="ghost"
-              onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+              onClick={() =>
+                column.toggleSorting(column.getIsSorted() === "asc")
+              }
             >
-              { field }
+              {field}
               <CaretSortIcon className="ml-2 h-4 w-4" />
             </Button>
           );
         },
-        cell: ({ row }) => <div className="lowercase">{row.getValue(field)}</div>,
-      }
+        cell: ({ row }) => {
+          // debugger;
+          return <div className="lowercase">{row.getValue(field)}</div>;
+        },
+      };
     });
-  
+
     return [
       {
         id: "select",
         header: ({ table }) => (
           <Checkbox
             checked={table.getIsAllPageRowsSelected()}
-            onCheckedChange={(value) => table.toggleAllPageRowsSelected(!!value)}
+            onCheckedChange={(value) =>
+              table.toggleAllPageRowsSelected(!!value)
+            }
             aria-label="Select all"
           />
         ),
@@ -101,10 +107,12 @@ export function ResourceIndex() {
       ...columns,
       {
         id: "actions",
-        cell: ({ row }) => <ResourceIndexRowActions row={row} setData={setData} />,
+        cell: ({ row }) => (
+          <ResourceIndexRowActions row={row} setData={setData} />
+        ),
       },
-    ]
-  }
+    ];
+  };
 
   const columns = constructColumns(fields);
 

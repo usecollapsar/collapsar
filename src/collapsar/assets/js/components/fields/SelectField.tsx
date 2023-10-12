@@ -9,14 +9,18 @@ import {
 } from "@/components/ui/select";
 
 export function SelectField(props: any) {
+  const onValueChange = (value: any) => {
+    props.onChange(value);
+  }
+
   return (
     <Select
       id={props.id}
-      onValueChange={props.onChange}
+      onValueChange={onValueChange}
       onBlur={props.onBlur}
       name={props.name}
       disabled={props.disabled}
-      defaultValue={props.value}
+      defaultValue={props?.value?.toString()}
       ref={props.ref}
     >
       <SelectTrigger className="w-[180px]">
@@ -25,7 +29,7 @@ export function SelectField(props: any) {
       <SelectContent>
         {props.fieldConfig.options.map((option: any, key) => {
           return (
-            <SelectItem key={key} value={option?.label || option}>
+            <SelectItem key={key} value={option?.value?.toString() || option}>
               {option?.label || option}
             </SelectItem>
           );
