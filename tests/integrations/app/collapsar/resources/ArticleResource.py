@@ -9,7 +9,8 @@ from src.collapsar.BelongsTo import BelongsTo
 class ArticleResource(Resource):
     """Article Resource."""
 
-    title = "id"
+    label = "Article"
+    title = "Articles"
     model = Article
 
     def to_string(self):

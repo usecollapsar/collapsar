@@ -7,10 +7,19 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import { Link } from "react-router-dom";
 
 export function BelongsToField(props: any) {
   const onValueChange = (value: any) => {
     props.onChange(value);
+  }
+
+  const displayRender = () => {
+    return <Link className="text-primary hover:underline" to={`/resource/${props.relation_urikey}/${props.value}`}>{props.relation_label}</Link>;
+  }
+
+  if (props.renderForDisplay || !props.fieldConfig) {
+    return displayRender();
   }
 
   return (

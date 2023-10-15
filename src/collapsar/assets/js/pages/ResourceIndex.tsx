@@ -32,7 +32,7 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { Link, useParams } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 
 import { ResourceIndexRowActions } from "@/components/ResourceIndexRowActions";
 
@@ -61,7 +61,7 @@ export function ResourceIndex() {
   const constructColumns = (fields: any[]): ColumnDef[any] => {
     const columns = fields.map((field, k) => {
       return {
-        accessorKey: field.attribute,
+        accessorKey: field.name,
         header: ({ column }) => {
           return (
             <Button
@@ -76,13 +76,11 @@ export function ResourceIndex() {
           );
         },
         cell: ({ row }) => {
-          const originalField = row.original[k]
-
-          console.log(originalField, field.attribute)
+          const originalField = row.original[k];
 
           if (originalField.component == "BelongsToField") {
             return (
-              <div className="lowercase">
+              <div className="font-medium hover:underline text-primary">
                 <Link
                   to={`/resource/${originalField.relation_urikey}/${originalField.value}`}
                 >
@@ -92,7 +90,7 @@ export function ResourceIndex() {
             );
           }
 
-          return <div className="lowercase">{originalField.value}</div>;
+          return <div>{originalField.value}</div>;
         },
       };
     });
@@ -130,6 +128,7 @@ export function ResourceIndex() {
   };
 
   const columns = constructColumns(fields);
+  const navigate = useNavigate();
 
   const table = useReactTable({
     data: data,
@@ -163,8 +162,12 @@ export function ResourceIndex() {
           }
           className="max-w-sm"
         />
-        <Button variant="default" className="ml-auto">
-          <Link to={`/resource/${resource}/create`}>Create</Link>
+        <Button
+          variant="default"
+          className="ml-auto"
+          onClick={() => navigate(`/resource/${resource}/create`)}
+        >
+          Create
         </Button>
         <DropdownMenu>
           <DropdownMenuTrigger asChild>

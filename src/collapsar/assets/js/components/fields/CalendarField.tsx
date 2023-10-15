@@ -15,6 +15,18 @@ import { useEffect } from "react";
 export function CalendarField(props: any) {
   const value = props.value ? new Date(props.value) : new Date();
 
+  const displayRender = () => {
+    return (
+      <div className="flex items-center space-x-2">
+        {props.value.toString()}
+      </div>
+    );
+  };
+
+  if (props.renderForDisplay || !props.fieldConfig) {
+    return displayRender();
+  }
+
   // force the value to be a Date object
   useEffect(() => {
     props.onChange(value);

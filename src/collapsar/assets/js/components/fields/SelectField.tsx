@@ -13,6 +13,18 @@ export function SelectField(props: any) {
     props.onChange(value);
   }
 
+  const displayRender = () => {
+    return (
+      <div className="flex items-center space-x-2">
+        {props.value.toString()}
+      </div>
+    );
+  };
+
+  if (props.renderForDisplay || !props.fieldConfig) {
+    return displayRender();
+  }
+
   return (
     <Select
       id={props.id}

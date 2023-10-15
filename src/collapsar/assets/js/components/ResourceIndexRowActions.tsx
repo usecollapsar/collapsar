@@ -17,7 +17,7 @@ import {
   DropdownMenuSubTrigger,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { Link, useParams } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
 
 interface DataTableRowActionsProps<TData> {
@@ -29,6 +29,7 @@ export function ResourceIndexRowActions<TData>({
   setData,
 }: DataTableRowActionsProps<TData>) {
   const params = useParams();
+  const navigate = useNavigate();
 
   const originalField = row.original.find((f) => f.field_name == "IdField");
 
@@ -49,16 +50,24 @@ export function ResourceIndexRowActions<TData>({
 
   return (
     <div className="flex">
-      <Button variant="ghost" className="flex h-8 w-8 p-0">
-        <Link to={`/resource/${params.resource}/${originalField.value}`}>
-          <AiFillEye className="h-4 w-4" />
-        </Link>
+      <Button
+        variant="ghost"
+        className="flex h-8 w-8 p-0"
+        onClick={() =>
+          navigate(`/resource/${params.resource}/${originalField.value}`)
+        }
+      >
+        <AiFillEye className="h-4 w-4" />
         <span className="sr-only">View</span>
       </Button>
-      <Button variant="ghost" className="flex h-8 w-8 p-0">
-        <Link to={`/resource/${params.resource}/${originalField.value}/edit`}>
-          <BiEdit className="h-4 w-4" />
-        </Link>
+      <Button
+        variant="ghost"
+        className="flex h-8 w-8 p-0"
+        onClick={() =>
+          navigate(`/resource/${params.resource}/${originalField.value}/edit`)
+        }
+      >
+        <BiEdit className="h-4 w-4" />
         <span className="sr-only">Edit</span>
       </Button>
       <Button

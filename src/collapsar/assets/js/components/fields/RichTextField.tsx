@@ -224,12 +224,20 @@ const extensions = [
 ];
 
 export function RichTextField(props: any) {
+  const renderForDisplay = props.renderForDisplay || !props.fieldConfig
+
+  const onUpdateHandler = (e: any) => {
+    if (!props.onChange) return;
+
+    props.onChange(e.editor.getHTML())
+  }
+
   return (
     <div className="tiptap--container rounded p-[1rem] bg-white">
       <EditorProvider
         slotBefore={<MenuBar />}
         extensions={extensions}
-        onUpdate={e => props.onChange(e.editor.getHTML())}
+        onUpdate={onUpdateHandler}
         content={props.value}
       ></EditorProvider>
     </div>

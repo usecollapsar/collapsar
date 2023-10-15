@@ -37,13 +37,13 @@ class BelongsTo(Field, RelationField):
             map(lambda item: {"label": item.name, "value": item.id}, self.resource.model.all())
         )
 
-    def get_related_local_key(self):
+    def get_related_local_key(self, model):
         """Get the related local key"""
-        return self.resource.model.get_related(self.attribute).local_key
+        return model.get_related(self.attribute).local_key
 
-    def get_related_foreign_key(self):
+    def get_related_foreign_key(self, model):
         """Get the related foreign key"""
-        return self.resource.model.get_related(self.attribute).foreign_key
+        return model.get_related(self.attribute).foreign_key
 
     def get_related_resource(self, model: "Model"):
         """Get the related resource"""
@@ -60,7 +60,7 @@ class BelongsTo(Field, RelationField):
     def fill(self, request, model: "Model"):
         """Fill the field"""
         related_id = request.input(self.attribute)
-        model.update({self.get_related_local_key(): related_id})
+        setattr(model, self.get_related_local_key(model), related_id)
 
         return None
 

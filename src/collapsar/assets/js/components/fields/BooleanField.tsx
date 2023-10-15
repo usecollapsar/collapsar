@@ -1,15 +1,28 @@
-import { Label } from "@/components/ui/label"
-import { Switch } from "@/components/ui/switch"
+import { Label } from "@/components/ui/label";
+import { Switch } from "@/components/ui/switch";
 
 export function BooleanField(props: any) {
+  const displayRender = () => {
+    return (
+      <div className="flex items-center space-x-2">
+        {props.value.toString()}
+      </div>
+    );
+  };
+
+  if (props.renderForDisplay || !props.fieldConfig) {
+    return displayRender();
+  }
+
   return (
     <div className="flex items-center space-x-2">
-      <Switch 
-      id={props.attribute} 
-      checked={props.value}
-      onCheckedChange={props.onChange}
-      disabled={props.fieldConfig.readonly} />
+      <Switch
+        id={props.attribute}
+        checked={props.value}
+        onCheckedChange={props.onChange}
+        disabled={props.fieldConfig.readonly}
+      />
       <Label htmlFor={props.attribute}>{props.attribute}</Label>
     </div>
-  )
+  );
 }

@@ -1,12 +1,14 @@
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Link, useLoaderData, useParams } from "react-router-dom";
+import { Link, useLoaderData, useNavigate, useParams } from "react-router-dom";
+import * as Fields from "@/components/fields";
 
 type Field = {
   id: number | string;
   name: string;
   type: string;
   required: boolean;
+  component: string;
   attribute: string;
   help_text: string;
   value: string | number;
@@ -21,6 +23,7 @@ interface RouterResponse {
 export function ResourceShow() {
   const params = useParams();
   const data = useLoaderData() as RouterResponse;
+  const navigate = useNavigate();
 
   const fields = data.fields;
 
@@ -31,21 +34,23 @@ export function ResourceShow() {
   };
 
   const renderFormField = (field: Field) => {
-    const fieldInfo = fields.find(
+    const fieldData = fields.find(
       (f) => f.attribute == field.attribute
     ) as Field;
-    const value = field.value;
 
-    if (!value) return null;
+    const FieldComponent = Fields[fieldData.component as keyof typeof Fields];
+
+    if (!FieldComponent) {
+      console.error(`Component ${fieldData.component} not found!`);
+      return null;
+    }
 
     return (
       <div className="flex gap-2 border-b">
         <div className="w-1/4 py-6 px-8">
-          <p>{fieldInfo.name}</p>
+          <p>{fieldData.name}</p>
         </div>
-        <div className="w-3/4 py-6 px-8">
-          <Input placeholder="" value={value} readonly={true} />
-        </div>
+        <FieldComponent renderForDisplay={true} {...field} />
       </div>
     );
   };
@@ -54,10 +59,8 @@ export function ResourceShow() {
     <>
       <div className="flex">
         <h1>{getTitle()}</h1>
-        <Button variant="default" className="ml-auto">
-          <Link to={`/resource/${params.resource}/${data.data.id}/edit`}>
+        <Button variant="default" className="ml-auto" onClick={() => navigate(`/resource/${params.resource}/${data.data.id}/edit`)}>
             Edit
-          </Link>
         </Button>
       </div>
       <div className="py-4">
