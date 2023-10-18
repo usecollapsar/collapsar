@@ -1,7 +1,7 @@
 # Collapsar
 
 <p align="center">
-    <img src="https://banners.beyondco.de/Collapsar.png?theme=dark&packageManager=pip+install&packageName=masonite-collapsar&pattern=cage&style=style_1&description=Masonite+Dashboard+Package&md=0&showWatermark=1&fontSize=100px&images=emoji-happy">
+    <img src="https://banners.beyondco.de/Collapsar.png?theme=dark&packageManager=pip+install&packageName=collapsar&pattern=cage&style=style_1&description=Masonite+Dashboard+Package&md=0&showWatermark=1&fontSize=100px&images=emoji-happy">
 </p>
 
 <p align="center">
@@ -27,18 +27,14 @@ Collapsar is a package that will let you save time creating a dashboard for your
 - _Use fields: TextField, IdField, PasswordField, SelectField and more_
 - _Add basic validations: max, min, required, email, etc._
 
-## Official Masonite Documentation
+## Documentation
 
-New to Masonite ? Please first read the [Official Documentation](https://docs.masoniteproject.com/).
-Masonite strives to have extremely comprehensive documentation 😃. It would be wise to go through the tutorials there.
-If you find any discrepencies or anything that doesn't make sense, be sure to comment directly on the documentation to start a discussion!
-
-Have questions or want to talk? Be sure to join the [Masonite Discord Community](https://discord.gg/TwKeFahmPZ)!
+See the [official documentation](https://collapsar.aguad.dev) to learn how to use Collapsar.
 
 ## Installation
 
 ```bash
-pip install masonite-collapsar
+pip install collapsar
 ```
 
 ## Configuration
@@ -59,63 +55,17 @@ PROVIDERS = [
 ]
 ```
 
-## Develop instructions
+Create a new resource using
 
-To test the project locally, you just need to clone the repository and configure a basic .env just like any masonite project.
-
-```bash
-git clone https://github.com/eaguad1337/masonite-collapsar
+```python
+python craft resource MyModel
 ```
 
-Install dependencies
-
-```bash
-python -m venv venv
-source venv/bin/activate
-python -m pip install -r requirements.txt
-```
-
-Create a simple .env
-```bash
-cp .env-example .env
-```
-
-Run migrations
-```bash
-python craft migrate
-```
-
-Build assets
-
-```bash
-npm install
-npx vite build 
-```
-
-Run the app
-```bash
-python craft serve
-```
-
-Visit [http://localhost:8000/collapsar](http://localhost:8000/collapsar) and you should see the dashboard and the User resource.
-
-## Usage
-
-This package has the UserResource class as example, you could edit the configuration editing the file `/tests/integrations/app/collapsar/resources/UserResource.py`
-
-## Making changes
-
-If you want to make changes on the front assets, you could do it by modifying the React App on _/src/collapsar/assets/js_
-
-Then, compile the assets using this script
-
-```bash
-npx vite build 
-```
+And see your panel on https://localhost/collapsar
 
 ## Contributing
 
-Please read the [Contributing Documentation](CONTRIBUTING.md) here.
+Please read the [Contributing Documentation](https://collapsar.aguad.dev/docs/contributing/) here.
 
 ## Maintainers
 

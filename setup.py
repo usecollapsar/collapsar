@@ -4,11 +4,11 @@ with open("README.md", "r") as fh:
     long_description = fh.read()
 
 setup(
-    name="masonite-collapsar",
+    name="collapsar",
     # Versions should comply with PEP440.  For a discussion on single-sourcing
     # the version across setup.py and the project code, see
     # https://packaging.python.org/en/latest/single_source_version.html
-    version="0.0.1",
+    version="0.0.4",
     packages=[
         "collapsar",
         "collapsar.config",
@@ -16,12 +16,13 @@ setup(
         "collapsar.foundation",
         "collapsar.helpers",
         "collapsar.providers",
+        "collapsar.commands",
+        "collapsar.stubs",
         "collapsar.routes",
-        "collapsar.templates",
         "collapsar.traits",
     ],
     package_dir={"": "src"},
-    description="Masonite Dashboard",
+    description="Create beautiful admin dashboards in Masonite Framework",
     long_description=long_description,
     long_description_content_type="text/markdown",
     # The project's main homepage.
@@ -98,6 +99,6 @@ setup(
     # installed, specify them here.  If using Python 2.6 or less, then these
     # have to be included in MANIFEST.in as well.
     package_data={
-        "": ["templates/**", "dist/**"],
+        "collapsar": ["templates/**", "dist/**"],
     },
 )

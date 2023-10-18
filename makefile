@@ -22,7 +22,7 @@ coverage: ## Run package tests and upload coverage reports
 	python -m pytest --cov-report term --cov-report xml --cov=src/collapsar tests
 publish: ## Publish package to pypi
 	python setup.py sdist bdist_wheel
-	twine upload dist/*
-	rm -fr build dist .egg src/masonite_collapsar.egg-info
+	twine upload --skip-existing dist/*
+	rm -fr build dist .egg src/collapsar.egg-info
 pypirc: ## Copy the template .pypirc in the repo to your home directory
 	cp .pypirc ~/.pypirc

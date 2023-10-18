@@ -13,7 +13,7 @@ coverage.xml
 dist
 .env
 *.db
-src/masonite_collapsar.egg-info
+src/collapsar.egg-info
 node_modules/
 *.sqlite3
 *.env*
