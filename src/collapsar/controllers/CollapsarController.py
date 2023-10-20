@@ -1,7 +1,9 @@
 """A CollapsarController Module."""
+import os
 from masonite.views import View
 from masonite.controllers import Controller
 from masonite.request import Request
+from masonite.response import Response
 
 from ..helpers.DashboardHelper import DashboardHelper
 
@@ -16,3 +18,16 @@ class CollapsarController(Controller):
         return view.render(
             "masonite-collapsar:admin.index", {"dashboard_helper": dashboard_helper}
         )
+
+    def get_js(self, response: Response):
+        """Return the JS file."""
+        return response.download("style.css", self.get_asset("app-bundle.umd.js"))
+
+    def get_css(self, response: Response):
+        """Return the css file."""
+        return response.download("style.css", self.get_asset("style.css"))
+
+    def get_asset(self, filename):
+        """Return file path."""
+
+        return os.path.dirname(__file__) + "/../dist/assets/" + filename
