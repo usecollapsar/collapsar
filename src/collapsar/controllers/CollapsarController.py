@@ -21,7 +21,7 @@ class CollapsarController(Controller):
 
     def get_js(self, response: Response):
         """Return the JS file."""
-        return response.download("style.css", self.get_asset("app-bundle.umd.js"))
+        return response.download("app.js", self.get_asset("app-bundle.umd.js"))
 
     def get_css(self, response: Response):
         """Return the css file."""
