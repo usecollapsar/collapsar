@@ -1,10 +1,10 @@
-"""Textfield field class."""
+"""TextInput field class."""
 from typing import Callable, Union, List
 from .Field import Field
 
 
-class TextField(Field):
-    """Textfield field class."""
+class TextInput(Field):
+    """TextInput field class."""
 
     def __init__(
         self, name: str, attribute: Union[str, Callable] = None, resolve_callback: Callable = None

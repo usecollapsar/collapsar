@@ -16,7 +16,7 @@ class CollapsarController(Controller):
         dashboard_helper = request.app.make(DashboardHelper)
 
         return view.render(
-            "masonite-collapsar:admin.index", {"dashboard_helper": dashboard_helper}
+            "collapsar:admin.index", {"dashboard_helper": dashboard_helper}
         )
 
     def get_js(self, response: Response):
@@ -29,5 +29,4 @@ class CollapsarController(Controller):
 
     def get_asset(self, filename):
         """Return file path."""
-
         return os.path.dirname(__file__) + "/../dist/assets/" + filename

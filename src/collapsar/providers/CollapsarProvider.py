@@ -18,7 +18,7 @@ class CollapsarProvider(PackageProvider):
         """Register objects into the Service Container."""
         (
             self.root("collapsar")
-            .name("masonite-collapsar")
+            .name("collapsar")
             .config("config/collapsar.py", publish=True)
             .commands(*self.register_commands())
             .controllers("controllers")

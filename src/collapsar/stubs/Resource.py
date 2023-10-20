@@ -1,5 +1,5 @@
 from collapsar import Resource
-from collapsar.IdField import IdField
+from collapsar.Id import Id
 from app.models.__class__ import __class__
 
 class __class__Resource(Resource):
@@ -13,5 +13,5 @@ class __class__Resource(Resource):
         """Return the fields of the resource."""
 
         return [
-            IdField("Id", "id").readonly().sortable(),
+            Id("Id", "id").readonly().sortable(),
         ]

@@ -1,4 +1,4 @@
-"""CalendarField field class."""
+"""Calendar field class."""
 from typing import Callable, Union, TYPE_CHECKING
 from datetime import datetime
 from .Field import Field
@@ -7,8 +7,8 @@ if TYPE_CHECKING:
     from masoniteorm.models.Model import Model
 
 
-class CalendarField(Field):
-    """CalendarField field class."""
+class Calendar(Field):
+    """Calendar field class."""
 
     type = "date"
 

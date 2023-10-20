@@ -53,7 +53,9 @@ class BelongsTo(Field, RelationField):
         """Resolve the field for display"""
 
         self.value = self.resolve_value(model)
-        self.relation_label = self.get_related_resource(model).resolve_label()
+
+        if model[self.attribute] is not None:
+            self.relation_label = self.get_related_resource(model).resolve_label()
 
         return self
 

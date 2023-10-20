@@ -50,8 +50,8 @@ class Resource(ResolvesFields, ForwardsCalls, FillsFields):
         paginator = paginator.serialize()
         paginator["data"] = data
         paginator["fields"] = [
-            field for field in data[0] if len(data) > 0
-        ]
+            field for field in data[0]
+        ] if len(data) > 0 else []
 
         return paginator
 

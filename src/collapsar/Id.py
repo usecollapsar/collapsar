@@ -1,16 +1,18 @@
-"""RichTextField field class."""
+"""ID Field definition"""
 from typing import Callable, Union
 from .Field import Field
 
 
-class RichTextField(Field):
-    """RichTextField field class."""
+class Id(Field):
+    """ID Field definition"""
+
+    _show_on_creation = False
 
     def __init__(
         self, name: str, attribute: Union[str, Callable] = None, resolve_callback: Callable = None
     ):
         # Field's component
-        self.component = "RichTextField"
+        self.component = "TextField"
         # Field's suggestions callback
         self.suggestions = None
 
@@ -23,5 +25,4 @@ class RichTextField(Field):
         :return: dict
         """
         serialized = super().json_serialize()
-        serialized["value"] = str(self.value)
         return serialized

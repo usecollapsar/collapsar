@@ -1,10 +1,10 @@
-"""BooleanField definition"""
+"""Boolean definition"""
 from typing import Callable, Union
 from .Field import Field
 
 
-class BooleanField(Field):
-    """BooleanField definition"""
+class Boolean(Field):
+    """Boolean definition"""
 
     type = "boolean"
 

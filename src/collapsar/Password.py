@@ -1,22 +1,30 @@
-"""ID Field definition"""
-from typing import Callable, Union
+"""PasswordField Field definition"""
+from typing import Callable, Union, TYPE_CHECKING
+from masonite.facades.Hash import Hash
 from .Field import Field
 
+if TYPE_CHECKING:
+    from masoniteorm.models.Model import Model
 
-class IdField(Field):
-    """ID Field definition"""
 
-    _show_on_creation = False
+class Password(Field):
+    """PasswordField Field definition"""
 
     def __init__(
         self, name: str, attribute: Union[str, Callable] = None, resolve_callback: Callable = None
     ):
         # Field's component
-        self.component = "TextField"
+        self.component = "PasswordField"
         # Field's suggestions callback
         self.suggestions = None
 
         super().__init__(name, attribute, resolve_callback)
+
+    def fill(self, request, model: "Model"):
+        """Fill the field"""
+        setattr(model, self.attribute, Hash.make(request.input(self.attribute)))
+
+        return None
 
     def json_serialize(self):
         """

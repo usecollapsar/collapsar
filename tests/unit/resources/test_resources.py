@@ -1,9 +1,9 @@
 from masonite.tests import TestCase, DatabaseTransactions
 from masoniteorm.models import Model
 from src.collapsar.Resource import Resource
-from src.collapsar.TextField import TextField
-from src.collapsar.PasswordField import PasswordField
-from src.collapsar.IdField import IdField
+from src.collapsar.TextInput import TextInput
+from src.collapsar.Password import Password
+from src.collapsar.Id import Id
 
 
 class User(Model):
@@ -32,11 +32,11 @@ class UserResource(Resource):
         """Return the fields of the resource."""
 
         return [
-            IdField("Id", "id"),
-            TextField("Name", "name"),
-            TextField("Email", "email"),
-            PasswordField("Password", "password"),
-            TextField("Created At", "created_at"),
+            Id("Id", "id"),
+            TextInput("Name", "name"),
+            TextInput("Email", "email"),
+            Password("Password", "password"),
+            TextInput("Created At", "created_at"),
         ]
 
     @classmethod

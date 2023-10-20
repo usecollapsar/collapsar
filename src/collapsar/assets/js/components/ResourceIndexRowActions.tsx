@@ -31,7 +31,7 @@ export function ResourceIndexRowActions<TData>({
   const params = useParams();
   const navigate = useNavigate();
 
-  const originalField = row.original.find((f) => f.field_name == "IdField");
+  const originalField = row.original.find((f) => f.field_name == "Id");
 
   const labels = [
     { label: "One", value: 1 },
@@ -43,6 +43,8 @@ export function ResourceIndexRowActions<TData>({
       .delete(`/collapsar/api/${params.resource}/${originalField.value}`)
       .then((response) => {
         setData((prevData) => {
+          debugger;
+
           return prevData.filter((item) => item.id != originalField.value);
         });
       });
