@@ -94,7 +94,7 @@ export function ResourceIndexRowActions<TData>({
         <BiTrash className="h-4 w-4" />
         <span className="sr-only">Delete</span>
       </Button>
-      <DropdownMenu>
+      {/* <DropdownMenu>
         <DropdownMenuTrigger asChild>
           <Button
             variant="ghost"
@@ -127,7 +127,7 @@ export function ResourceIndexRowActions<TData>({
             <DropdownMenuShortcut>⌘⌫</DropdownMenuShortcut>
           </DropdownMenuItem>
         </DropdownMenuContent>
-      </DropdownMenu>
+      </DropdownMenu> */}
     </div>
   );
 }
