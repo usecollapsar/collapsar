@@ -26,6 +26,16 @@ class Select(Field):
         self._options = options
         return self
 
+    def get_display_value(self):
+        """Get the display value of the field"""
+        if not (len(self._options) > 0 and isinstance(self._options[0], dict)):
+            return self.value
+
+        if option := next(filter(lambda option: str(option["value"]) == self.value, self._options)):
+            return option["label"]
+
+        return self.value
+
     def json_serialize(self):
         """
         Prepare the element for JSON serialization.
@@ -34,4 +44,5 @@ class Select(Field):
         """
         serialized = super().json_serialize()
         serialized.update({"options": self._options})
+        serialized.update({"display_value": self.get_display_value()})
         return serialized

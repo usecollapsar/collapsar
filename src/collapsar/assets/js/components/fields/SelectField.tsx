@@ -16,7 +16,7 @@ export function SelectField(props: any) {
   const displayRender = () => {
     return (
       <div className="flex items-center space-x-2">
-        {props.value.toString()}
+        {props.display_value}
       </div>
     );
   };

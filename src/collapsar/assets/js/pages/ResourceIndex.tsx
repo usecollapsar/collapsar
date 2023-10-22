@@ -79,7 +79,7 @@ export function ResourceIndex() {
                 column.toggleSorting(column.getIsSorted() === "asc")
               }
             >
-              {field.name}
+              {field.name.toUpperCase()}
               <CaretSortIcon className="ml-2 h-4 w-4" />
             </Button>
           );
@@ -97,6 +97,10 @@ export function ResourceIndex() {
                 </Link>
               </div>
             );
+          }
+
+          if (originalField.component == "SelectField") {
+            return <div>{originalField.display_value}</div>;
           }
 
           return <div>{originalField.value}</div>;
@@ -218,7 +222,7 @@ export function ResourceIndex() {
         </DropdownMenu>
       </div>
       <div className="rounded-md border">
-        <Table>
+        <Table className="text-md">
           <TableHeader>
             {table.getHeaderGroups().map((headerGroup) => (
               <TableRow key={headerGroup.id}>
