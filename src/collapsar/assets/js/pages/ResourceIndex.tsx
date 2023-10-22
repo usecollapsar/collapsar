@@ -44,6 +44,7 @@ export function ResourceIndex() {
   const [fields, setFields] = React.useState([]);
   const [sorting, setSorting] = React.useState<SortingState>([]);
   const [searchParams, setSearchParams] = useSearchParams()
+  const [searchString, setSearchString] = React.useState(searchParams.get('search') ?? '')
 
   const [pagination, setPagination] = React.useState({
     pageIndex: 0,
@@ -58,7 +59,8 @@ export function ResourceIndex() {
   const [rowSelection, setRowSelection] = React.useState({});
 
   const handlePagination = ({ page }) => {
-    axios.get(`/collapsar/api/${resource}?page=${page + 1}`).then((response) => {
+    axios.get(`/collapsar/api/${resource}`, {params: { search: searchString, page: page + 1 }})
+    .then((response) => {
       setData(response.data.data);
       setFields(response.data.fields);
       setMeta(response.data.meta);
@@ -166,7 +168,7 @@ export function ResourceIndex() {
 
   React.useEffect(() => {
     handlePagination({ page: table.getState().pagination.pageIndex });
-  }, [pagination, resource]);
+  }, [pagination, resource, searchString]);
 
   return (
     <div className="w-full">
@@ -174,10 +176,10 @@ export function ResourceIndex() {
 
       <div className="flex items-center py-4">
         <Input
-          placeholder="Search records"
-          value={(table.getColumn("email")?.getFilterValue() as string) ?? ""}
+          placeholder="Search"
+          value={searchString}
           onChange={(event) =>
-            table.getColumn("email")?.setFilterValue(event.target.value)
+            setSearchString(event.target.value)
           }
           className="max-w-sm"
         />

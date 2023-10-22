@@ -16,6 +16,7 @@ class Resource(ResolvesFields, ForwardsCalls, FillsFields):
     model: "Model"
     group = "Resources"
     resource: "Model"
+    search_fields = ["id"]
 
     def __init__(self, resource=None):
         """Resource Constructor."""
@@ -31,7 +32,12 @@ class Resource(ResolvesFields, ForwardsCalls, FillsFields):
     @classmethod
     def paginate(cls, collapsar_request: "CollapsarRequest"):
         """Paginate the resource."""
-        paginator = cls.model.paginate(
+        search_model = cls.model
+        if search_string := collapsar_request.input('search'):
+            for field in cls.search_fields:
+                search_model = search_model.or_where(field, 'like', f'%{search_string}%')
+
+        paginator = search_model.paginate(
             collapsar_request.input("per_page", 10), int(collapsar_request.input("page", 1))
         )
 

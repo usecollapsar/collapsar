@@ -12,6 +12,7 @@ class ArticleResource(Resource):
     label = "Article"
     title = "Articles"
     model = Article
+    search_fields = ["title", "id"]
 
     def to_string(self):
         """Return string representation of the resource."""
