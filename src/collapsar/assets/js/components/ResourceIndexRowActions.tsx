@@ -19,6 +19,8 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
+import { AlertMessage } from "./utils/AlertMessage";
+import { useState } from "react";
 
 interface DataTableRowActionsProps<TData> {
   row: Row<TData>;
@@ -30,6 +32,10 @@ export function ResourceIndexRowActions<TData>({
 }: DataTableRowActionsProps<TData>) {
   const params = useParams();
   const navigate = useNavigate();
+  const [alertMessageOpen, setAlertMessageOpen] = useState(false);
+  const [alertMessageTitle, setAlertMessageTitle] = useState('');
+  const [alertMessageContent, setAlertMessageContent] = useState('');
+  const [selectedRow, setSelectedRow] = useState(null);
 
   const originalField = row.original.find((f) => f.field_name == "Id");
 
@@ -38,20 +44,28 @@ export function ResourceIndexRowActions<TData>({
     { label: "Two", value: 2 },
   ];
 
+  const openDeleteAlert = (row) => {
+    setAlertMessageTitle('Delete');
+    setAlertMessageContent('Are you sure you want to delete this item?');
+    setAlertMessageOpen(true);
+    setSelectedRow(row)
+  }
+
   const deleteItem = (row) => {
     axios
       .delete(`/collapsar/api/${params.resource}/${originalField.value}`)
       .then((response) => {
         setData((prevData) => {
-          debugger;
-
-          return prevData.filter((item) => item.id != originalField.value);
+          return prevData.filter((item) => {
+            return !item.some(f => f.primary_key && f.value == originalField.value)
+          });
         });
       });
   };
 
   return (
     <div className="flex">
+      <AlertMessage open={alertMessageOpen} setOpen={setAlertMessageOpen} title={alertMessageTitle} content={alertMessageContent} onConfirm={() => deleteItem(selectedRow)} />
       <Button
         variant="ghost"
         className="flex h-8 w-8 p-0"
@@ -73,7 +87,7 @@ export function ResourceIndexRowActions<TData>({
         <span className="sr-only">Edit</span>
       </Button>
       <Button
-        onClick={() => deleteItem(row)}
+        onClick={() => openDeleteAlert(row)}
         variant="ghost"
         className="flex h-8 w-8 p-0"
       >

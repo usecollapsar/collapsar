@@ -25,4 +25,5 @@ class Id(Field):
         :return: dict
         """
         serialized = super().json_serialize()
+        serialized['primary_key'] = True
         return serialized
