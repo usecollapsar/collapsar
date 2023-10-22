@@ -26,7 +26,7 @@ class UserResource(Resource):
 
         return [
             Id("Id", "id").readonly().sortable(),
-            Boolean("Active", "is_active").hide_from_index(),
+            Boolean("Active", "is_active"),
             TextInput("Name", "name").rules("required", "max:40").hide_from_index(),
             TextInput("Email", "email")
             .rules("required", "email", "max:30", "unique:users")
@@ -50,5 +50,5 @@ class UserResource(Resource):
             Calendar("Birth Date", "birth_date").hide_from_index(),
             TextInput(
                 "Created At (computed)", lambda user: user.created_at.strftime("%d/%m/%Y %H:%M:%S")
-            ),
+            ).hide_from_index(),
         ]

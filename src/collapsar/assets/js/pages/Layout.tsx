@@ -3,12 +3,15 @@ import { useOutlet } from "react-router-dom";
 import { ThemeProvider } from "@/components/theme-provider";
 import { Header } from "@/components/Header";
 import { Dashboard } from "@/components/Dashboard";
+import CollapsarProvider from "@/context/CollapsarProvider";
+
 
 export function Layout() {
   const outlet = useOutlet();
 
   return (
     <ThemeProvider defaultTheme="light" storageKey="vite-ui-theme">
+      <CollapsarProvider>
       <div className="flex">
         <Sidebar />
 
@@ -19,6 +22,7 @@ export function Layout() {
           </div>
         </div>
       </div>
+      </CollapsarProvider>
     </ThemeProvider>
   );
 }

@@ -35,9 +35,11 @@ import {
 import { Link, useNavigate, useParams, useSearchParams } from "react-router-dom";
 
 import { ResourceIndexRowActions } from "@/components/ResourceIndexRowActions";
+import { CollapsarContext } from "@/context/CollapsarProvider";
 
 export function ResourceIndex() {
   const { resource } = useParams();
+  const { renderFormField } = React.useContext(CollapsarContext);
 
   const [data, setData] = React.useState([]);
   const [meta, setMeta] = React.useState({} as any);
@@ -86,24 +88,7 @@ export function ResourceIndex() {
         },
         cell: ({ row }) => {
           const originalField = row.original[k];
-
-          if (originalField.component == "BelongsToField") {
-            return (
-              <div className="font-medium hover:underline text-primary">
-                <Link
-                  to={`/resource/${originalField.relation_urikey}/${originalField.value}`}
-                >
-                  {originalField.relation_label}
-                </Link>
-              </div>
-            );
-          }
-
-          if (originalField.component == "SelectField") {
-            return <div>{originalField.display_value}</div>;
-          }
-
-          return <div>{originalField.value}</div>;
+          return renderFormField({ component: originalField.component, field: originalField, renderForDisplay: true})
         },
       };
     });

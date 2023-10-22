@@ -1,11 +1,13 @@
 import { Label } from "@/components/ui/label";
 import { Switch } from "@/components/ui/switch";
+import { CheckCircledIcon, CrossCircledIcon } from "@radix-ui/react-icons";
 
 export function BooleanField(props: any) {
+
   const displayRender = () => {
     return (
       <div className="flex items-center space-x-2">
-        {props.value.toString()}
+        {props.value ? <CheckCircledIcon className="text-green-500" /> : <CrossCircledIcon className="text-red-500" />}
       </div>
     );
   };
