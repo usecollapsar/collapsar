@@ -14,20 +14,20 @@ export function Dashboard() {
         </div>
 
         <div className="grid grid-cols-2 gap-5">
-          <Card title="Create your first resource">
+          <Card title="Create your first resource" link="https://collapsar.aguad.dev/docs/quickstart">
             Create your first resource using{" "}
             <CodeText>python craft collapsar:resource</CodeText>, inside your{" "}
             <CodeText>Resource</CodeText> class, you can customize the way your
             resource is displayed, created, updated and more.
           </Card>
-          <Card title="Add fields">
+          <Card title="Add fields"link="https://collapsar.aguad.dev/docs/fields">
             You can easily manage attributes from your Masonite Model directly
             from Collapsar. You just need whether it is a{" "}
             <CodeText>Text</CodeText>, <CodeText>Select</CodeText>,{" "}
             <CodeText>Image</CodeText> and relax. See all available Fields{" "}
             <a href="#">here</a>.
           </Card>
-          <Card title="Customize behaviour">
+          <Card title="Customize behaviour" link="https://collapsar.aguad.dev/docs/fields/visibility/">
             Show only the information you want to. Choose which fields are
             displayed in the index, show or edit views.
           </Card>
@@ -49,7 +49,7 @@ function Card({ title, content, link, children }: any) {
         <p className="card-text leading-7">{children}</p>
         <div className="mt-5">
           <Button asChild>
-            <Link to={link}>Read more</Link>
+            <Link to={link} target="_blank">Read more</Link>
           </Button>
         </div>
       </div>
