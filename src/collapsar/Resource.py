@@ -31,7 +31,9 @@ class Resource(ResolvesFields, ForwardsCalls, FillsFields):
     @classmethod
     def paginate(cls, collapsar_request: "CollapsarRequest"):
         """Paginate the resource."""
-        paginator = cls.model.paginate(collapsar_request.param("per_page", 10))
+        paginator = cls.model.paginate(
+            collapsar_request.input("per_page", 10), int(collapsar_request.input("page", 1))
+        )
 
         def _resolve_fields(model, resource: "Resource"):
             return (
@@ -49,9 +51,7 @@ class Resource(ResolvesFields, ForwardsCalls, FillsFields):
 
         paginator = paginator.serialize()
         paginator["data"] = data
-        paginator["fields"] = [
-            field for field in data[0]
-        ] if len(data) > 0 else []
+        paginator["fields"] = [field for field in data[0]] if len(data) > 0 else []
 
         return paginator
 
