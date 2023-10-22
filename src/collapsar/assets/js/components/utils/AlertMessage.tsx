@@ -23,7 +23,6 @@ interface AlertDialogProps {
 export function AlertMessage({ open, content, title, setOpen, onConfirm, onCancel}: AlertDialogProps) {
   return (
     <AlertDialog open={open}>
-      <AlertDialogTrigger>Open</AlertDialogTrigger>
       <AlertDialogContent>
         <AlertDialogHeader>
           <AlertDialogTitle>{title}</AlertDialogTitle>
