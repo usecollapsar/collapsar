@@ -1,15 +1,19 @@
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
-import { Link, useLocation } from "react-router-dom";
-import { FaUser } from "react-icons/fa6";
+import { Link, useLocation, useNavigate, useSearchParams } from "react-router-dom";
 
 export function Sidebar({ className }) {
   const menuItems = window.Collapsar.sidebar.items;
   const location = useLocation();
+  const navigate = useNavigate();
 
   const checkCurrentRoute = (route) => {
     return route == location.pathname ? "secondary" : "ghost";
-  }
+  };
+
+  const handleChangeRoute = (route) => {
+    navigate({pathname: route}, { replace: true });
+  };
 
   return (
     <div className={cn("pb-12", className)}>
@@ -19,7 +23,10 @@ export function Sidebar({ className }) {
             Collapsar
           </h2>
           <div className="space-y-1">
-            <Button variant={checkCurrentRoute("/")} className="w-full justify-start">
+            <Button
+              variant={checkCurrentRoute("/")}
+              className="w-full justify-start"
+            >
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 viewBox="0 0 24 24"
@@ -46,10 +53,13 @@ export function Sidebar({ className }) {
             </h2>
             <div className="space-y-1">
               {menuItems[key].map((item, k) => (
-                <Button key={k} variant={checkCurrentRoute("/resource/" + item.urikey)} className="w-full justify-start" asChild>
-                  <Link to={"/resource/" + item.urikey}>
-                    {item.title}
-                  </Link>
+                <Button
+                  key={k}
+                  variant={checkCurrentRoute("/resource/" + item.urikey)}
+                  className="w-full justify-start"
+                  onClick={() => handleChangeRoute("/resource/" + item.urikey)}
+                >
+                  {item.title}
                 </Button>
               ))}
             </div>
