@@ -18,4 +18,7 @@ class ResourceIndexController(Controller):
         if resource is None:
             return response.json({"success": False})
 
-        return response.json(resource.paginate(collapsar_request))
+        data = resource.paginate(collapsar_request)
+        data["meta"]["resource"] = resource.json_serialize()
+
+        return response.json(data)

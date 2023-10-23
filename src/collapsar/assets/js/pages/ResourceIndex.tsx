@@ -161,7 +161,7 @@ export function ResourceIndex() {
 
   return (
     <div className="w-full">
-      <h1>Resources</h1>
+      <h1 className="font-bold text-3xl">{meta?.resource?.title}</h1>
 
       <div className="flex items-center py-4">
         <Input
