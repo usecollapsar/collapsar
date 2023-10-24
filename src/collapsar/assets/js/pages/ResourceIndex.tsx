@@ -61,7 +61,7 @@ export function ResourceIndex() {
   const [rowSelection, setRowSelection] = React.useState({});
 
   const handlePagination = ({ page }) => {
-    axios.get(`/collapsar/api/${resource}`, {params: { search: searchString, page: page + 1 }})
+    axios.get(`/collapsar-api/${resource}`, {params: { search: searchString, page: page + 1 }})
     .then((response) => {
       setData(response.data.data);
       setFields(response.data.fields);

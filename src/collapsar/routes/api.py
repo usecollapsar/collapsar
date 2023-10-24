@@ -17,6 +17,6 @@ ROUTES = [
             Route.delete("/@resource/@resource_id", ResourceDeleteController.handle),
             Route.put("/@resource/", ResourceStoreController.handle),
         ],
-        prefix="/collapsar/api",
+        prefix="/collapsar-api",
     )
 ]

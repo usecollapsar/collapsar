@@ -28,7 +28,7 @@ const routes = [
         path: 'resource/:resource/:id',
         element: <ResourceShow />,
         loader: async ({params}) => {
-          const res = await axios.get(`/collapsar/api/${params.resource}/${params.id}`)
+          const res = await axios.get(`/collapsar-api/${params.resource}/${params.id}`)
 
           return {
             fields: res.data.fields,
@@ -40,7 +40,7 @@ const routes = [
         path: 'resource/:resource/:id/edit',
         element: <ResourceEdit />,
         loader: async ({params}) => {
-          const res = await axios.get(`/collapsar/api/${params.resource}/${params.id}`)
+          const res = await axios.get(`/collapsar-api/${params.resource}/${params.id}`)
 
           return {
             isCreating: false,
@@ -53,7 +53,7 @@ const routes = [
         path: 'resource/:resource/create',
         element: <ResourceEdit />,
         loader: async ({params}) => {
-          const res = await axios.get(`/collapsar/api/${params.resource}/creation-fields`)
+          const res = await axios.get(`/collapsar-api/${params.resource}/creation-fields`)
 
           return {
             isCreating: true,

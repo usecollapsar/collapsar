@@ -53,7 +53,7 @@ export function ResourceIndexRowActions<TData>({
 
   const deleteItem = (row) => {
     axios
-      .delete(`/collapsar/api/${params.resource}/${originalField.value}`)
+      .delete(`/collapsar-api/${params.resource}/${originalField.value}`)
       .then((response) => {
         setData((prevData) => {
           return prevData.filter((item) => {

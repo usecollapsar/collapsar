@@ -137,7 +137,7 @@ export function ResourceEdit() {
 
     if (isCreating) {
       return axios
-        .put(`/collapsar/api/${params.resource}/`, values)
+        .put(`/collapsar-api/${params.resource}/`, values)
         .then((response) => {
           console.log("Success");
           console.log(response.data);
@@ -149,7 +149,7 @@ export function ResourceEdit() {
     }
 
     axios
-      .patch(`/collapsar/api/${params.resource}/${data.data.id}`, values)
+      .patch(`/collapsar-api/${params.resource}/${data.data.id}`, values)
       .then((response) => {
         console.log("Success");
         console.log(response.data);
