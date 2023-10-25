@@ -21,10 +21,10 @@ export function Dashboard() {
             resource is displayed, created, updated and more.
           </Card>
           <Card title="Add fields"link="https://collapsar.aguad.dev/docs/fields">
-            You can easily manage attributes from your Masonite Model directly
-            from Collapsar. You just need whether it is a{" "}
+            You can easily manage the attributes of your Masonite Model directly
+            from Collapsar. You just need to add the fields you want, like{" "}
             <CodeText>Text</CodeText>, <CodeText>Select</CodeText>,{" "}
-            <CodeText>Image</CodeText> and relax. See all available Fields{" "}
+            <CodeText>Image</CodeText> or whatever data type . See all available Fields{" "}
             <a href="#">here</a>.
           </Card>
           <Card title="Customize behaviour" link="https://collapsar.aguad.dev/docs/fields/visibility/">

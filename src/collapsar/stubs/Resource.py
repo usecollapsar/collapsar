@@ -2,6 +2,7 @@ from collapsar import Resource
 from collapsar.Id import Id
 from app.models.__class__ import __class__
 
+
 class __class__Resource(Resource):
     """__class__ Resource."""
 

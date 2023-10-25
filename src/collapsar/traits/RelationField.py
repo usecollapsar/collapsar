@@ -6,13 +6,14 @@ if TYPE_CHECKING:
     from ..Resource import Resource
 
 
-class RelationField():
+class RelationField:
     """A trait to identify relation fields."""
+
     collapsar: "Collapsar"
 
     def find_resource(self, resource_name: Union[str, "Resource"]):
         """Find a resource by name"""
-        if type(resource_name) is "Resource":
+        if not isinstance(resource_name, str):
             return resource_name
 
         for resource in self.collapsar.get_resources():

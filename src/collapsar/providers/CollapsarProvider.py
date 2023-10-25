@@ -35,27 +35,17 @@ class CollapsarProvider(PackageProvider):
 
         super().register()
 
-        resources_path = config('collapsar.resources_path', 'app/collapsar/resources')
+        resources_path = config("collapsar.resources_path", "app/collapsar/resources")
 
         self.application.bind("Collapsar", Collapsar(self.application))
         self.application.simple(DashboardHelper(self.application))
         self.application.bind("collapsar.resources.location", resources_path)
 
-
     def boot(self):
         """Boots services required by the container."""
 
-        # request = self.application.make("request")
-        # self.application.bind(
-        #     "CollapsarRequest",
-        #     CollapsarRequest(request),
-        # )
-
     def register_commands(self):
-        return [
-            MakeResourceCommand(self.application),
-            CollapsarInstallCommand(self.application)
-        ]
+        return [MakeResourceCommand(self.application), CollapsarInstallCommand(self.application)]
 
     def register_helpers(self):
         """Register helpers into the container."""

@@ -1,4 +1,6 @@
 from tests.integrations.app.models.Article import Article
+from UserResource import UserResource
+
 from src.collapsar import Resource
 from src.collapsar.TextInput import TextInput
 from src.collapsar.Id import Id
@@ -26,5 +28,5 @@ class ArticleResource(Resource):
             Id("Id", "id").readonly(),
             TextInput("Title", "title").rules("required"),
             RichText("Content", "content").rules("required").hide_from_index(),
-            BelongsTo("User", "user", "UserResource").rules("required"),
+            BelongsTo("User", "user", UserResource).rules("required"),
         ]
