@@ -6,6 +6,7 @@ import {
 } from "react-router-dom";
 import { ResourceEdit } from "@/pages/ResourceEdit";
 import { ResourceShow } from "@/pages/ResourceShow";
+import { Login } from "@/pages/Login";
 import axios from "axios";
 
 // use proxy to remount component on resource change
@@ -16,6 +17,10 @@ const ResourceIndexProxy = (props: any) =>
 }
 
 const routes = [
+  {
+    path: 'auth/login',
+    element: <Login />,
+  },
   {
     path: '/',
     element: <Layout />,

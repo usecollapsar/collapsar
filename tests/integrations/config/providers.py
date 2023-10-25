@@ -45,7 +45,7 @@ PROVIDERS = [
     AuthenticationProvider,
     ValidationProvider,
     AuthorizationProvider,
-    ORMProvider
+    ORMProvider,
 ]
 
 PROVIDERS += [CollapsarProvider]

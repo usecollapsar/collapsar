@@ -1,5 +1,6 @@
 import { createContext, useEffect, useState } from "react";
 import * as Fields from "@/components/fields";
+import axios from "axios";
 
 interface renderFormFieldProps {
   component: string;
@@ -8,13 +9,12 @@ interface renderFormFieldProps {
 }
 
 interface CollapsarContextProps {
-  renderFormField: (options: renderFormFieldProps) => JSX.Element;
+  renderFormField: (options: renderFormFieldProps) => JSX.Element | null;
 }
 
 export const CollapsarContext = createContext({} as CollapsarContextProps);
 
 const CollapsarProvider = ({ children }: any) => {
-
   const renderFormField = ({component, field, renderForDisplay = false}: renderFormFieldProps) => {
     const FieldComponent = Fields[component as keyof typeof Fields];
 
@@ -26,9 +26,7 @@ const CollapsarProvider = ({ children }: any) => {
     return (
       <FieldComponent renderForDisplay={true} {...field} />
     );
-
   }
-
 
   return (
     <CollapsarContext.Provider

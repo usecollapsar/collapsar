@@ -10,7 +10,7 @@ export function Layout() {
   const outlet = useOutlet();
 
   return (
-    <ThemeProvider defaultTheme="light" storageKey="vite-ui-theme">
+    <ThemeProvider defaultTheme="dark" storageKey="vite-ui-theme">
       <CollapsarProvider>
       <div className="flex">
         <Sidebar />

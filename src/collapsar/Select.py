@@ -31,10 +31,11 @@ class Select(Field):
         if not (len(self._options) > 0 and isinstance(self._options[0], dict)):
             return self.value
 
-        if option := next(filter(lambda option: str(option["value"]) == self.value, self._options)):
-            return option["label"]
+        filter_value = list(
+            filter(lambda option: str(option["value"]) == self.value, self._options)
+        )
 
-        return self.value
+        return filter_value[0]["label"] if filter_value else self.value
 
     def json_serialize(self):
         """
