@@ -33,7 +33,9 @@ class Resource(ResolvesFields, ForwardsCalls, FillsFields):
     def paginate(cls, collapsar_request: "CollapsarRequest"):
         """Paginate the resource."""
         search_model = cls.model
-        if search_string := collapsar_request.input('search'):
+        search_string = collapsar_request.input('search')
+
+        if search_string:
             for field in cls.search_fields:
                 search_model = search_model.or_where(field, 'like', f'%{search_string}%')
 
