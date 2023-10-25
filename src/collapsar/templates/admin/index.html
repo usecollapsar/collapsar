@@ -3,13 +3,14 @@
 {% block title %}Collapsar Admin{% endblock %}
 
 {% block head_scripts %}
+
 <script>
     window.Collapsar = {
       sidebar: {
         items: {{ dashboard_helper.get_resources_navigation() | json_encode() | safe}}
       },
       token: document.head.querySelector('meta[name="csrf-token"]').content,
-      user: {% if auth.user %} {{ auth.user | json_encode() | safe }} {% else %} {{ "null" }} {% endif %}
+      user: {{ dashboard_helper.get_user() | json_encode() | safe }}
     }
 </script>
 {% endblock %}

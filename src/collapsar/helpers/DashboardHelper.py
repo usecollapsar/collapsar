@@ -18,6 +18,19 @@ class DashboardHelper:
         """Register a resource."""
         self.resources.append(resource)
 
+    def get_user(self):
+        """Return the user."""
+        user = self.application.make("auth").user()
+
+        if user:
+            return {
+                "name": user.name,
+                "email": user.email,
+                "id": user.id,
+            }
+
+        return None
+
     def get_resources_navigation(self):
         """Return the resources navigation."""
         resources = (
