@@ -56,6 +56,8 @@ class Collapsar:
                 # Iterate over all objects in the module
                 for name, obj in inspect.getmembers(module):
                     if inspect.isclass(obj) and issubclass(obj, Resource) and obj != Resource:
-                        subclasses.append({"urikey": obj.get_urikey(), "resource": obj})
+                        if obj not in subclasses:
+                            subclasses.append(obj)
+                            break
 
-        self.resources = subclasses
+        self.resources = map(lambda obj: {"urikey": obj.get_urikey(), "resource": obj}, subclasses)
