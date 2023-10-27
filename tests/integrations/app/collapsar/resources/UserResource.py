@@ -12,6 +12,7 @@ from src.collapsar.RichText import RichText
 class UserResource(Resource):
     """User Resource."""
 
+    index = 10
     label = "name"
     title = "User"
     model = User

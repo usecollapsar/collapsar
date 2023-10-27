@@ -17,6 +17,7 @@ class Resource(ResolvesFields, ForwardsCalls, FillsFields):
     group = "Resources"
     resource: "Model"
     search_fields = ["id"]
+    index = 100
 
     def __init__(self, resource=None):
         """Resource Constructor."""

@@ -38,10 +38,12 @@ class DashboardHelper:
             .map(
                 lambda resource: {
                     "title": resource.title,
+                    "index": resource.index,
                     "group": resource.group,
                     "urikey": resource.get_urikey(),
                 }
             )
+            .sort("index")
             .group_by("group")
         )
 

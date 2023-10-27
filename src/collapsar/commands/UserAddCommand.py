@@ -1,10 +1,8 @@
 """User Add Command."""
-from masonite.commands.Command import Command
-from masonite.facades.Hash import Hash
 from getpass import getpass
 
-from app.models.User import User
-
+from masonite.commands.Command import Command
+from masonite.facades.Hash import Hash
 
 class UserAddCommand(Command):
     """
@@ -22,6 +20,7 @@ class UserAddCommand(Command):
         email = input("Enter your email: ")
         password = getpass("Enter your password: ")
 
+        from app.models.User import User
         User().create({"name": name, "email": email, "password": Hash.make(password)})
 
         self.info("User created successfully")
