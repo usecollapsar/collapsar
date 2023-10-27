@@ -10,6 +10,7 @@ from ..Resource import Resource
 
 class Collapsar:
     """Collapsar class definition."""
+
     application = None
     resources = []
 
@@ -60,4 +61,6 @@ class Collapsar:
                             subclasses.append(obj)
                             break
 
-        self.resources = map(lambda obj: {"urikey": obj.get_urikey(), "resource": obj}, subclasses)
+        self.resources = list(
+            map(lambda obj: {"urikey": obj.get_urikey(), "resource": obj}, subclasses)
+        )

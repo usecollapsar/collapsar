@@ -7,6 +7,7 @@ from ..helpers.DashboardHelper import DashboardHelper
 from ..foundation.Collapsar import Collapsar
 from ..commands.MakeResourceCommand import MakeResourceCommand
 from ..commands.CollapsarInstallCommand import CollapsarInstallCommand
+from ..commands.UserAddCommand import UserAddCommand
 
 
 class CollapsarProvider(PackageProvider):
@@ -45,7 +46,11 @@ class CollapsarProvider(PackageProvider):
         """Boots services required by the container."""
 
     def register_commands(self):
-        return [MakeResourceCommand(self.application), CollapsarInstallCommand(self.application)]
+        return [
+            MakeResourceCommand(self.application),
+            CollapsarInstallCommand(self.application),
+            UserAddCommand(self.application),
+        ]
 
     def register_helpers(self):
         """Register helpers into the container."""

@@ -31,24 +31,7 @@ class UserResource(Resource):
             TextInput("Email", "email")
             .rules("required", "email", "max:30", "unique:users")
             .sortable(),
-            TextInput("Name + ID (computed)", lambda user: f"(#{user.id}) {user.name} "),
-            RichText("Content", "content").hide_from_index(),
-            Select("Role", "role").options(["admin", "user"]).rules("required").sortable(),
-            Select("Department", "department")
-            .options(
-                [
-                    {"label": "IT", "value": 1},
-                    {"label": "Marketing", "value": 2},
-                    {"label": "Sales", "value": 3},
-                ]
-            )
-            .rules("required")
-            .sortable(),
             Password("Password", "password")
             .update_rules("nullable", "min:8")
             .hide_from_index(),
-            Calendar("Birth Date", "birth_date").hide_from_index(),
-            TextInput(
-                "Created At (computed)", lambda user: user.created_at.strftime("%d/%m/%Y %H:%M:%S")
-            ).hide_from_index(),
         ]

@@ -28,5 +28,5 @@ class ArticleResource(Resource):
             Id("Id", "id").readonly(),
             TextInput("Title", "title").rules("required"),
             RichText("Content", "content").rules("required").hide_from_index(),
-            BelongsTo("User", "user", UserResource).rules("required"),
+            BelongsTo("User", "user", "UserResource").rules("required"),
         ]
