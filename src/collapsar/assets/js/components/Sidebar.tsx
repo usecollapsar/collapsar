@@ -46,8 +46,8 @@ export function Sidebar({ className }) {
             </Button>
           </div>
         </div>
-        {Object.keys(menuItems)?.map((key) => (
-          <div className="px-3 py-2">
+        {Object.keys(menuItems)?.map((key, k) => (
+          <div className="px-3 py-2" key={k}>
             <h2 className="mb-2 px-4 text-lg font-semibold tracking-tight">
               {key}
             </h2>

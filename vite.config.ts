@@ -4,10 +4,12 @@ import path from "path";
 
 export default defineConfig(({ mode }) => {
   return {
-    mode: "development",
+    mode: "production",
     build: {
+      manifest: true,
       minify: false,
       outDir: "./src/collapsar/dist/assets",
+      input: "./src/collapsar/assets/js/index.tsx",
       lib: {
         name: "collapsar",
         entry: "./src/collapsar/assets/js/index.tsx",

@@ -1,4 +1,5 @@
 """A CollapsarProvider Service Provider."""
+import os
 import json
 from masonite.packages import PackageProvider
 from masonite.configuration import config
@@ -40,7 +41,6 @@ class CollapsarProvider(PackageProvider):
         resources_path = config("collapsar.resources_path", "app/collapsar/resources")
 
         self.application.bind("Collapsar", Collapsar(self.application))
-        self.application.simple(DashboardHelper(self.application))
         self.application.bind("collapsar.resources.location", resources_path)
 
     def boot(self):
@@ -59,4 +59,11 @@ class CollapsarProvider(PackageProvider):
         def json_encode(data):
             return json.dumps(data)
 
+        self.application.make("view").composer(
+            "collapsar:admin.index",
+            {
+                "INJECT_VITE": os.environ.get("INJECT_VITE") == "True",
+                "dashboard_helper": DashboardHelper(self.application),
+            },
+        )
         self.application.make("view").filter("json_encode", json_encode)

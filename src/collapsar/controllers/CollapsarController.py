@@ -5,19 +5,13 @@ from masonite.controllers import Controller
 from masonite.request import Request
 from masonite.response import Response
 
-from ..helpers.DashboardHelper import DashboardHelper
-
 
 class CollapsarController(Controller):
     """CollapsarController Controller Class."""
 
-    def index(self, view: View, request: Request):
+    def index(self, view: View):
         """Handle CollapsarController request."""
-        dashboard_helper = request.app.make(DashboardHelper)
-
-        return view.render(
-            "collapsar:admin.index", {"dashboard_helper": dashboard_helper}
-        )
+        return view.render("collapsar:admin.index")
 
     def get_js(self, response: Response):
         """Return the JS file."""

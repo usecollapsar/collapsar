@@ -5,6 +5,7 @@ from ..controllers.AuthController import AuthController
 ROUTES = [
     Route.group(
         [
+            Route.get('/', CollapsarController.index).middleware('auth',),
             Route.get("/auth/login", CollapsarController.index).name('login'),
             Route.post("/auth/login", AuthController.login),
             Route.get("/auth/logout", AuthController.logout),
