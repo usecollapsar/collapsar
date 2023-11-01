@@ -1,11 +1,11 @@
 from tests.integrations.app.models.Article import Article
-from UserResource import UserResource
 
 from src.collapsar import Resource
 from src.collapsar.TextInput import TextInput
 from src.collapsar.Id import Id
 from src.collapsar.RichText import RichText
 from src.collapsar.BelongsTo import BelongsTo
+from src.collapsar.File import File
 
 
 class ArticleResource(Resource):
@@ -26,6 +26,7 @@ class ArticleResource(Resource):
 
         return [
             Id("Id", "id").readonly(),
+            File("Image", "image"),
             TextInput("Title", "title").rules("required"),
             RichText("Content", "content").rules("required").hide_from_index(),
             BelongsTo("User", "user", "UserResource").rules("required"),

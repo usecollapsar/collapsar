@@ -36,6 +36,7 @@ class CollapsarProvider(PackageProvider):
 
         super().register()
 
+        # TODO: Make this configurable
         resources_path = config("collapsar.resources_path", "app/collapsar/resources")
 
         self.application.bind("Collapsar", Collapsar(self.application))

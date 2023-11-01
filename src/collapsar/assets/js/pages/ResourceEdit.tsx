@@ -59,6 +59,9 @@ export function ResourceEdit() {
     let schema: z.ZodTypeAny;
 
     switch (field.type) {
+      case "file":
+        schema = z.instanceof(File);
+        break;
       case "boolean":
         schema = z.boolean();
         break;
@@ -128,16 +131,16 @@ export function ResourceEdit() {
 
   function onSubmit(values: any) {
     // filter values object to remove computed fields
-    values = Object.keys(values)
+    const formData = new FormData()
+    Object.keys(values)
       .filter((key) => !key.startsWith("computed"))
-      .reduce((obj, key) => {
-        obj[key] = values[key];
-        return obj;
-      }, {});
+      .forEach(key => {
+        formData.append(key, values[key])
+      });
 
     if (isCreating) {
       return axios
-        .put(`/collapsar-api/${params.resource}/`, values)
+        .put(`/collapsar-api/${params.resource}/`, formData)
         .then((response) => {
           console.log("Success");
           console.log(response.data);
@@ -149,7 +152,7 @@ export function ResourceEdit() {
     }
 
     axios
-      .patch(`/collapsar-api/${params.resource}/${data.data.id}`, values)
+      .patch(`/collapsar-api/${params.resource}/${data.data.id}`, formData)
       .then((response) => {
         console.log("Success");
         console.log(response.data);

@@ -30,3 +30,9 @@ class CollapsarController(Controller):
     def get_asset(self, filename):
         """Return file path."""
         return os.path.dirname(__file__) + "/../dist/assets/" + filename
+
+    def get_storage(self, request: Request, response: Response):
+        """Return file path."""
+        storage = request.app.make("storage")
+        file_name = request.environ.get('PATH_INFO').split('/')[-1].replace('..', '')
+        return response.download(file_name, storage.disk('local').get_path('collapsar/storage/' + file_name))

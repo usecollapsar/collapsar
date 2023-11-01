@@ -6,7 +6,7 @@ from masoniteorm.relationships import belongs_to
 class Article(Model, UUIDPrimaryKeyMixin):
     """Article Model"""
 
-    __fillable__ = ["title", "content", "user_id"]
+    __fillable__ = ["title", "content", "user_id", "image"]
 
     @belongs_to('user_id', 'id')
     def user(self):
