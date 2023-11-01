@@ -88,7 +88,7 @@ export function ResourceIndex() {
         },
         cell: ({ row }) => {
           const originalField = row.original[k];
-          return renderFormField({ component: originalField.component, field: originalField, renderForDisplay: true})
+          return renderFormField({ component: originalField.component, field: originalField, renderForIndex: true})
         },
       };
     });

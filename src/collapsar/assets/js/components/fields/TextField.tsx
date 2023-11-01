@@ -9,9 +9,9 @@ export function TextField(props: any) {
     );
   };
 
-  if (props.renderForDisplay || !props.fieldConfig) {
+  if (props.renderForDisplay || !props?.fieldConfig) {
     return displayRender();
   }
 
-  return <Input readOnly={props.fieldConfig.readonly} {...props} />;
+  return <Input readOnly={props.fieldConfig?.readonly} {...props} />;
 }

@@ -18,3 +18,4 @@ node_modules/
 *.sqlite3
 *.env*
 !.env.ci
+tests/integrations/storage/framework/filesystem/collapsar/

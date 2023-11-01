@@ -5,6 +5,7 @@ import axios from "axios";
 interface renderFormFieldProps {
   component: string;
   renderForDisplay?: boolean;
+  renderForIndex?: boolean;
   field: object;
 }
 
@@ -15,7 +16,12 @@ interface CollapsarContextProps {
 export const CollapsarContext = createContext({} as CollapsarContextProps);
 
 const CollapsarProvider = ({ children }: any) => {
-  const renderFormField = ({component, field, renderForDisplay = false}: renderFormFieldProps) => {
+  const renderFormField = ({
+    component,
+    field,
+    renderForDisplay = false,
+    renderForIndex = false,
+  }: renderFormFieldProps) => {
     const FieldComponent = Fields[component as keyof typeof Fields];
 
     if (!FieldComponent) {
@@ -24,14 +30,18 @@ const CollapsarProvider = ({ children }: any) => {
     }
 
     return (
-      <FieldComponent renderForDisplay={true} {...field} />
+      <FieldComponent
+        renderForIndex={renderForIndex}
+        renderForDisplay={renderForDisplay}
+        {...field}
+      />
     );
-  }
+  };
 
   return (
     <CollapsarContext.Provider
       value={{
-        renderFormField
+        renderFormField,
       }}
     >
       {children}

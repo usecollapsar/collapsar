@@ -131,11 +131,11 @@ export function ResourceEdit() {
 
   function onSubmit(values: any) {
     // filter values object to remove computed fields
-    const formData = new FormData()
+    const formData = new FormData();
     Object.keys(values)
       .filter((key) => !key.startsWith("computed"))
-      .forEach(key => {
-        formData.append(key, values[key])
+      .forEach((key) => {
+        formData.append(key, values[key]);
       });
 
     if (isCreating) {
@@ -171,16 +171,6 @@ export function ResourceEdit() {
     return `Update ${params.resource
       ?.charAt(0)
       .toUpperCase()}${params.resource?.slice(1)}`;
-  };
-
-  const renderFormField = (field: Field, form) => {
-    return (
-      <FormField
-        control={form.control}
-        name={field.attribute}
-        render={renderForm}
-      />
-    );
   };
 
   const renderForm = ({ field }) => {
@@ -219,7 +209,14 @@ export function ResourceEdit() {
         <Form {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)}>
             <div className="card rounded border">
-              {fields.map((field) => renderFormField(field, form))}
+              {fields.map((field, k) => (
+                <FormField
+                  key={k}
+                  control={form.control}
+                  name={field.attribute}
+                  render={renderForm}
+                />
+              ))}
             </div>
 
             <div className="flex gap-2 mt-6">
