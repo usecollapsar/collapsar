@@ -22,9 +22,10 @@ class Password(Field):
 
     def fill(self, request, model: "Model"):
         """Fill the field"""
-        setattr(model, self.attribute, Hash.make(request.input(self.attribute)))
+        if not request.input(self.attribute):
+            return None
 
-        return None
+        setattr(model, self.attribute, Hash.make(request.input(self.attribute)))
 
     def json_serialize(self):
         """
