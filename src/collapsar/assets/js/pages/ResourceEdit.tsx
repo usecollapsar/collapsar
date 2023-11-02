@@ -60,7 +60,7 @@ export function ResourceEdit() {
 
     switch (field.type) {
       case "file":
-        schema = z.instanceof(File);
+        schema = z.union([z.instanceof(File), z.null(), z.string()]);
         break;
       case "boolean":
         schema = z.boolean();

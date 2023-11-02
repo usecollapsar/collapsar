@@ -1,9 +1,8 @@
 import { Input } from "@/components/ui/input";
 import { useEffect, useRef, useState } from "react";
 import { Button } from "@/components/ui/button";
-import { CrossCircledIcon } from "@radix-ui/react-icons";
 
-export function FileField(props: any) {
+export function ImageField(props: any) {
   const [replaceImage, setReplaceImage] = useState(false);
   const fileInput = useRef<HTMLInputElement>(null);
   const [originalValue, setOriginalValue] = useState(null);
