@@ -21,6 +21,7 @@ format: ## Format code with Black
 coverage: ## Run package tests and upload coverage reports
 	python -m pytest --cov-report term --cov-report xml --cov=src/collapsar tests
 publish: ## Publish package to pypi
+	npx vite build
 	python setup.py sdist bdist_wheel
 	twine upload --skip-existing dist/*
 	rm -fr build dist .egg src/collapsar.egg-info

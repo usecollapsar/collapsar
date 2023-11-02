@@ -38,24 +38,26 @@ export function FileField(props: any) {
 
   return (
     <>
-      {props.value && !replaceImage ? (
+      {!replaceImage ? (
         <div>
           <Button
             type="button"
             variant="secondary"
             onClick={() => setReplaceImage(true)}
           >
-            Replace
+            {props.value ? "Replace" : "Set image"}
           </Button>
-          <img
+          {props.value && (
+            <img
             className="rounded-md border-2 mt-3 max-w-sm"
             src={`/${originalValue}`}
             alt=""
-          />
+            />
+          )}
         </div>
       ) : (
         <>
-          {props.value && (
+          {fileInput && (
             <div className="flex flex-col gap-3">
               <div className="flex gap-3">
                 <Button
@@ -67,19 +69,19 @@ export function FileField(props: any) {
                 </Button>
                 <Button
                   type="button"
-                  onClick={(e) => fileInput.current?.click()}
+                  onClick={(e) => fileInput?.current?.click()}
                 >
-                  {fileInput.current?.files?.length > 0 ? "Change selection" : "Select"}
+                  {fileInput?.current?.files?.length > 0 ? "Change selection" : "Select"}
                 </Button>
               </div>
-              {fileInput.current?.files?.length > 0 ? (
+              {fileInput?.current?.files?.length > 0 ? (
                 <div className="text-sm flex flex-col gap-3">
                   <div id="filename">
                     <div className="span">
-                      {fileInput.current.files[0].name}{" "}
+                      {fileInput?.current.files[0].name}{" "}
                     </div>
                     <span className="text-muted-foreground">
-                      {(fileInput.current.files[0].size / 1024).toFixed(1)} kb
+                      {(fileInput?.current.files[0].size / 1024).toFixed(1)} kb
                     </span>
                   </div>
                   <img
