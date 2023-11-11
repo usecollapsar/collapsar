@@ -2,11 +2,9 @@ from tests.integrations.app.models.User import User
 from src.collapsar import Resource
 from src.collapsar.TextInput import TextInput
 from src.collapsar.Id import Id
-from src.collapsar.Select import Select
 from src.collapsar.Boolean import Boolean
 from src.collapsar.Password import Password
 from src.collapsar.Calendar import Calendar
-from src.collapsar.RichText import RichText
 
 
 class UserResource(Resource):
@@ -35,4 +33,5 @@ class UserResource(Resource):
             Password("Password", "password")
             .update_rules("nullable", "min:8")
             .hide_from_index(),
+            Calendar("Created at", "created_at"),
         ]

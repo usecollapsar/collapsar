@@ -1,5 +1,7 @@
 """Boolean definition"""
 from typing import Callable, Union
+
+from masoniteorm.models import Model
 from .Field import Field
 
 
@@ -17,6 +19,15 @@ class Boolean(Field):
         self.suggestions = None
 
         super().__init__(name, attribute, resolve_callback)
+
+
+    def fill(self, request, model: Model):
+        setattr(
+            model,
+            self.attribute,
+            1 if request.input(self.attribute) == "true" else 0,
+        )
+
 
     def json_serialize(self):
         """

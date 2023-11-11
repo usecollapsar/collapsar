@@ -1,6 +1,7 @@
 import { Label } from "@/components/ui/label";
 import { Switch } from "@/components/ui/switch";
 import { CheckCircledIcon, CrossCircledIcon } from "@radix-ui/react-icons";
+import { boolean } from "zod";
 
 export function BooleanField(props: any) {
 
@@ -16,12 +17,16 @@ export function BooleanField(props: any) {
     return displayRender();
   }
 
+  const handleOnChange = (e: any) => {
+    props.onChange(e.target.checked);
+  }
+
   return (
     <div className="flex items-center space-x-2">
       <Switch
         id={props.attribute}
         checked={props.value}
-        onCheckedChange={props.onChange}
+        onCheckedChange={handleOnChange}
         disabled={props.fieldConfig.readonly}
       />
       <Label htmlFor={props.attribute}>{props.attribute}</Label>

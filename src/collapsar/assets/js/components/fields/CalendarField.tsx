@@ -18,7 +18,7 @@ export function CalendarField(props: any) {
   const displayRender = () => {
     return (
       <div className="flex items-center space-x-2">
-        {props.value.toString()}
+        {props?.value?.toString()}
       </div>
     );
   };
@@ -27,9 +27,13 @@ export function CalendarField(props: any) {
     return displayRender();
   }
 
+  const handleOnChange = (date: Date) => {
+    props.onChange(date);
+  }
+
   // force the value to be a Date object
   useEffect(() => {
-    props.onChange(value);
+    handleOnChange(value);
   }, []);
 
   return (
@@ -52,10 +56,10 @@ export function CalendarField(props: any) {
         <Calendar
           mode="single"
           selected={value}
-          onSelect={props.onChange}
-          disabled={(date) =>
-            date > new Date() || date < new Date("1900-01-01")
-          }
+          onSelect={handleOnChange}
+          // disabled={(date) =>
+          //   date > new Date() || date < new Date("1900-01-01")
+          // }
           initialFocus
         />
       </PopoverContent>
