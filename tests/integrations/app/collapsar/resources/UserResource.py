@@ -1,5 +1,5 @@
 from tests.integrations.app.models.User import User
-from src.collapsar import Resource
+from src.collapsar.Resource import Resource
 from src.collapsar.TextInput import TextInput
 from src.collapsar.Id import Id
 from src.collapsar.Boolean import Boolean

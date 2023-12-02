@@ -19,3 +19,6 @@ node_modules/
 *.env*
 !.env.ci
 tests/integrations/storage/framework/filesystem/collapsar/
+tests/integrations/config/collapsar.py
+tests/integrations/resources/vendor/
+tests/integrations/templates/vendor/
