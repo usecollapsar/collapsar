@@ -1,4 +1,6 @@
 """Collapsar class definition"""
+from masonite.configuration import config
+
 class Collapsar:
     """Collapsar class definition."""
 
@@ -7,8 +9,7 @@ class Collapsar:
 
     def __init__(self, application):
         self.application = application
-        self.config = application.make('config').get('collapsar')
-        self.resources = self.config['resources']
+        self.resources = config('collapsar.resources')
 
     def get_resources(self):
         """Return the resource of given urikey."""
