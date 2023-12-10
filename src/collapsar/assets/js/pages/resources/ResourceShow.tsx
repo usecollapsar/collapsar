@@ -51,8 +51,8 @@ export default function ResourceShow() {
       </div>
       <div className="py-4">
         <form className="space-y-8 border rounded">
-          {fields.map((field) => (
-            <div className="flex gap-2 border-b">
+          {fields.map((field, k) => (
+            <div key={k} className="flex gap-2 border-b">
               <div className="w-1/4 py-6 px-8">
                 <p>{field.name}</p>
               </div>

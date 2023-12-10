@@ -16,6 +16,8 @@ import { useForm } from "react-hook-form";
 import axios from "axios";
 import * as Fields from "@/components/fields";
 import { usePage, router, Link } from "@inertiajs/react";
+import { useContext } from "react";
+import { CollapsarContext } from "@/context/CollapsarProvider";
 
 type Field = {
   id: number | string;
@@ -40,6 +42,7 @@ interface FieldValues {
 
 export default function ResourceEdit() {
   const {data, resource} = usePage().props
+  const { resolveField } = useContext(CollapsarContext);
 
   const isCreating = data.isCreating;
   const fields = data.fields;
@@ -160,12 +163,14 @@ export default function ResourceEdit() {
   const renderForm = ({ field }) => {
     const fieldData = fields.find((f) => f.attribute == field.name) as Field;
 
-    const FieldComponent = Fields[fieldData.component as keyof typeof Fields];
+    const FieldComponent = resolveField(fieldData.component);
 
-    if (!FieldComponent) {
-      console.error(`Component ${fieldData.component} not found!`);
-      return null;
-    }
+    // const FieldComponent = Fields[fieldData.component as keyof typeof Fields];
+
+    // if (!FieldComponent) {
+    //   console.error(`Component ${fieldData.component} not found!`);
+    //   return null;
+    // }
 
     return (
       <FormItem className="flex border-b">

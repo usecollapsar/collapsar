@@ -1,18 +1,18 @@
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 import { Link, usePage, router } from "@inertiajs/react";
-// import { Link, useLocation, useNavigate, useSearchParams } from "react-router-dom";
 
 export function Sidebar({ className }) {
   const { menuItems } = usePage().props;
 
-  // const navigate = useNavigate();
-
-  const checkCurrentRoute = (route) => {
-  }
+  const checkCurrentRoute = (route: string): string => {
+    // get current route path from url
+    const currentRoute = window.location.pathname;
+    return currentRoute == route ? "bg-muted" : "";
+  };
 
   const handleChangeRoute = (route) => {
-    router.visit(route)
+    router.visit(route);
   };
 
   return (
@@ -42,7 +42,7 @@ export function Sidebar({ className }) {
                 <rect width="7" height="7" x="14" y="14" rx="1" />
                 <rect width="7" height="7" x="3" y="14" rx="1" />
               </svg>
-              <Link href="/">Dashboard</Link>
+              <Link href="/collapsar">Dashboard</Link>
             </Button>
           </div>
         </div>
@@ -51,15 +51,17 @@ export function Sidebar({ className }) {
             <h2 className="mb-2 px-4 text-lg font-semibold tracking-tight">
               {key}
             </h2>
-            <div className="space-y-1">
+            <div className="space-y-1 flex flex-col">
               {menuItems[key].map((item, k) => (
-                <Link
+                <div
                   key={k}
-                  className="w-full justify-start"
-                  href={"/collapsar/resource/" + item.urikey}
+                  onClick={() => handleChangeRoute("/collapsar/resource/" + item.urikey)}
+                  className={`w-full rounded cursor-pointer py-1 px-5 ${checkCurrentRoute(
+                    "/collapsar/resource/" + item.urikey
+                  )}`}
                 >
                   {item.title}
-                </Link>
+                </div>
               ))}
             </div>
           </div>

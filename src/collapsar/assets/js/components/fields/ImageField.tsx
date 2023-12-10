@@ -14,7 +14,7 @@ export function ImageField(props: any) {
   const displayRender = () => {
     return (
       <div className="flex items-center space-x-2 max-h-[200px]">
-        <img className="h-full" src={`/${props.value}`} alt="" />
+        {props.value && <img className="h-full" src={`/${props.value}`} alt="" />}
       </div>
     );
   };
@@ -22,7 +22,7 @@ export function ImageField(props: any) {
   if (props.renderForIndex) {
     return (
       <div className="flex items-center space-x-2 h-[30px]">
-        <img className="h-full" src={`/${props.value}`} alt="" />
+        {props.value && <img className="h-full" src={`/${props.value}`} alt="" />}
       </div>
     );
   }

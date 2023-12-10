@@ -1,6 +1,6 @@
 import { Input } from "@/components/ui/input";
 
-export function TextField(props: any) {
+export function TextField({fieldConfig, ...props}: any) {
   const displayRender = () => {
     return (
       <div className="flex items-center space-x-2">
@@ -9,9 +9,9 @@ export function TextField(props: any) {
     );
   };
 
-  if (props.renderForDisplay || !props?.fieldConfig) {
+  if (props.renderForDisplay || !fieldConfig) {
     return displayRender();
   }
 
-  return <Input readOnly={props.fieldConfig?.readonly} {...props} />;
+  return <Input readOnly={fieldConfig?.readonly} {...props} />;
 }

@@ -1,6 +1,6 @@
 import { createContext, useEffect, useState } from "react";
 import * as Fields from "@/components/fields";
-import axios from "axios";
+import { Field } from "@/components/fields/Field";
 
 interface renderFormFieldProps {
   component: string;
@@ -11,11 +11,19 @@ interface renderFormFieldProps {
 
 interface CollapsarContextProps {
   renderFormField: (options: renderFormFieldProps) => JSX.Element | null;
+  resolveField: (component: string) => typeof Field | null;
 }
 
 export const CollapsarContext = createContext({} as CollapsarContextProps);
 
 const CollapsarProvider = ({ children }: any) => {
+
+  const resolveField = (component: string) => {
+    const fields = import.meta.glob('../components/fields/**/*.tsx', { eager: true })
+    const index = Object.keys(fields).findIndex(f => f.split('/').slice(-1)[0] == `${component}.tsx`)
+    return fields[Object.keys(fields)[index]][component]
+  }
+
   const renderFormField = ({
     component,
     field,
@@ -42,6 +50,7 @@ const CollapsarProvider = ({ children }: any) => {
     <CollapsarContext.Provider
       value={{
         renderFormField,
+        resolveField,
       }}
     >
       {children}
