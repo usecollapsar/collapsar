@@ -25,8 +25,7 @@
   <body class="min-w-site bg-40 text-black min-h-full">
     {{ inertia(page) }}
 
-    <!-- if env('INJECT_VITE') -->
-    {% if True %}
+    {% if env('INJECT_VITE') %}
 
       <!-- Vite DEV -->
       <script type="module">
