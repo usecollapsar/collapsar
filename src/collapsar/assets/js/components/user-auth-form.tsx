@@ -32,7 +32,6 @@ export function UserAuthForm({ className, ...props }: UserAuthFormProps) {
 
   return (
     <div className={cn("grid gap-6", className)} {...props}>
-      {errors?.global}
       <form onSubmit={onSubmit}>
         <div className="grid gap-5">
           <div className="grid gap-3">
@@ -66,6 +65,9 @@ export function UserAuthForm({ className, ...props }: UserAuthFormProps) {
               autoCorrect="off"
               disabled={processing}
             />
+          </div>
+          <div className="text-red-500">
+          {errors?.global}
           </div>
           <Button disabled={processing}>
             {isLoading && (

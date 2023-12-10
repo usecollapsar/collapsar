@@ -8,7 +8,7 @@ export function Sidebar({ className }) {
   const checkCurrentRoute = (route: string): string => {
     // get current route path from url
     const currentRoute = window.location.pathname;
-    return currentRoute == route ? "bg-muted" : "";
+    return currentRoute == route ? "secondary" : "primary";
   };
 
   const handleChangeRoute = (route) => {
@@ -24,7 +24,7 @@ export function Sidebar({ className }) {
           </h2>
           <div className="space-y-1">
             <Button
-              variant={checkCurrentRoute("/")}
+              variant={checkCurrentRoute("/collapsar")}
               className="w-full justify-start"
             >
               <svg
@@ -53,15 +53,18 @@ export function Sidebar({ className }) {
             </h2>
             <div className="space-y-1 flex flex-col">
               {menuItems[key].map((item, k) => (
-                <div
+                <Button
                   key={k}
-                  onClick={() => handleChangeRoute("/collapsar/resource/" + item.urikey)}
-                  className={`w-full rounded cursor-pointer py-1 px-5 ${checkCurrentRoute(
+                  variant={checkCurrentRoute(
                     "/collapsar/resource/" + item.urikey
-                  )}`}
+                  )}
+                  className="justify-start"
+                  onClick={() =>
+                    handleChangeRoute("/collapsar/resource/" + item.urikey)
+                  }
                 >
                   {item.title}
-                </div>
+                </Button>
               ))}
             </div>
           </div>
