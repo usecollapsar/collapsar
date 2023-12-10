@@ -22,6 +22,7 @@ from masonite.providers import (
 from masonite.scheduling.providers import ScheduleProvider
 from masonite.notification.providers import NotificationProvider
 from masonite.validation.providers import ValidationProvider
+from masonite.inertia.providers.InertiaProvider import InertiaProvider
 
 from src.collapsar import CollapsarProvider
 
@@ -45,6 +46,7 @@ PROVIDERS = [
     AuthenticationProvider,
     ValidationProvider,
     AuthorizationProvider,
+    InertiaProvider,
     ORMProvider,
 ]
 

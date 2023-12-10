@@ -1,18 +1,18 @@
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
-import { Link, useLocation, useNavigate, useSearchParams } from "react-router-dom";
+import { Link, usePage, router } from "@inertiajs/react";
+// import { Link, useLocation, useNavigate, useSearchParams } from "react-router-dom";
 
 export function Sidebar({ className }) {
-  const menuItems = window.Collapsar.sidebar.items;
-  const location = useLocation();
-  const navigate = useNavigate();
+  const { menuItems } = usePage().props;
+
+  // const navigate = useNavigate();
 
   const checkCurrentRoute = (route) => {
-    return route == location.pathname ? "secondary" : "ghost";
-  };
+  }
 
   const handleChangeRoute = (route) => {
-    navigate({pathname: route}, { replace: true });
+    router.visit(route)
   };
 
   return (
@@ -42,7 +42,7 @@ export function Sidebar({ className }) {
                 <rect width="7" height="7" x="14" y="14" rx="1" />
                 <rect width="7" height="7" x="3" y="14" rx="1" />
               </svg>
-              <Link to="/">Dashboard</Link>
+              <Link href="/">Dashboard</Link>
             </Button>
           </div>
         </div>
@@ -53,14 +53,13 @@ export function Sidebar({ className }) {
             </h2>
             <div className="space-y-1">
               {menuItems[key].map((item, k) => (
-                <Button
+                <Link
                   key={k}
-                  variant={checkCurrentRoute("/resource/" + item.urikey)}
                   className="w-full justify-start"
-                  onClick={() => handleChangeRoute("/resource/" + item.urikey)}
+                  href={"/collapsar/resource/" + item.urikey}
                 >
                   {item.title}
-                </Button>
+                </Link>
               ))}
             </div>
           </div>

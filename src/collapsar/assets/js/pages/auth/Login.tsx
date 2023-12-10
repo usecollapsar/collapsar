@@ -1,7 +1,7 @@
 import { ThemeProvider } from "@/components/theme-provider";
 import { UserAuthForm } from "@/components/user-auth-form";
 
-export function Login() {
+export default function Login() {
   return (
     <ThemeProvider defaultTheme="dark" storageKey="vite-ui-theme">
       <div className="relative min-h-screen flex flex-col items-center justify-center">

@@ -43,6 +43,13 @@ class Calendar(Field):
             request: The request object.
             model (Model): The model object.
         """
+        if not request.input(self.attribute):
+            setattr(
+                model,
+                self.attribute,
+                None,
+            )
+            return
 
         date_string_without_timezone = re.sub(
             r"GMT[+-]\d{4}\s\(.*\)", "", request.input(self.attribute)

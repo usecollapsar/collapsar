@@ -17,8 +17,8 @@ export function BooleanField(props: any) {
     return displayRender();
   }
 
-  const handleOnChange = (e: any) => {
-    props.onChange(e.target.checked);
+  const handleOnChange = (val: any) => {
+    props.onChange(val);
   }
 
   return (
@@ -26,10 +26,11 @@ export function BooleanField(props: any) {
       <Switch
         id={props.attribute}
         checked={props.value}
+        // onClick={handleOnChange}
         onCheckedChange={handleOnChange}
         disabled={props.fieldConfig.readonly}
       />
-      <Label htmlFor={props.attribute}>{props.attribute}</Label>
+      {/* <Label htmlFor={props.attribute}>{props.attribute}</Label> */}
     </div>
   );
 }

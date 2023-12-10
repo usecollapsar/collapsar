@@ -1,12 +1,12 @@
 import { Layout } from "../pages/Layout";
-import { ResourceIndex } from "../pages/ResourceIndex";
+import { ResourceIndex } from "../pages/resource/ResourceIndex";
 
 import {
   createBrowserRouter, useParams,
 } from "react-router-dom";
 import { ResourceEdit } from "@/pages/ResourceEdit";
-import { ResourceShow } from "@/pages/ResourceShow";
-import { Login } from "@/pages/Login";
+import { ResourceShow } from "@/pages/resource/ResourceShow";
+import { Login } from "@/pages/login/Login";
 import axios from "axios";
 
 // use proxy to remount component on resource change

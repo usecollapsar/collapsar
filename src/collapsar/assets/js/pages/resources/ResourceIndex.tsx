@@ -32,21 +32,22 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { Link, useNavigate, useParams, useSearchParams } from "react-router-dom";
+// import { Link, useNavigate, useParams, useSearchParams } from "react-router-dom";
 
 import { ResourceIndexRowActions } from "@/components/ResourceIndexRowActions";
 import { CollapsarContext } from "@/context/CollapsarProvider";
+import { usePage, router } from "@inertiajs/react";
 
-export function ResourceIndex() {
-  const { resource } = useParams();
+export default function ResourceIndex() {
+  const { resource } = usePage().props;
   const { renderFormField } = React.useContext(CollapsarContext);
 
   const [data, setData] = React.useState([]);
   const [meta, setMeta] = React.useState({} as any);
   const [fields, setFields] = React.useState([]);
   const [sorting, setSorting] = React.useState<SortingState>([]);
-  const [searchParams, setSearchParams] = useSearchParams()
-  const [searchString, setSearchString] = React.useState(searchParams.get('search') ?? '')
+  // const [searchParams, setSearchParams] = useSearchParams()
+  // const [searchString, setSearchString] = React.useState(searchParams.get('search') ?? '')
 
   const [pagination, setPagination] = React.useState({
     pageIndex: 0,
@@ -61,7 +62,7 @@ export function ResourceIndex() {
   const [rowSelection, setRowSelection] = React.useState({});
 
   const handlePagination = ({ page }) => {
-    axios.get(`/collapsar-api/${resource}`, {params: { search: searchString, page: page + 1 }})
+    axios.get(`/collapsar-api/${resource}`, {params: { search: "", page: page + 1 }})
     .then((response) => {
       setData(response.data.data);
       setFields(response.data.fields);
@@ -126,7 +127,7 @@ export function ResourceIndex() {
   };
 
   const columns = constructColumns(fields);
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
 
   const table = useReactTable({
     data: data,
@@ -152,12 +153,12 @@ export function ResourceIndex() {
   });
 
   React.useEffect(() => {
-    setSearchParams(`?${new URLSearchParams({ page: table.getState().pagination.pageIndex + 1 })}`)
+    // setSearchParams(`?${new URLSearchParams({ page: table.getState().pagination.pageIndex + 1 })}`)
   }, [pagination]);
 
   React.useEffect(() => {
     handlePagination({ page: table.getState().pagination.pageIndex });
-  }, [pagination, resource, searchString]);
+  }, [pagination, resource]);
 
   return (
     <div className="w-full">
@@ -166,16 +167,16 @@ export function ResourceIndex() {
       <div className="flex items-center py-4">
         <Input
           placeholder="Search"
-          value={searchString}
-          onChange={(event) =>
-            setSearchString(event.target.value)
-          }
+          value={""}
+          // onChange={(event) =>
+          //   setSearchString(event.target.value)
+          // }
           className="max-w-sm"
         />
         <Button
           variant="default"
           className="ml-auto"
-          onClick={() => navigate(`/resource/${resource}/create`)}
+          onClick={() => router.visit(`/collapsar/resource/${resource}/create`)}
         >
           Create
         </Button>

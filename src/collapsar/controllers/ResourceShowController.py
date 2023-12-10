@@ -3,6 +3,7 @@ from typing import TYPE_CHECKING
 from masonite.controllers import Controller
 from masonite.response import Response
 from ..CollapsarRequest import CollapsarRequest
+from ..helpers.DashboardHelper import DashboardHelper
 
 if TYPE_CHECKING:
     from ..Resource import Resource
@@ -11,27 +12,35 @@ if TYPE_CHECKING:
 class ResourceShowController(Controller):
     """ResourceShowController Controller Class."""
 
+    def show(self, request: CollapsarRequest, dashboard_helper: DashboardHelper):
+        """Handle resource create request."""
+
+        data = self.handle(request)
+
+        return dashboard_helper.render(
+            "resources/ResourceShow", {"resource": request.param("resource"), "data": data}
+        )
+
     def handle(
-        self, collapsar_request: CollapsarRequest, response: Response, resource, resource_id
+        self, request: CollapsarRequest
     ):
         """Get the fields for the update page."""
 
-        resource: "Resource" = collapsar_request.resource()
+        resource: "Resource" = request.resource()
+        resource_id = request.param("resource_id")
 
         if resource is None:
-            return response.json({"success": False})
+            return None
 
         model = resource.model.find(resource_id)
 
-        return response.json(
-            {
-                "data": model.serialize(),
-                "resource": resource.json_serialize(),
-                "fields": list(
-                    map(
-                        lambda field: field.json_serialize(),
-                        resource.show_fields(collapsar_request),
-                    )
-                ),
-            }
-        )
+        return {
+            "data": model.serialize(),
+            "resource": resource.json_serialize(),
+            "fields": list(
+                map(
+                    lambda field: field.json_serialize(),
+                    resource.show_fields(request),
+                )
+            ),
+        }

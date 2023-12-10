@@ -2,23 +2,56 @@
 import json
 from masonite.controllers import Controller
 from masonite.response import Response
-from masonite.request import Request
+
+from ..controllers.ResourceShowController import ResourceShowController
+from ..helpers.DashboardHelper import DashboardHelper
+from ..CollapsarRequest import CollapsarRequest
 
 
 class ResourceUpdateController(Controller):
     """ResourceUpdateController Controller Class."""
 
-    def handle(self, request: Request, response: Response, resource):
-        """Handle resource update request."""
+    def edit(self, request: CollapsarRequest, dashboard_helper: DashboardHelper):
+        """Handle resource create request."""
 
-        resource = request.app.make("Collapsar").get_resource(resource)
+        data = ResourceShowController().handle(request)
+
+        return dashboard_helper.render(
+            "resources/ResourceEdit", {"resource": request.param("resource"), "data": data}
+        )
+
+    def create(self, request: CollapsarRequest, dashboard_helper: DashboardHelper):
+        """Handle resource create request."""
+
+        resource = request.resource()
 
         if resource is None:
-            return response.json({"success": False})
+            return None
+
+        fields = list(map(lambda field: field.json_serialize(), resource.creation_fields()))
+
+        data = {
+            "isCreating": True,
+            "fields": fields,
+        }
+
+        return dashboard_helper.render(
+            "resources/ResourceEdit", {"resource": request.param("resource"), "data": data}
+        )
+
+    def handle(self, request: CollapsarRequest, response: Response):
+        """Handle resource update request."""
+
+        resource = request.resource()
+
+        if resource is None:
+            return None
 
         resource_model = resource.get_model().find(request.param("resource_id"))
 
         [resource_model, callbacks] = resource.fill(request, resource_model)
         resource_model.save()
 
-        return response.json({"resource": resource_model.serialize(), "success": True})
+        return response.redirect(
+            f"/collapsar/resource/{request.param('resource')}/{resource_model.id}"
+        ).status(303)

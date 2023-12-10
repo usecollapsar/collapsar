@@ -19,34 +19,29 @@
     {% endblock styles %}
     <!-- Tool Styles -->
 
-    <!-- Custom Meta Data -->
-
     <!-- Theme Styles -->
     {% block head_scripts %} {% endblock head_scripts %}
   </head>
   <body class="min-w-site bg-40 text-black min-h-full">
-    <div id="collapsar"></div>
+    {{ inertia(page) }}
 
-    <script>
-      // window.config = @json(\Laravel\Nova\Nova::jsonVariables(request()));
-    </script>
+    <!-- if env('INJECT_VITE') -->
+    {% if True %}
 
-    {% if INJECT_VITE %}
-    <!-- {{INJECT_VITE}} -->
-    <!-- Vite DEV -->
-    <script type="module">
-      import RefreshRuntime from "http://localhost:5173/@react-refresh";
-      RefreshRuntime.injectIntoGlobalHook(window);
-      window.$RefreshReg$ = () => {};
-      window.$RefreshSig$ = () => (type) => type;
-      window.__vite_plugin_react_preamble_installed__ = true;
-    </script>
-    <script type="module" src="http://localhost:5173/@vite/client"></script>
-    <script
-      type="module"
-      src="http://localhost:5173/src/collapsar/assets/js/index.tsx"
-    ></script>
-    <!-- Vite DEV -->
+      <!-- Vite DEV -->
+      <script type="module">
+        import RefreshRuntime from "http://localhost:5173/@react-refresh";
+        RefreshRuntime.injectIntoGlobalHook(window);
+        window.$RefreshReg$ = () => {};
+        window.$RefreshSig$ = () => (type) => type;
+        window.__vite_plugin_react_preamble_installed__ = true;
+      </script>
+      <script type="module" src="http://localhost:5173/@vite/client"></script>
+      <script
+        type="module"
+        src="http://localhost:5173/src/collapsar/assets/js/index.tsx"
+      ></script>
+      <!-- Vite DEV -->
     {% else %}
       <script src="/collapsar/assets/app.js"></script>
     {% endif %}

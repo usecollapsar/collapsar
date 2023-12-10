@@ -1,7 +1,7 @@
 import { Button } from "@/components/ui/button";
-import { Link } from "react-router-dom";
+// import { Link } from "@inertiajs/react";
 
-export function Dashboard() {
+export default function Dashboard() {
   return (
     <div>
       <div className="container">
@@ -20,7 +20,7 @@ export function Dashboard() {
             <CodeText>Resource</CodeText> class, you can customize the way your
             resource is displayed, created, updated and more.
           </Card>
-          <Card title="Add fields"link="https://collapsar.aguad.dev/docs/fields">
+          <Card title="Add fields" link="https://collapsar.aguad.dev/docs/fields">
             You can easily manage the attributes of your Masonite Model directly
             from Collapsar. You just need to add the fields you want, like{" "}
             <CodeText>Text</CodeText>, <CodeText>Select</CodeText>,{" "}
@@ -49,7 +49,7 @@ function Card({ title, content, link, children }: any) {
         <p className="card-text leading-7">{children}</p>
         <div className="mt-5">
           <Button asChild>
-            <Link to={link} target="_blank">Read more</Link>
+            <a href={link} target="_blank">Read more</a>
           </Button>
         </div>
       </div>

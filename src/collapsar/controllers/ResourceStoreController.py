@@ -14,7 +14,7 @@ class ResourceStoreController(Controller):
         resource: Resource = request.app.make("Collapsar").get_resource(resource)
 
         if resource is None:
-            return response.json({"success": False})
+            return None
 
         # this fills every model attribute with request parameters (except id)
         # every field has its own fill method, for example,
@@ -22,4 +22,6 @@ class ResourceStoreController(Controller):
         [resource_model, callbacks] = resource.fill(request, resource.new_model())
         resource_model.save()
 
-        return response.json({"resource_model": resource_model.serialize(), "success": True})
+        return response.redirect(
+            f"/collapsar/resource/{resource.get_urikey()}/{resource_model.id}"
+        ).status(303)

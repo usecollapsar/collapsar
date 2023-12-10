@@ -1,15 +1,18 @@
-import '../css/app.css'
-import * as React from "react";
-import * as ReactDOM from "react-dom/client";
-import {router} from "./services/router";
+import { createInertiaApp } from '@inertiajs/react'
+import { createRoot } from 'react-dom/client'
+import { Layout } from './pages/Layout'
 
-import {
-  RouterProvider,
-} from "react-router-dom";
+import "../css/app.css"
 
+createInertiaApp({
+  resolve: name => {
+    const pages = import.meta.glob('./pages/**/*.tsx', { eager: true })
+    let page = pages[`./pages/${name}.tsx`]
 
-ReactDOM.createRoot(document.getElementById("collapsar")).render(
-  <React.StrictMode>
-    <RouterProvider router={router} />
-  </React.StrictMode>
-);
+    page.default.layout = name.startsWith('auth/') ? undefined : page => <Layout children={page} />
+    return page
+  },
+  setup({ el, App, props }) {
+    createRoot(el).render(<App {...props} />)
+  },
+})

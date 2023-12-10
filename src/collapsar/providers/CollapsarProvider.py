@@ -10,7 +10,6 @@ from ..commands.MakeResourceCommand import MakeResourceCommand
 from ..commands.CollapsarInstallCommand import CollapsarInstallCommand
 from ..commands.UserAddCommand import UserAddCommand
 
-
 class CollapsarProvider(PackageProvider):
     """
     A service provider for the Collapsar package.
@@ -41,6 +40,7 @@ class CollapsarProvider(PackageProvider):
         resources_path = config("collapsar.resources_path", "app/collapsar/resources")
 
         self.application.bind("Collapsar", Collapsar(self.application))
+        self.application.bind("DashboardHelper", DashboardHelper(self.application))
         self.application.bind("collapsar.resources.location", resources_path)
 
     def boot(self):

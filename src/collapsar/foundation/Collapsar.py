@@ -24,4 +24,3 @@ class Collapsar:
             return resource[0]
         else:
             return None
-

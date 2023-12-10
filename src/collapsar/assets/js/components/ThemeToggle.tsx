@@ -8,7 +8,7 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
 import { useTheme } from "@/components/theme-provider"
-import { useNavigate } from "react-router-dom"
+import { router } from "@inertiajs/react"
 
 export function ThemeToggle() {
   const { setTheme } = useTheme()
@@ -28,7 +28,7 @@ export function ThemeToggle() {
         <DropdownMenuItem onClick={() => setTheme("dark")}>
           Dark theme
         </DropdownMenuItem>
-        <DropdownMenuItem onClick={() => location.replace("/collapsar/auth/logout")}>
+        <DropdownMenuItem onClick={() => router.get("/collapsar/auth/logout")}>
           Logout
         </DropdownMenuItem>
       </DropdownMenuContent>

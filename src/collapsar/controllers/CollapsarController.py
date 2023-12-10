@@ -1,17 +1,25 @@
 """A CollapsarController Module."""
 import os
-from masonite.views import View
 from masonite.controllers import Controller
 from masonite.request import Request
 from masonite.response import Response
+from masonite.inertia import Inertia
+from wsgi import application
+
+from ..helpers.DashboardHelper import DashboardHelper
 
 
 class CollapsarController(Controller):
     """CollapsarController Controller Class."""
 
-    def index(self, view: View):
+    def index(self, view: Inertia):
         """Handle CollapsarController request."""
-        return view.render("collapsar:admin.index")
+
+        menu_items = DashboardHelper(application).get_resources_navigation()
+        view.set_root_view('collapsar:admin.base')
+        return view.render("Dashboard", {
+            "menuItems": menu_items
+        })
 
     def get_js(self, response: Response):
         """Return the JS file."""

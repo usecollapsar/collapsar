@@ -1,7 +1,8 @@
 import { Button } from "@/components/ui/button";
-import { Link, useLoaderData, useNavigate, useParams } from "react-router-dom";
+// import { Link, useLoaderData, useNavigate, useParams } from "react-router-dom";
 import { CollapsarContext } from "@/context/CollapsarProvider";
 import { useContext } from "react";
+import { usePage, router } from "@inertiajs/react";
 
 type Field = {
   id: number | string;
@@ -20,18 +21,18 @@ interface RouterResponse {
   isCreating: Boolean;
 }
 
-export function ResourceShow() {
-  const params = useParams();
-  const data = useLoaderData() as RouterResponse;
-  const navigate = useNavigate();
+export default function ResourceShow() {
+  const { resource } = usePage().props;
+  const { data } = usePage().props;
+  // const navigate = useNavigate();
   const { renderFormField } = useContext(CollapsarContext);
 
   const fields = data.fields;
 
   const getTitle = () => {
-    return `${params?.resource
+    return `${resource
       ?.charAt(0)
-      .toUpperCase()}${params?.resource?.slice(1)} Details`;
+      .toUpperCase()}${resource?.slice(1)} Details`;
   };
 
   return (
@@ -42,7 +43,7 @@ export function ResourceShow() {
           variant="default"
           className="ml-auto"
           onClick={() =>
-            navigate(`/resource/${params.resource}/${data.data.id}/edit`)
+            router.visit(`/collapsar/resource/${resource}/${data.data.id}/edit`)
           }
         >
           Edit

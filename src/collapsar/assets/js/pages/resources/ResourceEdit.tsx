@@ -12,9 +12,10 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { useForm } from "react-hook-form";
-import { Link, useLoaderData, useNavigate, useParams } from "react-router-dom";
+// import { Link, useLoaderData, useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
 import * as Fields from "@/components/fields";
+import { usePage, router, Link } from "@inertiajs/react";
 
 type Field = {
   id: number | string;
@@ -37,13 +38,12 @@ interface FieldValues {
   [key: string]: string;
 }
 
-export function ResourceEdit() {
-  const params = useParams();
-  const data = useLoaderData() as RouterResponse;
-  let navigate = useNavigate();
+export default function ResourceEdit() {
+  const {data, resource} = usePage().props
 
   const isCreating = data.isCreating;
   const fields = data.fields;
+
   let defaultValues: FieldValues = {};
   let createRules: any = {};
 
@@ -139,38 +139,22 @@ export function ResourceEdit() {
       });
 
     if (isCreating) {
-      return axios
-        .put(`/collapsar-api/${params.resource}/`, formData)
-        .then((response) => {
-          console.log("Success");
-          console.log(response.data);
-
-          navigate(
-            `/resource/${params.resource}/${response.data.resource_model.id}`
-          );
-        });
+      return router.post(`/collapsar-api/${resource}/`, formData)
     }
 
-    axios
-      .patch(`/collapsar-api/${params.resource}/${data.data.id}`, formData)
-      .then((response) => {
-        console.log("Success");
-        console.log(response.data);
-
-        navigate(`/resource/${params.resource}/${response.data.resource.id}`);
-      });
+    router.patch(`/collapsar-api/${resource}/${data.data.id}`, formData)
   }
 
   const getTitle = () => {
     if (isCreating) {
-      return `Create ${params.resource
+      return `Create ${resource
         ?.charAt(0)
-        .toUpperCase()}${params.resource?.slice(1)}`;
+        .toUpperCase()}${resource?.slice(1)}`;
     }
 
-    return `Update ${params.resource
+    return `Update ${resource
       ?.charAt(0)
-      .toUpperCase()}${params.resource?.slice(1)}`;
+      .toUpperCase()}${resource?.slice(1)}`;
   };
 
   const renderForm = ({ field }) => {
@@ -221,7 +205,7 @@ export function ResourceEdit() {
 
             <div className="flex gap-2 mt-6">
               <Button variant="secondary">
-                <Link to={`/resource/${params.resource}`}>Cancel</Link>
+                <Link href={`/collapsar/resource/${resource}`}>Cancel</Link>
               </Button>
               <Button type="submit">{isCreating ? "Create" : "Update"}</Button>
             </div>

@@ -4,20 +4,8 @@ import { AiFillEye } from "react-icons/ai";
 import { BiEdit, BiTrash } from "react-icons/bi";
 
 import { Button } from "@/components/ui/button";
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuRadioGroup,
-  DropdownMenuRadioItem,
-  DropdownMenuSeparator,
-  DropdownMenuShortcut,
-  DropdownMenuSub,
-  DropdownMenuSubContent,
-  DropdownMenuSubTrigger,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
-import { Link, useNavigate, useParams } from "react-router-dom";
+// import { Link, useNavigate, useParams } from "react-router-dom";
+import { Link, usePage, router } from "@inertiajs/react";
 import axios from "axios";
 import { AlertMessage } from "./utils/AlertMessage";
 import { useState } from "react";
@@ -30,8 +18,7 @@ export function ResourceIndexRowActions<TData>({
   row,
   setData,
 }: DataTableRowActionsProps<TData>) {
-  const params = useParams();
-  const navigate = useNavigate();
+  const { resource } = usePage().props
   const [alertMessageOpen, setAlertMessageOpen] = useState(false);
   const [alertMessageTitle, setAlertMessageTitle] = useState('');
   const [alertMessageContent, setAlertMessageContent] = useState('');
@@ -53,7 +40,7 @@ export function ResourceIndexRowActions<TData>({
 
   const deleteItem = (row) => {
     axios
-      .delete(`/collapsar-api/${params.resource}/${originalField.value}`)
+      .delete(`/collapsar-api/${resource}/${originalField.value}`)
       .then((response) => {
         setData((prevData) => {
           return prevData.filter((item) => {
@@ -70,7 +57,7 @@ export function ResourceIndexRowActions<TData>({
         variant="ghost"
         className="flex h-8 w-8 p-0"
         onClick={() =>
-          navigate(`/resource/${params.resource}/${originalField.value}`)
+          router.visit(`/collapsar/resource/${resource}/${originalField.value}`)
         }
       >
         <AiFillEye className="h-4 w-4" />
@@ -80,7 +67,7 @@ export function ResourceIndexRowActions<TData>({
         variant="ghost"
         className="flex h-8 w-8 p-0"
         onClick={() =>
-          navigate(`/resource/${params.resource}/${originalField.value}/edit`)
+          router.visit(`/collapsar/resource/${resource}/${originalField.value}/edit`)
         }
       >
         <BiEdit className="h-4 w-4" />

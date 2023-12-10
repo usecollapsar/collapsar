@@ -9,6 +9,17 @@ class DashboardHelper:
 
     def __init__(self, application):
         self.application = application
+        self.inertia = application.make("inertia")
+
+    def render(self, *args, **kwargs):
+        """Render the view."""
+        data = args[1] if len(args) > 1 else {}
+
+        if "menuItems" not in data:
+            data["menuItems"] = self.get_resources_navigation()
+
+        self.inertia.set_root_view("collapsar:admin.base")
+        return self.inertia.render(args[0], data, **kwargs)
 
     def get_resources(self):
         """Return the resources of the given resource."""
