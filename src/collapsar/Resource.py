@@ -32,9 +32,14 @@ class Resource(ResolvesFields, ForwardsCalls, FillsFields):
         """Return the fields of the resource."""
 
     @classmethod
+    def query(cls):
+        """Return the query of the resource."""
+        return cls.model().query()
+
+    @classmethod
     def paginate(cls, collapsar_request: "CollapsarRequest"):
         """Paginate the resource."""
-        search_model = cls.model
+        search_model = cls.query()
         search_string = collapsar_request.input('search')
 
         if search_string:

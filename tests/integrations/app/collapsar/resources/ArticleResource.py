@@ -21,6 +21,11 @@ class ArticleResource(Resource):
         return self.model.__name__
 
     @classmethod
+    def query(cls):
+        """Return the query of the resource."""
+        return cls.model().query().where_not_null("user_id")
+
+    @classmethod
     def fields(cls):
         """Return the fields of the resource."""
 
