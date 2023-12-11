@@ -1,8 +1,9 @@
 """A AuthController Module."""
 from masonite.controllers import Controller
 from masonite.response import Response
-from masonite.request import Request
 from masonite.authentication import Auth
+
+from ..CollapsarRequest import CollapsarRequest
 from ..helpers.DashboardHelper import DashboardHelper
 
 
@@ -13,8 +14,13 @@ class AuthController(Controller):
         """Handle AuthController request."""
         return dashboard_helper.render('auth/Login')
 
-    def login(self, request: Request, response: Response, auth: Auth):
+    def login(self, request: CollapsarRequest, response: Response, auth: Auth):
         """Handle login."""
+
+        user = request.collapsar.get_user_model().where('email', request.input("email")).first()
+
+        if not request.collapsar.gate(user):
+            return response.redirect('/collapsar/auth/login').with_errors({"global": "Invalid credentials. Try again."})
 
         if (auth.attempt(request.input("email"), request.input("password"))):
             return response.redirect('/collapsar/')

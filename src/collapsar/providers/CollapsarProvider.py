@@ -26,7 +26,6 @@ class CollapsarProvider(PackageProvider):
             .routes("routes/web.py", "routes/api.py")
             .views("templates", publish=True)
             .assets("dist")
-            .register_helpers()
         )
 
     def register(self):
@@ -52,18 +51,3 @@ class CollapsarProvider(PackageProvider):
             CollapsarInstallCommand(self.application),
             UserAddCommand(self.application),
         ]
-
-    def register_helpers(self):
-        """Register helpers into the container."""
-
-        def json_encode(data):
-            return json.dumps(data)
-
-        self.application.make("view").composer(
-            "collapsar:admin.index",
-            {
-                "INJECT_VITE": os.environ.get("INJECT_VITE") == "True",
-                "dashboard_helper": DashboardHelper(self.application),
-            },
-        )
-        self.application.make("view").filter("json_encode", json_encode)

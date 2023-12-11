@@ -10,6 +10,12 @@ class Collapsar:
     def __init__(self, application):
         self.application = application
         self.resources = config('collapsar.resources')
+        self.user_model = config('collapsar.user_model')
+        self.gate = config('collapsar.gate')
+
+    def get_user_model(self):
+        """Return the user model."""
+        return self.user_model
 
     def get_resources(self):
         """Return the resource of given urikey."""
