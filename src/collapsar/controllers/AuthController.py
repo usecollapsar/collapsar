@@ -2,6 +2,7 @@
 from masonite.controllers import Controller
 from masonite.response import Response
 from masonite.authentication import Auth
+from masonite.facades import Gate
 
 from ..CollapsarRequest import CollapsarRequest
 from ..helpers.DashboardHelper import DashboardHelper
@@ -19,8 +20,8 @@ class AuthController(Controller):
 
         user = request.collapsar.get_user_model().where('email', request.input("email")).first()
 
-        if not request.collapsar.gate(user):
-            return response.redirect('/collapsar/auth/login').with_errors({"global": "Invalid credentials. Try again."})
+        if not Gate.for_user(user).allows('view-collapsar'):
+            return response.redirect('/collapsar/auth/login').with_errors({"global": "User unauthorized. Try again."})
 
         if (auth.attempt(request.input("email"), request.input("password"))):
             return response.redirect('/collapsar/')

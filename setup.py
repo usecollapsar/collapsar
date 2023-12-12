@@ -17,6 +17,7 @@ setup(
         "collapsar.helpers",
         "collapsar.providers",
         "collapsar.commands",
+        "collapsar.middlewares",
         "collapsar.stubs",
         "collapsar.routes",
         "collapsar.traits",

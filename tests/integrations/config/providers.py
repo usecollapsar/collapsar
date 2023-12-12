@@ -24,7 +24,7 @@ from masonite.notification.providers import NotificationProvider
 from masonite.validation.providers import ValidationProvider
 from masonite.inertia.providers.InertiaProvider import InertiaProvider
 
-from src.collapsar import CollapsarProvider
+from src.collapsar import CollapsarApplicationProvider
 
 PROVIDERS = [
     FrameworkProvider,
@@ -50,4 +50,4 @@ PROVIDERS = [
     ORMProvider,
 ]
 
-PROVIDERS += [CollapsarProvider]
+PROVIDERS += [CollapsarApplicationProvider]

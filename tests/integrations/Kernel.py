@@ -13,14 +13,13 @@ from masonite.middleware import (
 from masonite.routes import Route
 from masonite.configuration.Configuration import Configuration
 from masonite.configuration import config
-from src.collapsar.middlewares.HandleInertiaRequestsMiddleware import HandleInertiaRequestsMiddleware
+from masonite.inertia import InertiaMiddleware
 
 from tests.integrations.app.middlewares import VerifyCsrfToken, AuthenticationMiddleware
 
 
 class Kernel:
-
-    http_middleware = [MaintenanceModeMiddleware, EncryptCookies, HandleInertiaRequestsMiddleware]
+    http_middleware = [MaintenanceModeMiddleware, EncryptCookies, InertiaMiddleware]
 
     route_middleware = {
         "web": [SessionMiddleware, LoadUserMiddleware, VerifyCsrfToken],

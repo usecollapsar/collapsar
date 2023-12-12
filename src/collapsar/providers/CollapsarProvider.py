@@ -1,14 +1,14 @@
 """A CollapsarProvider Service Provider."""
-import os
-import json
 from masonite.packages import PackageProvider
 from masonite.configuration import config
+from masonite.facades import Gate
 
 from ..helpers.DashboardHelper import DashboardHelper
 from ..foundation.Collapsar import Collapsar
 from ..commands.MakeResourceCommand import MakeResourceCommand
 from ..commands.CollapsarInstallCommand import CollapsarInstallCommand
 from ..commands.UserAddCommand import UserAddCommand
+
 
 class CollapsarProvider(PackageProvider):
     """
@@ -44,6 +44,7 @@ class CollapsarProvider(PackageProvider):
 
     def boot(self):
         """Boots services required by the container."""
+        self.register_gates()
 
     def register_commands(self):
         return [
@@ -51,3 +52,8 @@ class CollapsarProvider(PackageProvider):
             CollapsarInstallCommand(self.application),
             UserAddCommand(self.application),
         ]
+
+    def register_gates(self):
+        """Define gates."""
+
+        Gate.define("view-collapsar", lambda user: user.email in [])
