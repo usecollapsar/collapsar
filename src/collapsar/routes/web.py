@@ -1,9 +1,13 @@
 from masonite.routes import Route
+from masonite.configuration import config
+
 from ..controllers.CollapsarController import CollapsarController
 from ..controllers.ResourceIndexController import ResourceIndexController
 from ..controllers.ResourceShowController import ResourceShowController
 from ..controllers.ResourceUpdateController import ResourceUpdateController
 from ..controllers.AuthController import AuthController
+
+ROUTE_PREFIX = config('collapsar.route_prefix')
 
 ROUTES = [
     Route.group(
@@ -34,6 +38,6 @@ ROUTES = [
             # Route.get('', CollapsarController.index).middleware('auth',),
             # Route.get('.*', CollapsarController.index).middleware('auth',),
         ],
-        prefix="/collapsar",
+        prefix=ROUTE_PREFIX,
     )
 ]

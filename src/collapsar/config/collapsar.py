@@ -1,5 +1,5 @@
 """Collapsar Settings"""
-ROUTE_PREFIX = "collapsar"
+ROUTE_PREFIX = "/collapsar"
 
 RESOURCES = [
     # Add your resources
