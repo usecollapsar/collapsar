@@ -152,9 +152,9 @@ export default function ResourceIndex() {
     },
   });
 
-  React.useEffect(() => {
-    // setSearchParams(`?${new URLSearchParams({ page: table.getState().pagination.pageIndex + 1 })}`)
-  }, [pagination]);
+  // React.useEffect(() => {
+  //   // setSearchParams(`?${new URLSearchParams({ page: table.getState().pagination.pageIndex + 1 })}`)
+  // }, [pagination]);
 
   React.useEffect(() => {
     handlePagination({ page: table.getState().pagination.pageIndex });

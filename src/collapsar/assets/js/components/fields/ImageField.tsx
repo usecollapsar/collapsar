@@ -27,7 +27,7 @@ export function ImageField(props: any) {
     );
   }
 
-  if (props.renderForDisplay || !props?.fieldConfig) {
+  if (props.renderForDisplay) {
     return displayRender();
   }
 

@@ -18,10 +18,16 @@ export const CollapsarContext = createContext({} as CollapsarContextProps);
 
 const CollapsarProvider = ({ children }: any) => {
 
-  const resolveField = (component: string) => {
+  const resolveField = (component: any) => {
+    const componentName = component.component;
+
+    if (component.custom_field && component.package_name) {
+      return window[component.package_name][component.component]
+    }
+
     const fields = import.meta.glob('../components/fields/**/*.tsx', { eager: true })
-    const index = Object.keys(fields).findIndex(f => f.split('/').slice(-1)[0] == `${component}.tsx`)
-    return fields[Object.keys(fields)[index]][component]
+    const index = Object.keys(fields).findIndex(f => f.split('/').slice(-1)[0] == `${componentName}.tsx`)
+    return fields[Object.keys(fields)[index]][componentName]
   }
 
   const renderFormField = ({
@@ -30,7 +36,7 @@ const CollapsarProvider = ({ children }: any) => {
     renderForDisplay = false,
     renderForIndex = false,
   }: renderFormFieldProps) => {
-    const FieldComponent = Fields[component as keyof typeof Fields];
+    const FieldComponent = resolveField(field);
 
     if (!FieldComponent) {
       console.error(`Component ${component} not found!`);

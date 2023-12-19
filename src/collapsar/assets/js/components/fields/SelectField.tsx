@@ -21,7 +21,7 @@ export function SelectField(props: any) {
     );
   };
 
-  if (props.renderForDisplay || !props.fieldConfig) {
+  if (props.renderForDisplay || props.renderForIndex) {
     return displayRender();
   }
 

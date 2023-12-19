@@ -9,7 +9,7 @@ export function TextField({fieldConfig, ...props}: any) {
     );
   };
 
-  if (props.renderForDisplay || !fieldConfig) {
+  if (props.renderForDisplay || props.renderForIndex) {
     return displayRender();
   }
 

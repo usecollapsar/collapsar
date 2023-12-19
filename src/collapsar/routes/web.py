@@ -10,6 +10,7 @@ from ..controllers.AuthController import AuthController
 ROUTE_PREFIX = config('collapsar.route_prefix')
 
 ROUTES = [
+    Route.get('/collapsar_scripts', CollapsarController.get_script),
     Route.group(
         [
             Route.get("/", CollapsarController.index).middleware(

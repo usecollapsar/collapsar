@@ -163,7 +163,7 @@ export default function ResourceEdit() {
   const renderForm = ({ field }) => {
     const fieldData = fields.find((f) => f.attribute == field.name) as Field;
 
-    const FieldComponent = resolveField(fieldData.component);
+    const FieldComponent = resolveField(fieldData);
 
     // const FieldComponent = Fields[fieldData.component as keyof typeof Fields];
 

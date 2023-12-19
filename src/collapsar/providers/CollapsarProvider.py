@@ -26,6 +26,7 @@ class CollapsarProvider(PackageProvider):
             .routes("routes/web.py", "routes/api.py")
             .views("templates", publish=True)
             .assets("dist")
+            .register_helpers()
         )
 
     def register(self):
@@ -45,6 +46,12 @@ class CollapsarProvider(PackageProvider):
     def boot(self):
         """Boots services required by the container."""
         self.register_gates()
+
+    def register_helpers(self):
+        """Register helpers."""
+        self.application.make("view").share(
+            {"collapsar_scripts": DashboardHelper(self.application).render_scripts}
+        )
 
     def register_commands(self):
         return [

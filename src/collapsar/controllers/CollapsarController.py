@@ -16,10 +16,15 @@ class CollapsarController(Controller):
         """Handle CollapsarController request."""
 
         menu_items = DashboardHelper(application).get_resources_navigation()
-        view.set_root_view('collapsar:admin.base')
-        return view.render("Dashboard", {
-            "menuItems": menu_items
-        })
+        view.set_root_view("collapsar:admin.base")
+        return view.render("Dashboard", {"menuItems": menu_items})
+
+    def get_script(self, request: Request, response: Response):
+        """Return the JS file."""
+        script = request.input("script")
+        return response.download(
+            f"{script}.js", request.app.make("DashboardHelper").get_script(script)
+        )
 
     def get_js(self, response: Response):
         """Return the JS file."""
@@ -36,5 +41,7 @@ class CollapsarController(Controller):
     def get_storage(self, request: Request, response: Response):
         """Return file path."""
         storage = request.app.make("storage")
-        file_name = request.environ.get('PATH_INFO').split('/')[-1].replace('..', '')
-        return response.download(file_name, storage.disk('local').get_path('collapsar/storage/' + file_name))
+        file_name = request.environ.get("PATH_INFO").split("/")[-1].replace("..", "")
+        return response.download(
+            file_name, storage.disk("local").get_path("collapsar/storage/" + file_name)
+        )

@@ -20,6 +20,7 @@ class Field:
     value: str = ""
     type: str = "string"
     collapsar: "Collapsar"
+    custom_field = False
 
     _readonly_callback: Callable = None
     _required_callback: Union[bool, Callable] = False

@@ -15,6 +15,8 @@ class ResourceShowController(Controller):
     def show(self, request: CollapsarRequest, dashboard_helper: DashboardHelper):
         """Handle resource create request."""
 
+        dashboard_helper.resolve_resource_scripts(request.resource())
+
         data = self.handle(request)
 
         return dashboard_helper.render(

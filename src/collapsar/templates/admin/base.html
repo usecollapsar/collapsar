@@ -25,8 +25,13 @@
   <body class="min-w-site bg-40 text-black min-h-full">
     {{ inertia(page) }}
 
-    {% if env('INJECT_VITE') %}
+    <!-- Scripts -->
+    {% for script in collapsar_scripts()%}
+    <script src="/collapsar_scripts?script={{ script }}"></script>
+    {% endfor %}
+    <!-- Tool Scripts -->
 
+    {% if env('INJECT_VITE') %}
       <!-- Vite DEV -->
       <script type="module">
         import RefreshRuntime from "http://localhost:5173/@react-refresh";
@@ -44,13 +49,6 @@
     {% else %}
       <script src="/collapsar/assets/app.js"></script>
     {% endif %}
-
-    <!-- Scripts -->
-
-    <!-- Build Nova Instance -->
-    <script>
-      // window.Nova = new CreateNova(config)
-    </script>
 
     <!-- Render Scripts -->
 

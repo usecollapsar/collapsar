@@ -8,7 +8,8 @@ export function PasswordField({fieldConfig, ...props}: any) {
       </div>
     );
   };
-  if (props.renderForDisplay || !props.fieldConfig) {
+
+  if (props.renderForDisplay || props.renderForIndex) {
     return displayRender();
   }
 

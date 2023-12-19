@@ -6,6 +6,7 @@ class DashboardHelper:
     """DashboardHelper class"""
 
     resources = []
+    scripts = {}
 
     def __init__(self, application):
         self.application = application
@@ -21,13 +22,35 @@ class DashboardHelper:
         self.inertia.set_root_view("collapsar:admin.base")
         return self.inertia.render(args[0], data, **kwargs)
 
+    def render_scripts(self):
+        return self.scripts
+
     def get_resources(self):
         """Return the resources of the given resource."""
         return self.application.make("Collapsar").get_resources()
 
-    def register_resource(self, resource):
-        """Register a resource."""
-        self.resources.append(resource)
+    def register_script(self, field_class, script_path):
+        """Register a script."""
+        if field_class in self.scripts:
+            return
+
+        self.scripts.update({field_class: script_path})
+
+    def get_script(self, script):
+        """Return the scripts."""
+        return self.scripts[script]
+
+    def resolve_resource_scripts(self, resource):
+        """Resolve the scripts for the given resource."""
+        (
+            collect(resource.fields())
+            .filter(
+                lambda field: field.custom_field
+            )
+            .each(lambda field: self.register_script(field.__class__.__name__, field.get_script()))
+        )
+
+        return self
 
     def get_user(self):
         """Return the user."""

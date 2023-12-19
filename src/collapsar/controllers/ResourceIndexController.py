@@ -15,6 +15,8 @@ class ResourceIndexController(Controller):
     def index(self, request: CollapsarRequest, dashboard_helper: DashboardHelper):
         """Handle resource create request."""
 
+        dashboard_helper.resolve_resource_scripts(request.resource())
+
         return dashboard_helper.render(
             "resources/ResourceIndex", {"resource": request.param("resource")}
         )

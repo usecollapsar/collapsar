@@ -18,7 +18,7 @@ export function BelongsToField(props: any) {
     return <Link className="text-primary hover:underline" href={`/collapsar/resource/${props.relation_urikey}/${props.value}`}>{props.relation_label}</Link>;
   }
 
-  if (props.renderForDisplay || !props.fieldConfig) {
+  if (props.renderForDisplay || props.renderForIndex) {
     return displayRender();
   }
 
