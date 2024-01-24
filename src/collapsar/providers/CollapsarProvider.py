@@ -26,6 +26,7 @@ class CollapsarProvider(PackageProvider):
             .routes("routes/web.py", "routes/api.py")
             .views("templates", publish=True)
             .assets("dist")
+            .register_gates()
             .register_helpers()
         )
 
@@ -63,4 +64,5 @@ class CollapsarProvider(PackageProvider):
     def register_gates(self):
         """Define gates."""
 
-        Gate.define("view-collapsar", lambda user: user.email in [])
+        Gate.define("view-collapsar", lambda user: True)
+        return self

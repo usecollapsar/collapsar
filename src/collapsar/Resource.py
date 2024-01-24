@@ -41,10 +41,15 @@ class Resource(ResolvesFields, ForwardsCalls, FillsFields):
         """Paginate the resource."""
         search_model = cls.query()
         search_string = collapsar_request.input('search')
+        sort_by = collapsar_request.input('sort_by')
+        sort_dir = "desc" if collapsar_request.input('sort_desc') == "true" else "asc"
 
         if search_string:
             for field in cls.search_fields:
                 search_model = search_model.or_where(field, 'like', f'%{search_string}%')
+
+        if sort_by:
+            search_model = search_model.order_by(sort_by, sort_dir)
 
         paginator = search_model.paginate(
             collapsar_request.input("per_page", cls.per_page), int(collapsar_request.input("page", 1))

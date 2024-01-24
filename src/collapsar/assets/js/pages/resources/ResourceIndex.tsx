@@ -62,7 +62,10 @@ export default function ResourceIndex() {
   const [rowSelection, setRowSelection] = React.useState({});
 
   const handlePagination = ({ page }) => {
-    axios.get(`/collapsar-api/${resource}`, {params: { search: searchString, page: page + 1 }})
+    const sortBy = sorting?.[0].id ?? ""
+    const sortDesc = sorting?.[0].desc
+
+    axios.get(`/collapsar-api/${resource}`, {params: { search: searchString, page: page + 1, sort_by: sortBy, sort_desc: sortDesc }})
     .then((response) => {
       setData(response.data.data);
       setFields(response.data.fields);
@@ -73,6 +76,7 @@ export default function ResourceIndex() {
   const constructColumns = (fields: any[]): ColumnDef[any] => {
     const columns = fields.map((field, k) => {
       return {
+        id: field.attribute,
         accessorKey: field.name,
         header: ({ column }) => {
           return (
@@ -133,6 +137,7 @@ export default function ResourceIndex() {
     data: data,
     columns,
     manualPagination: true,
+    manualSorting: true,
     onPaginationChange: setPagination,
     pageCount: meta.last_page,
     onSortingChange: setSorting,
@@ -157,8 +162,9 @@ export default function ResourceIndex() {
   // }, [pagination]);
 
   React.useEffect(() => {
+    console.log(sorting)
     handlePagination({ page: table.getState().pagination.pageIndex });
-  }, [pagination, resource, searchString]);
+  }, [pagination, resource, sorting, searchString]);
 
   return (
     <div className="w-full">

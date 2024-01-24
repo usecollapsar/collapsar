@@ -44,5 +44,5 @@ class TextInput(Field):
         :return: dict
         """
         serialized = super().json_serialize()
-        serialized["value"] = str(self.value)
+        serialized["value"] = str(self.value) if self.value else ""
         return serialized
