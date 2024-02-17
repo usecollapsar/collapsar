@@ -62,8 +62,8 @@ export default function ResourceIndex() {
   const [rowSelection, setRowSelection] = React.useState({});
 
   const handlePagination = ({ page }) => {
-    const sortBy = sorting?.[0].id ?? ""
-    const sortDesc = sorting?.[0].desc
+    const sortBy = sorting?.[0]?.id ?? ""
+    const sortDesc = sorting?.[0]?.desc
 
     axios.get(`/collapsar-api/${resource}`, {params: { search: searchString, page: page + 1, sort_by: sortBy, sort_desc: sortDesc }})
     .then((response) => {
