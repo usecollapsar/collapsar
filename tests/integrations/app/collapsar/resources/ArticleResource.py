@@ -6,7 +6,7 @@ from src.collapsar.Id import Id
 from src.collapsar.RichText import RichText
 from src.collapsar.BelongsTo import BelongsTo
 from src.collapsar.Image import Image
-
+from src.collapsar.Markdown import Markdown
 
 class ArticleResource(Resource):
     """Article Resource."""
@@ -33,6 +33,6 @@ class ArticleResource(Resource):
             Id("Id", "id").readonly(),
             Image("Image", "image"),
             TextInput("Title", "title").rules("required"),
-            RichText("Content", "content").rules("required").hide_from_index(),
+            Markdown("Content", "content").rules("required").hide_from_index(),
             BelongsTo("User", "user", "UserResource").rules("required"),
         ]

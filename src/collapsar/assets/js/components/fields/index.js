@@ -6,5 +6,6 @@ export { RichTextField } from './RichTextField';
 export { CalendarField } from './CalendarField';
 export { ImageField } from './ImageField';
 export { BelongsToField } from './BelongsToField';
+export { MarkdownField } from './MarkdownField';
 
 export { Field } from './Field';

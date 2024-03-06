@@ -1,6 +1,7 @@
-import { Input } from "@/components/ui/input";
+import { Input } from "../ui/input";
 
-export function TextField({fieldConfig, ...props}: any) {
+
+export function TextField({ fieldConfig, ...props }: any) {
   const displayRender = () => {
     return (
       <div className="flex items-center space-x-2">

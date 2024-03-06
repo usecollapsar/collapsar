@@ -63,6 +63,5 @@ class CollapsarProvider(PackageProvider):
 
     def register_gates(self):
         """Define gates."""
-
         Gate.define("view-collapsar", lambda user: True)
         return self

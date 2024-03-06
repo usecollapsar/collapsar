@@ -11,3 +11,4 @@ class CollapsarApplicationProvider(CollapsarProvider):
         """Define gates."""
 
         Gate.define("view-collapsar", lambda user: user.email in ["eduardo@aguad.dev"])
+        return self
