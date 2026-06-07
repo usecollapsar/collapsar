@@ -1,4 +1,4 @@
-masonite>=4,<5
-masonite-orm>=2,<3
+masonite-framework>=5,<6
+masonite-framework-orm>=3,<4
 requests>=2.31
 python-slugify>=8
