@@ -26,7 +26,7 @@ setup(
     long_description=long_description,
     long_description_content_type="text/markdown",
     # The project's main homepage.
-    url="https://github.com/usecollapsar/collapsar",
+    url="https://github.com/masonitedev/collapsar",
     # Author details
     author="Eduardo Aguad",
     author_email="eduardo@aguad.dev",
