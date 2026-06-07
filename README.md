@@ -11,7 +11,7 @@
   <img alt="GitHub Workflow Status (branch)" src="https://img.shields.io/github/actions/workflow/status/usecollapsar/collapsar/pythonapp.yml?branch=develop">
   <img src="https://codecov.io/gh/usecollapsar/collapsar/branch/develop/graph/badge.svg?token="/>
   <img alt="PyPI" src="https://img.shields.io/pypi/v/collapsar">
-  <img src="https://img.shields.io/badge/python-3.6+-blue.svg" alt="Python Version">
+  <img src="https://img.shields.io/badge/python-3.10+-blue.svg" alt="Python Version">
   <img alt="GitHub release (latest by date including pre-releases)" src="https://img.shields.io/github/v/release/usecollapsar/collapsar?include_prereleases">
   <img alt="License" src="https://img.shields.io/github/license/usecollapsar/collapsar">
   <a href="https://github.com/psf/black"><img alt="Code style: black" src="https://img.shields.io/badge/code%20style-black-000000.svg"></a>
@@ -31,7 +31,14 @@ Collapsar is a package that will let you save time creating a dashboard for your
 
 See the [official documentation](https://collapsar.aguad.dev) to learn how to use Collapsar.
 
+## Requirements
+
+- Python 3.10 – 3.13
+- Masonite 5 (`masonite-framework>=5`) — Collapsar ≤ 0.0.14 supported Masonite 4 only
+
 ## Installation
+
+Inside a [Masonite 5 application](https://docs.masonite.dev/getting-started/installation/):
 
 ```bash
 pip install collapsar
@@ -55,13 +62,20 @@ PROVIDERS = [
 ]
 ```
 
-Create a new resource using
+Create a new resource for one of your models:
 
-```python
-python craft resource MyModel
+```bash
+python craft resource User
 ```
 
-And see your panel on https://localhost/collapsar
+This generates `app/collapsar/resources/User.py`, which Collapsar discovers automatically on boot. Make sure you have at least one user to log in with (you can create one with `python craft collapsar:user`), then start the server and open the panel:
+
+```bash
+python craft serve
+```
+
+- Admin panel: `http://localhost:8000/collapsar` (redirects to `/collapsar/auth/login` until you sign in)
+- JSON API used by the panel: `http://localhost:8000/collapsar-api/...` (auth protected)
 
 ## Contributing
 

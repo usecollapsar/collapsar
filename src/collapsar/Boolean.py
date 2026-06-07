@@ -20,14 +20,12 @@ class Boolean(Field):
 
         super().__init__(name, attribute, resolve_callback)
 
-
     def fill(self, request, model: Model):
         setattr(
             model,
             self.attribute,
             1 if request.input(self.attribute) == "true" else 0,
         )
-
 
     def json_serialize(self):
         """

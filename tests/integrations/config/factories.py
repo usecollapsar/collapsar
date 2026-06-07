@@ -1,5 +1,5 @@
 # config/factories.py
-from masoniteorm import Factory
+from masoniteorm.factories import Factory
 from tests.integrations.app.models.Article import Article
 
 

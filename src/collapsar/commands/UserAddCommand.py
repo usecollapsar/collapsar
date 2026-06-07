@@ -4,6 +4,7 @@ from getpass import getpass
 from masonite.commands.Command import Command
 from masonite.facades.Hash import Hash
 
+
 class UserAddCommand(Command):
     """
     Installs collapsar
