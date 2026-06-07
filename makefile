@@ -15,7 +15,7 @@ ci: ## [CI] Run package tests and lint
 	make test
 	make lint
 lint: ## Run code linting
-	python -m flake8 src/collapsar --ignore=E501,F401,E203,E128,E402,E731,F821,E712,W503,F811
+	python -m flake8 src/collapsar --ignore=E501,F401,E203,E128,E402,E731,E712,W503
 format: ## Format code with Black
 	black src/collapsar
 coverage: ## Run package tests and upload coverage reports
