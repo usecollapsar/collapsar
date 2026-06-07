@@ -1,4 +1,4 @@
 masonite-framework>=5.4.1,<6
 masonite-framework-orm>=3,<4
 requests>=2.34.2
-python-slugify>=8
+python-slugify>=8.0.4
