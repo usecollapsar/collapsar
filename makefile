@@ -5,9 +5,7 @@ help: ## Show this help
 init: ## Install package dependencies
 	cp .env-example .env
 	pip install --upgrade pip
-	# install test project and package dependencies
-	pip install -r requirements.txt
-	# install package and dev dependencies (see setup.py)
+	# install package and dev dependencies (see pyproject.toml)
 	pip install '.[dev]'
 test: ## Run package tests
 	python -m pytest tests
@@ -22,7 +20,7 @@ coverage: ## Run package tests and upload coverage reports
 	python -m pytest --cov-report term --cov-report xml --cov=src/collapsar tests
 publish: ## Publish package to pypi
 	npx vite build
-	python setup.py sdist bdist_wheel
+	python -m build
 	twine upload --skip-existing dist/*
 	rm -fr build dist .egg src/collapsar.egg-info
 pypirc: ## Copy the template .pypirc in the repo to your home directory
