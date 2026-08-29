@@ -1,6 +1,73 @@
+[build-system]
+requires = ["setuptools>=68.0", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "collapsar"
+version = "0.0.14"
+description = "Create beautiful admin dashboards in Masonite Framework"
+readme = "README.md"
+license = "MIT"
+requires-python = ">=3.10"
+authors = [
+    { name = "Eduardo Aguad", email = "eduardo@aguad.dev" },
+]
+keywords = ["Masonite", "Python", "Development"]
+classifiers = [
+    "Development Status :: 3 - Alpha",
+    "Intended Audience :: Developers",
+    "Topic :: Software Development :: Build Tools",
+    "Environment :: Web Environment",
+    "Operating System :: OS Independent",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.13",
+    "Topic :: Internet :: WWW/HTTP",
+    "Topic :: Internet :: WWW/HTTP :: Dynamic Content",
+    "Topic :: Internet :: WWW/HTTP :: WSGI",
+    "Topic :: Software Development :: Libraries :: Application Frameworks",
+    "Topic :: Software Development :: Libraries :: Python Modules",
+    "Framework :: Masonite",
+]
+dependencies = [
+    "masonite-framework>=5,<6",
+    "masonite-framework-orm>=3,<4",
+    "attrs>=23",
+    "requests>=2.31",
+    "python-slugify>=8",
+]
+
+[project.optional-dependencies]
+dev = [
+    "black",
+    "flake8",
+    "flake8-pyproject",
+    "coverage",
+    "build",
+    "pytest",
+    "pytest-cov",
+    "twine>=1.5.0",
+    "wheel",
+    "pytest-dotenv",
+]
+
+[project.urls]
+Homepage = "https://github.com/masonitedev/collapsar"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.setuptools.package-data]
+collapsar = ["templates/**", "dist/**"]
+
+[tool.pytest.ini_options]
+env_files = [".env.testing", ".env.ci"]
+filterwarnings = ["ignore::DeprecationWarning"]
+
 [tool.black]
 line-length = 99
-target-version = ['py38']
+target-version = ['py310']
 include = '\.pyi?$'
 exclude = '''
 /(
@@ -18,3 +85,23 @@ exclude = '''
 profile = "black"
 multi_line_output = 3
 include_trailing_comma = true
+
+[tool.flake8]
+exclude = [
+    ".git",
+    ".github",
+    ".vscode",
+    "__pycache__",
+    "templates",
+    "node_modules",
+    "venv",
+]
+max-complexity = 10
+max-line-length = 99
+omit = [
+    "*/config/*",
+    "setup.py",
+    "*/stubs/*",
+    "wsgi.py",
+    "tests/",
+]

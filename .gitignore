@@ -14,7 +14,7 @@ dist
 .env
 *.db
 src/collapsar.egg-info
-node_modules/
+node_modules
 *.sqlite3
 *.env*
 !.env.ci
